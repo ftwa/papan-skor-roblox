@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scoreboard Cyber HUD Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070b14;
+      --card-bg: #0d1424;
+      --border-color: #1e293b;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --color-name: #38bdf8;
+      --color-display: #f472b6;
+      --color-point: #fb7185;
+      --rank1-bg: rgba(254, 240, 138, 0.12);
+      --rank2-bg: rgba(56, 189, 248, 0.12);
+      --rank3-bg: rgba(251, 146, 60, 0.12);
+      --host-bg: rgba(168, 85, 247, 0.12);
+      --host-text: #c084fc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Space Grotesk', sans-serif; }
+    html, body {
+      background-color: var(--bg);
+      background-image: radial-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px);
+      background-size: 20px 20px;
+      color: #f8fafc; width: 100%; min-height: 100%; overflow-x: hidden;
+    }
+    body { padding: 8px; display: flex; justify-content: center; align-items: flex-start; }
+    body.resizing-active { user-select: none !important; cursor: col-resize !important; }
+
+    .container {
+      width: 100%; max-width: 1260px; background: var(--card-bg);
+      border-radius: 14px; padding: 12px 14px; border: 1.5px solid var(--border-color);
+      box-shadow: 0 16px 35px -5px rgba(0, 0, 0, 0.65);
+      position: relative; margin-bottom: 10px; overflow: visible;
+    }
+
+    /* BAR ATAS */
+    .top-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1.5px solid #1e293b;
+      gap: 8px; flex-wrap: wrap; position: relative; z-index: 20;
+    }
+    .top-left, .top-right { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+    .btn-action-soft {
+      background: #131d31; color: #cbd5e1; border: 1px solid #28354d; padding: 6px 12px;
+      border-radius: 6px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px;
+      transition: all 0.14s ease;
+    }
+    .btn-action-soft:hover { background: #1e2b45; border-color: #38bdf8; color: #ffffff; }
+
+    .btn-sort-manual {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #1e1b4b; color: #a5b4fc; border: 1px solid #4338ca;
+      padding: 6px 13px; border-radius: 6px; font-size: 11.5px; font-weight: 800; cursor: pointer;
+      transition: all 0.14s ease;
+    }
+    .btn-sort-manual:hover { background: #312e81; color: #ffffff; }
+
+    .btn-winner-trigger {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+      color: #ffffff; border: 1px solid #f59e0b;
+      padding: 6px 13px; border-radius: 6px; font-size: 11.5px; font-weight: 800; cursor: pointer;
+      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.35); transition: all 0.14s ease;
+    }
+    .btn-winner-trigger:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+    .btn-notif-trigger {
+      background: #064e3b; color: #6ee7b7; border: 1px solid #059669; padding: 6px 12px;
+      border-radius: 6px; font-size: 11.5px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 4px;
+    }
+    .btn-notif-trigger:hover { background: #047857; color: #ffffff; }
+
+    /* DROPDOWN RESET */
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-content {
+      display: none; position: absolute; top: 100%; left: 0; margin-top: 4px;
+      background-color: #0f172a; min-width: 170px; box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+      border-radius: 8px; border: 1px solid #334155; z-index: 1000; overflow: hidden;
+    }
+    .dropdown-content button {
+      width: 100%; text-align: left; padding: 8px 12px; font-size: 11.5px; font-weight: 700;
+      border: none; background: transparent; cursor: pointer; color: #e2e8f0; border-bottom: 1px solid #1e293b;
+    }
+    .dropdown-content button:last-child { border-bottom: none; }
+    .dropdown-content button:hover { background: #1e293b; color: var(--primary); }
+    .dropdown.show .dropdown-content { display: block; }
+
+    /* POPUP NOTIFIKASI BARU: CYBER HUD STYLE */
+    .center-notif-popup {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
+      width: 270px; min-height: 180px; background: rgba(13, 20, 36, 0.96); backdrop-filter: blur(16px);
+      border-radius: 16px; border: 1.5px solid rgba(56, 189, 248, 0.65);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(56, 189, 248, 0.25); z-index: 25000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      padding: 16px; text-align: center; opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .center-notif-popup.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    .c-notif-tag {
+      font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 800; color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12); padding: 3px 10px; border-radius: 99px;
+      border: 1px solid rgba(56, 189, 248, 0.35); letter-spacing: 1px; text-transform: uppercase;
+    }
+    .c-notif-name {
+      font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: #ffffff;
+      line-height: 1.15; max-width: 100%; overflow: hidden; text-overflow: ellipsis;
+    }
+    .c-notif-pts-box {
+      width: 100%; background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.4);
+      border-radius: 10px; padding: 6px 10px; margin-top: 4px;
+    }
+    .c-notif-pts-main { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 900; color: #fb7185; }
+    .c-notif-pts-total { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #fecdd3; margin-top: 2px; }
+
+    /* POPOVER POIN CEPAT */
+    .quick-point-popover {
+      display: none; position: fixed; z-index: 35000; background: #0d1527; color: #f8fafc;
+      width: 235px; padding: 12px; border-radius: 12px; border: 1.5px solid #38bdf8;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75); flex-direction: column; gap: 8px;
+    }
+    .quick-point-popover.show { display: flex; }
+    .qp-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 6px; }
+    .qp-title { font-size: 12px; font-weight: 800; color: #38bdf8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .qp-close { background: none; border: none; color: #94a3b8; font-size: 16px; font-weight: 800; cursor: pointer; }
+    .qp-close:hover { color: #ef4444; }
+    .qp-grid-plus { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+    .btn-qp {
+      border: 1px solid #1e293b; background: #141f36; color: #38bdf8; font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px; font-weight: 900; padding: 6px 0; border-radius: 5px; cursor: pointer; transition: all 0.12s ease;
+    }
+    .btn-qp:hover { background: #0284c7; color: #ffffff; border-color: #38bdf8; }
+    .qp-footer { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+    .qp-custom-input {
+      flex: 1; width: 100%; background: #141f36; border: 1px solid #334155; color: #ffffff;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 900; padding: 4px 6px; border-radius: 5px; outline: none; text-align: center;
+    }
+    .btn-qp-set { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; font-size: 10.5px; font-weight: 800; padding: 5px 8px; border-radius: 5px; cursor: pointer; }
+    .btn-qp-set:hover { background: #0284c7; color: #fff; }
+
+    /* TABEL GRID */
+    .grid-tables { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; position: relative; z-index: 10; }
+    .table-container {
+      background: #0a101f; border-radius: 10px; border: 1.5px solid #1e293b;
+      overflow: hidden; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4); scrollbar-width: none;
+    }
+    .table-container::-webkit-scrollbar { display: none; width: 0; height: 0; }
+    table { border-collapse: separate; border-spacing: 0; width: 100%; table-layout: fixed; }
+
+    th {
+      padding: 9px 6px; font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 800; color: #e2e8f0;
+      text-align: center; letter-spacing: 0.8px; position: relative; user-select: none;
+      background: #111a2e; border-bottom: 2px solid #1e293b; border-right: 1px solid rgba(51, 65, 85, 0.4);
+    }
+    th:last-child { border-right: none; }
+    th .col-resizer { position: absolute; right: -4px; top: 0; bottom: 0; width: 8px; cursor: col-resize; z-index: 50; }
+    th .col-resizer:hover { background: #38bdf8; }
+
+    th.th-no { border-right: 1.5px solid #1e293b !important; }
+
+    tbody tr { position: relative; border-bottom: 1px solid #141e33; }
+    tbody tr.moving-row { transition: transform 0.55s cubic-bezier(0.2, 1, 0.25, 1) !important; z-index: 10; }
+    td {
+      padding: 4px 6px; font-size: 14px; border-bottom: 1px solid #141e33; border-right: 1px solid #141e33; height: 48px; text-align: center;
+      background: #0a101f; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+    }
+    td:last-child { border-right: none; }
+    tbody tr:nth-child(even) td { background: #0e1629; }
+
+    .td-no { background: #111a2e !important; font-weight: 800; color: #94a3b8; font-size: 13.5px; border-right: 1.5px solid #1e293b !important; }
+    
+    /* BADGE STATUS AMAN (PENGGANTI PAID/UNPAID: DONE & READY) */
+    .pay-status-tag {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px;
+      margin-left: 4px; flex-shrink: 0; cursor: pointer; font-family: 'JetBrains Mono', monospace;
+      user-select: none; letter-spacing: 0.3px;
+    }
+    .pay-status-tag.done {
+      background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.5);
+    }
+    .pay-status-tag.ready {
+      background: #141f36; color: #64748b; border: 1px solid #28354d;
+    }
+
+    .cell-click-popup { cursor: pointer; border-radius: 5px; padding: 2px 4px; text-align: left; }
+    .cell-click-popup:hover { background: #141f36; }
+    
+    .name-tiktok { font-size: 14px; font-weight: 700; color: var(--color-name); word-break: break-all; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
+    .name-roblox-display { font-size: 13px; font-weight: 700; color: var(--color-display); word-break: break-all; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
+    .name-empty { font-size: 12.5px; font-weight: 600; color: #475569; font-style: italic; }
+
+    .avatar-mini { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; background: #141f36; border: 1px solid #334155; flex-shrink: 0; }
+    .avatar-placeholder { width: 30px; height: 30px; border-radius: 50%; background: #141f36; border: 1px solid #334155; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #94a3b8; }
+
+    .score-box { display: flex; justify-content: center; align-items: center; white-space: nowrap; }
+    .score-val { 
+      min-width: 52px; font-size: 19px; font-weight: 900; color: var(--color-point); 
+      text-align: center; border-radius: 6px; outline: none; cursor: pointer; 
+      padding: 3px 8px; background: rgba(251, 113, 133, 0.1); border: 1px solid rgba(251, 113, 133, 0.35); 
+      font-family: 'JetBrains Mono', monospace; line-height: 1; flex-shrink: 0; user-select: none;
+    }
+    .score-val:hover:not(.score-standby) { background: rgba(251, 113, 133, 0.22); border-color: #fb7185; transform: scale(1.05); }
+    .score-standby { color: #475569 !important; background: transparent !important; border-color: transparent !important; cursor: pointer !important; font-size: 15px; }
+
+    tr.rank-1 td { background: var(--rank1-bg) !important; font-weight: 800; border-bottom: 2px solid #ca8a04; }
+    tr.rank-1 .score-val { color: #facc15 !important; background: rgba(250, 204, 21, 0.18); border-color: #ca8a04; }
+    tr.rank-2 td { background: var(--rank2-bg) !important; font-weight: 800; border-bottom: 2px solid #0284c7; }
+    tr.rank-2 .score-val { color: #38bdf8 !important; background: rgba(56, 189, 248, 0.18); border-color: #0284c7; }
+    tr.rank-3 td { background: var(--rank3-bg) !important; font-weight: 800; border-bottom: 2px solid #ea580c; }
+    tr.rank-3 .score-val { color: #fb923c !important; background: rgba(251, 146, 60, 0.18); border-color: #ea580c; }
+
+    /* INLINE INPUT HOST (KURSI 20 LANGSUNG EDIT DI TABEL) */
+    tr.host-row td { background: var(--host-bg) !important; color: var(--host-text); border-bottom: 2px solid #9333ea; }
+    .host-inline-input {
+      width: 100%; background: transparent; border: 1px dashed rgba(192, 132, 252, 0.4);
+      color: #f3e8ff; font-size: 13.5px; font-weight: 700; border-radius: 5px; padding: 4px 6px; outline: none;
+    }
+    .host-inline-input:focus { border-style: solid; border-color: #c084fc; background: rgba(192, 132, 252, 0.12); }
+
+    /* LOG PANEL */
+    .log-panel { margin-top: 10px; background: #0a101f; border-radius: 10px; border: 1px solid #1e293b; padding: 8px 12px; position: relative; z-index: 10; }
+    .log-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #141e33; padding-bottom: 6px; }
+    .log-title { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 800; color: #38bdf8; text-transform: uppercase; cursor: pointer; user-select: none; }
+    .btn-clear-log { background: transparent; color: #94a3b8; border: 1px solid #334155; padding: 2px 8px; border-radius: 4px; font-size: 10px; cursor: pointer; }
+    .log-list { max-height: 110px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-top: 6px; }
+    .log-item { display: flex; justify-content: space-between; align-items: center; padding: 3px 6px; background: #0e1629; border-radius: 5px; border-left: 3px solid #38bdf8; color: #e2e8f0; }
+
+    /* MODAL TEMA MODERN GELAP */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4, 7, 15, 0.85); backdrop-filter: blur(5px); z-index: 9999; justify-content: center; align-items: center; padding: 12px; }
+    .modal-box { background: #0d1424; width: 330px; max-width: 96vw; border-radius: 12px; border: 1px solid #28354d; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; color: #f8fafc; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 6px; }
+    .modal-title { font-family: 'Outfit', sans-serif; font-size: 13.5px; font-weight: 800; color: #f8fafc; }
+    .btn-close-modal { background: none; border: none; font-size: 17px; font-weight: 800; color: #ef4444; cursor: pointer; }
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    .form-group label { font-size: 11px; font-weight: 700; color: #94a3b8; }
+    .form-input { padding: 7px 9px; border-radius: 5px; border: 1px solid #28354d; background: #141f36; font-size: 13.5px; font-weight: 700; color: #ffffff; outline: none; width: 100%; }
+    .form-input:focus { border-color: var(--primary); }
+    .modal-btn-row { display: flex; gap: 6px; margin-top: 4px; }
+    .btn-modal-save { flex: 1; background: var(--primary); color: #070b14; border: none; padding: 7px; border-radius: 5px; font-weight: 800; font-size: 12.5px; cursor: pointer; }
+    .btn-modal-clear { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #ef4444; padding: 7px 10px; border-radius: 5px; font-weight: 700; font-size: 11.5px; cursor: pointer; }
+
+    /* OVERLAY PODIUM PEMENANG */
+    .winner-overlay { display: none; position: fixed; inset: 0; background: radial-gradient(circle at 50% 30%, rgba(15, 23, 42, 0.96), rgba(3, 7, 18, 0.98)); backdrop-filter: blur(12px); z-index: 30000; justify-content: center; align-items: center; flex-direction: column; padding: 20px; }
+    .winner-overlay.active { display: flex; }
+    .btn-close-winner { position: absolute; top: 24px; right: 28px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #cbd5e1; width: 38px; height: 38px; border-radius: 50%; font-size: 18px; font-weight: 800; cursor: pointer; z-index: 30010; display: flex; align-items: center; justify-content: center; }
+    .winner-header { text-align: center; margin-bottom: 38px; position: relative; z-index: 30008; }
+    .winner-subtitle { font-size: 10.5px; letter-spacing: 4px; color: #94a3b8; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; }
+    .winner-title { font-family: 'Outfit', sans-serif; font-size: 40px; font-weight: 900; letter-spacing: 2px; margin: 0; background: linear-gradient(180deg, #FFFBEB 0%, #FACC15 60%, #D97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .podium-container { display: flex; align-items: flex-end; justify-content: center; gap: 24px; position: relative; z-index: 30008; }
+    .podium-card { position: relative; width: 250px; border-radius: 20px; padding: 26px 20px; display: flex; flex-direction: column; align-items: center; }
+    .podium-card.rank-1 { width: 275px; padding: 32px 22px; transform: translateY(-20px); background: linear-gradient(180deg, rgba(68, 52, 12, 0.9) 0%, rgba(18, 15, 10, 0.98) 100%); border: 1.5px solid rgba(250, 204, 21, 0.85); box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 30px rgba(250, 204, 21, 0.25); }
+    .podium-card.rank-2 { background: linear-gradient(180deg, rgba(14, 52, 75, 0.85) 0%, rgba(11, 20, 32, 0.98) 100%); border: 1.5px solid rgba(56, 189, 248, 0.75); }
+    .podium-card.rank-3 { background: linear-gradient(180deg, rgba(68, 36, 22, 0.85) 0%, rgba(22, 13, 10, 0.98) 100%); border: 1.5px solid rgba(251, 146, 60, 0.75); }
+    .title-badge { font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 2px; padding: 5px 16px; border-radius: 99px; margin-bottom: 20px; text-transform: uppercase; }
+    .rank-1 .title-badge { background: rgba(250, 204, 21, 0.25); color: #FEF08A; border: 1px solid #FACC15; }
+    .rank-2 .title-badge { background: rgba(56, 189, 248, 0.2); color: #BAE6FD; border: 1px solid #38BDF8; }
+    .rank-3 .title-badge { background: rgba(251, 146, 60, 0.2); color: #FED7AA; border: 1px solid #FB923C; }
+    .avatar-container { position: relative; width: 88px; height: 88px; display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
+    .rank-1 .avatar-container { width: 104px; height: 104px; }
+    .avatar-inner { width: calc(100% - 6px); height: calc(100% - 6px); border-radius: 50%; background: #141f36; border: 2.5px solid #070b14; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; overflow: hidden; }
+    .avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
+    .player-display-name { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 800; color: #FFFFFF; text-align: center; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rank-1 .player-display-name { font-size: 21px; color: #FEF9C3; }
+    .player-username { font-size: 12.5px; font-weight: 600; color: #94A3B8; margin-top: 3px; margin-bottom: 16px; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .podium-score-box { width: 100%; padding: 8px 14px; border-radius: 10px; display: flex; align-items: baseline; justify-content: center; gap: 5px; font-family: 'JetBrains Mono', monospace; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); }
+    .podium-score-value { font-size: 22px; font-weight: 900; color: #f8fafc; }
+    .podium-score-label { font-size: 11.5px; font-weight: 700; opacity: 0.8; }
+    #fireworksCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30005; }
+  </style>
+</head>
+<body class="view-match">
+
+<div class="container" id="mainContainer">
+  <!-- BAR ATAS: TANPA DROPDOWN TEST (MURNI TOMBOL NOTIF), URUTKAN & PODIUM DI KANAN -->
+  <div class="top-bar">
+    <div class="top-left">
+      <button class="btn-action-soft" onclick="bukaModalPoin()">Point Preset</button>
+      <button class="btn-action-soft" onclick="bukaModalNotifSuara()">Settings Audio</button>
+      
+      <div class="dropdown" id="dropdownReset">
+        <button class="btn-action-soft" onclick="toggleDropdownReset(event)">RESET ▾</button>
+        <div class="dropdown-content">
+          <button onclick="bukaModalKonfirmasiReset('POINT')">Reset Poin Saja</button>
+          <button onclick="bukaModalKonfirmasiReset('SEMUA')">Kosongkan Semua Kursi</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="top-right">
+      <button id="btnUrutkanManual" class="btn-sort-manual" onclick="eksekusiUrutkanManual()" title="Urutkan ranking sekarang">
+        URUTKAN
+      </button>
+
+      <button class="btn-winner-trigger" onclick="tampilkanLayarPemenang()" title="Tampilkan Layar Pemenang">
+        🏆 PODIUM
+      </button>
+
+      <!-- MURNI TOMBOL NOTIF (TANPA DROPDOWN) -->
+      <button class="btn-notif-trigger" onclick="tesPopupTengahManual()" title="Tes Tampilan Notifikasi Tengah">
+        🔔 NOTIF
+      </button>
+    </div>
+  </div>
+
+  <!-- TABEL 20 KURSI (GELAP & BORDER TEGAS) -->
+  <div class="grid-tables">
+    <div class="table-container">
+      <table id="tableLeft">
+        <colgroup>
+          <col data-col="no" style="width: 38px;">
+          <col data-col="nama" style="width: 210px;">
+          <col data-col="display" style="width: 180px;">
+          <col data-col="point" class="col-point" style="width: 95px;">
+        </colgroup>
+        <thead>
+          <tr>
+            <th data-col="no" class="th-no">NO<div class="col-resizer"></div></th>
+            <th data-col="nama">NAMA PEMAIN<div class="col-resizer"></div></th>
+            <th data-col="display">DISPLAY NAME<div class="col-resizer"></div></th>
+            <th data-col="point">POIN</th>
+          </tr>
+        </thead>
+        <tbody id="bodyLeft"></tbody>
+      </table>
+    </div>
+
+    <div class="table-container">
+      <table id="tableRight">
+        <colgroup>
+          <col data-col="no" style="width: 38px;">
+          <col data-col="nama" style="width: 210px;">
+          <col data-col="display" style="width: 180px;">
+          <col data-col="point" class="col-point" style="width: 95px;">
+        </colgroup>
+        <thead>
+          <tr>
+            <th data-col="no" class="th-no">NO<div class="col-resizer"></div></th>
+            <th data-col="nama">NAMA PEMAIN<div class="col-resizer"></div></th>
+            <th data-col="display">DISPLAY NAME<div class="col-resizer"></div></th>
+            <th data-col="point">POIN</th>
+          </tr>
+        </thead>
+        <tbody id="bodyRight"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- LOG AKTIVITAS -->
+  <div class="log-panel" id="mainLogPanel">
+    <div class="log-header">
+      <span class="log-title" onclick="toggleLogPanel()">
+        LOG AKTIVITAS <span id="iconFoldLog" style="font-size:10px;">▼</span>
+      </span>
+      <button class="btn-clear-log" onclick="hapusLogAktivitas()">Clear</button>
+    </div>
+    <div class="log-list" id="logList">
+      <div style="color: #64748b; font-style: italic; padding: 4px;" id="emptyLogText">Tidak ada aktivitas</div>
+    </div>
+  </div>
+</div>
+
+<!-- POPOVER POIN CEPAT -->
+<div class="quick-point-popover" id="quickPointPopover" onclick="event.stopPropagation()">
+  <div class="qp-header">
+    <span class="qp-title" id="qpPlayerTitle">Tambah Poin</span>
+    <button class="qp-close" onclick="tutupQuickPointPopover()">×</button>
+  </div>
+  <div class="qp-grid-plus" id="qpGridButtons"></div>
+  <div class="qp-footer">
+    <input type="number" id="qpDirectInput" class="qp-custom-input" min="0" placeholder="Set total..." onkeydown="if(event.key==='Enter'){event.stopPropagation();simpanSetTotalLangsung();}">
+    <button class="btn-qp-set" onclick="simpanSetTotalLangsung()">Set</button>
+  </div>
+</div>
+
+<!-- POPUP NOTIFIKASI CYBER HUD -->
+<div class="center-notif-popup" id="centerNotifPopup">
+  <span class="c-notif-tag" id="cNotifTag">UPDATE POIN</span>
+  <div class="c-notif-name" id="cNotifPlayer">NAMA PEMAIN</div>
+  <div class="c-notif-pts-box">
+    <div class="c-notif-pts-main" id="cNotifPts">+1 POIN</div>
+    <div class="c-notif-pts-total" id="cNotifTotal">Total: 15 Poin</div>
+  </div>
+</div>
+
+<!-- MODAL KONFIRMASI RESET MURNI YA / TIDAK (SANGAT SIMPEL) -->
+<div class="modal-overlay" id="modalConfirmResetTabel" onclick="tutupModalDiLuar(event)">
+  <div class="modal-box" style="width: 280px; text-align: center; padding: 18px 16px;">
+    <div id="resetTabelModalTitle" style="font-family:'Outfit',sans-serif; font-size:15px; font-weight:800; color:#f87171; margin-bottom:12px;">
+      Reset Poin?
+    </div>
+    <div class="modal-btn-row" style="gap: 8px;">
+      <button class="btn-action-soft" style="flex:1; justify-content:center; padding:8px;" onclick="tutupModalKonfirmasiResetTabel()">Tidak</button>
+      <button class="btn-action-soft" style="flex:1; justify-content:center; background:#dc2626; border-color:#ef4444; color:#fff; font-weight:800; padding:8px;" onclick="eksekusiResetTabelPasti()">Ya</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL INPUT NAMA PESERTA (KURSI 1-19) -->
+<div class="modal-overlay" id="modalInputNama" onclick="tutupModalDiLuar(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title" id="modalInputJudul">Edit Peserta</span>
+      <button class="btn-close-modal" onclick="tutupModalNama()">×</button>
+    </div>
+    <input type="hidden" id="editPlayerIndex" value="-1">
+    <input type="hidden" id="inputAvatarUrl" value="">
+
+    <div style="display:flex; align-items:center; gap:10px; background:#141f36; border:1px solid #28354d; padding:8px; border-radius:6px;">
+      <img id="modalAvatarPreview" src="" alt="Avatar" style="width:44px; height:44px; border-radius:50%; object-fit:cover; display:none;">
+      <div id="modalAvatarEmpty" style="width:44px; height:44px; border-radius:50%; background:#0a101f; border:1px dashed #475569; display:flex; align-items:center; justify-content:center; font-size:10px; color:#64748b;">
+        No Foto
+      </div>
+      <div style="flex:1; overflow:hidden;">
+        <div id="modalPreviewNick" style="font-size:13.5px; font-weight:800; color:#f472b6; overflow:hidden; text-overflow:ellipsis;">-</div>
+        <div id="modalPreviewUser" style="font-size:11px; font-weight:700; color:#38bdf8; overflow:hidden; text-overflow:ellipsis;">@username_roblox</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Username Roblox :</label>
+      <div style="display:flex; gap:6px;">
+        <input type="text" id="inputUserRoblox" class="form-input" placeholder="contoh: Bobohu" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();mulaiCariAkunRobloxAuto();}">
+        <button type="button" id="btnCariRoblox" class="btn-action-soft" style="padding:0 12px; font-size:11.5px; white-space:nowrap; background:#0284c7; color:#fff;" onclick="mulaiCariAkunRobloxAuto()">
+          Cari
+        </button>
+      </div>
+      <span id="modalSearchStatus" style="font-size:10px; font-weight:700; color:#94a3b8; min-height:14px; margin-top:2px;"></span>
+    </div>
+
+    <div class="form-group">
+      <label>Nama Pemain :</label>
+      <input type="text" id="inputNamaTikTok" class="form-input" placeholder="Nama tim/pemain..." onkeydown="if(event.key==='Enter')simpanDataModalNama()">
+    </div>
+
+    <div class="form-group">
+      <label>Display Name Roblox :</label>
+      <input type="text" id="inputDisplayName" class="form-input" placeholder="Otomatis / manual" onkeydown="if(event.key==='Enter')simpanDataModalNama()">
+    </div>
+
+    <div class="modal-btn-row">
+      <button class="btn-modal-clear" type="button" onclick="resetFormModalNama()">Reset</button>
+      <button class="btn-modal-save" type="button" onclick="simpanDataModalNama()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PRESET ANGKA POIN -->
+<div class="modal-overlay" id="modalPoin" onclick="tutupModalDiLuar(event)">
+  <div class="modal-box" style="width: 320px;">
+    <div class="modal-header">
+      <span class="modal-title">Preset Angka Poin Cepat</span>
+      <button class="btn-close-modal" onclick="tutupModalPoin()">×</button>
+    </div>
+    <div class="form-group" style="margin-top:4px;">
+      <label>Daftar Angka (Pisahkan koma):</label>
+      <input type="text" id="inputPresetPoinCepat" class="form-input" style="font-family:'JetBrains Mono',monospace;" value="1, 2, 3, 4, 5" onchange="simpanPoinWarna()">
+    </div>
+    <button class="btn-modal-save" style="margin-top:6px;" onclick="tutupModalPoin()">Selesai</button>
+  </div>
+</div>
+
+<!-- MODAL SETTINGS AUDIO (MURNI AUDIO TANPA FITUR BACKGROUND) -->
+<div class="modal-overlay" id="modalNotifSuara" onclick="tutupModalDiLuar(event)">
+  <div class="modal-box" style="width: 340px;">
+    <div class="modal-header">
+      <span class="modal-title">Pengaturan Suara Poin</span>
+      <button class="btn-close-modal" onclick="tutupModalNotifSuara()">×</button>
+    </div>
+
+    <div class="audio-tier-card" style="border-left: 3px solid #10b981; margin-top:4px;">
+      <div class="audio-tier-top">
+        <span style="color:#34d399;">🔔 Efek Suara Poin</span>
+        <span id="statusAudio_poin" style="font-size:10px; color:#4ade80;">Synth Bawaan</span>
+      </div>
+      <div class="audio-tier-actions">
+        <input type="file" id="audioInput_poin" accept="audio/*" style="font-size:10px; max-width:170px;" onchange="unggahAudioPoin(event)">
+        <div style="display:flex; gap:3px;">
+          <button type="button" class="btn-action-soft" style="padding:2px 7px; font-size:10px;" onclick="putarSuaraNotifPoin()">🔊 Tes</button>
+          <button type="button" class="btn-action-soft" style="padding:2px 7px; font-size:10px;" onclick="resetAudioPoin()">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-modal-save" style="margin-top:8px;" onclick="tutupModalNotifSuara()">Tutup</button>
+  </div>
+</div>
+
+<!-- OVERLAY PODIUM PEMENANG -->
+<div class="winner-overlay" id="winnerOverlay">
+  <canvas id="fireworksCanvas"></canvas>
+  <button class="btn-close-winner" onclick="tutupLayarPemenang()" title="Tutup">✕</button>
+
+  <div class="winner-header">
+    <div class="winner-subtitle">TOURNAMENT FINISHED</div>
+    <h1 class="winner-title">CONGRATULATIONS</h1>
+  </div>
+  
+  <div class="podium-container">
+    <div class="podium-card rank-2">
+      <div class="title-badge">2ND PLACE</div>
+      <div class="avatar-container">
+        <div class="avatar-inner" id="winAvatarBox2"><span>?</span></div>
+      </div>
+      <div class="player-display-name" id="winName2">-</div>
+      <div class="player-username" id="winNick2">-</div>
+      <div class="podium-score-box">
+        <span class="podium-score-value" id="winScore2">0</span>
+        <span class="podium-score-label">PTS</span>
+      </div>
+    </div>
+
+    <div class="podium-card rank-1">
+      <div class="title-badge">CHAMPION</div>
+      <div class="avatar-container">
+        <div class="avatar-inner" id="winAvatarBox1"><span>?</span></div>
+      </div>
+      <div class="player-display-name" id="winName1">-</div>
+      <div class="player-username" id="winNick1">-</div>
+      <div class="podium-score-box">
+        <span class="podium-score-value" id="winScore1">0</span>
+        <span class="podium-score-label">PTS</span>
+      </div>
+    </div>
+
+    <div class="podium-card rank-3">
+      <div class="title-badge">3RD PLACE</div>
+      <div class="avatar-container">
+        <div class="avatar-inner" id="winAvatarBox3"><span>?</span></div>
+      </div>
+      <div class="player-display-name" id="winName3">-</div>
+      <div class="player-username" id="winNick3">-</div>
+      <div class="podium-score-box">
+        <span class="podium-score-value" id="winScore3">0</span>
+        <span class="podium-score-label">PTS</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const DB_KEY = 'single_leaderboard_cyber_hud_v1';
+  const AUDIO_POIN_KEY = 'galatama_custom_sound_mitos';
+  const COL_WIDTHS_KEY = 'galatama_single_col_widths_cyber_v1';
+  const LOG_FOLD_KEY = 'galatama_log_is_folded';
+
+  const DEFAULT_QUICK_POINTS = [1, 2, 3, 4, 5];
+  const MIN_WIDTHS = { no: 36, nama: 100, display: 100, point: 85 };
+
+  function buatDataTabelKosong() {
+    const players = [];
+    for (let i = 0; i < 19; i++) {
+      players.push({ 
+        id: `p_kursi_${Date.now()}_${i}_${Math.random().toString(36).substr(2, 4)}`, 
+        robloxUser: '', user: '', nick: '', avatar: '', poin: 0, 
+        isReady: false, isPaid: false
+      });
+    }
+    return {
+      players: players,
+      host: { id: `p_host_${Date.now()}`, robloxUser: 'Host', user: 'Host Turnamen', nick: 'Host', avatar: '', poin: 0, isReady: true, isPaid: true }
+    };
+  }
+
+  let db = JSON.parse(localStorage.getItem(DB_KEY)) || {
+    warnaPoin: { quickPoints: DEFAULT_QUICK_POINTS },
+    data: buatDataTabelKosong()
+  };
+
+  if (!db.warnaPoin) db.warnaPoin = { quickPoints: DEFAULT_QUICK_POINTS };
+  if (!Array.isArray(db.warnaPoin.quickPoints) || db.warnaPoin.quickPoints.length === 0) db.warnaPoin.quickPoints = DEFAULT_QUICK_POINTS;
+  if (!db.data) db.data = buatDataTabelKosong();
+
+  if (db.data && db.data.players) {
+    db.data.players.forEach((p, idx) => {
+      if (!p.id) p.id = `p_init_${idx}_${Math.random().toString(36).substr(2, 4)}`;
+      if (p.avatar === undefined) p.avatar = '';
+      if (p.robloxUser === undefined) p.robloxUser = p.user || '';
+      const punyaNama = Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()));
+      p.isReady = punyaNama;
+      if (p.isPaid === undefined) p.isPaid = false;
+    });
+  }
+  if (db.data && db.data.host) {
+    if (!db.data.host.id) db.data.host.id = `p_host_init`;
+    if (db.data.host.avatar === undefined) db.data.host.avatar = '';
+    if (!db.data.host.user) db.data.host.user = 'Host Turnamen';
+    if (!db.data.host.nick) db.data.host.nick = 'Host';
+    db.data.host.isReady = true;
+    db.data.host.isPaid = true;
+  }
+
+  let customAudioPoinData = localStorage.getItem(AUDIO_POIN_KEY) || null;
+  let isLogFolded = JSON.parse(localStorage.getItem(LOG_FOLD_KEY)) || false;
+  let tipeResetPending = null;
+  let popupCenterTimer = null;
+  let activeQuickPointIndex = null;
+
+  let savedColWidths = JSON.parse(localStorage.getItem(COL_WIDTHS_KEY)) || {
+    no: "38px", nama: "210px", display: "180px", point: "95px"
+  };
+
+  function renderTombolQuickPoint() {
+    const grid = document.getElementById('qpGridButtons');
+    if (!grid) return;
+    const listAngka = (db.warnaPoin && Array.isArray(db.warnaPoin.quickPoints)) ? db.warnaPoin.quickPoints : DEFAULT_QUICK_POINTS;
+    grid.innerHTML = listAngka.map(n => `<button type="button" class="btn-qp" onclick="eksekusiQuickPoint(${n})">+${n}</button>`).join('');
+  }
+
+  function bukaQuickPointPopover(index, ev) {
+    if (ev) ev.stopPropagation();
+    const p = (index === 19) ? db.data.host : db.data.players[index];
+    if (!p) return;
+    if (index !== 19 && !p.isReady) {
+      bukaModalInputNama(index);
+      return;
+    }
+
+    activeQuickPointIndex = index;
+    renderTombolQuickPoint();
+
+    const namaTampil = p.nick || p.user || p.robloxUser || (index === 19 ? 'Host' : `Kursi ${index + 1}`);
+    document.getElementById('qpPlayerTitle').innerText = `${namaTampil} (${p.poin} Pts)`;
+    document.getElementById('qpDirectInput').value = p.poin;
+
+    const pop = document.getElementById('quickPointPopover');
+    pop.classList.add('show');
+
+    const rect = ev.currentTarget.getBoundingClientRect();
+    const popWidth = 235;
+    const popHeight = pop.offsetHeight || 150;
+
+    let leftPos = rect.left - popWidth - 8;
+    if (leftPos < 10) leftPos = Math.min(window.innerWidth - popWidth - 10, rect.right + 8);
+    let topPos = rect.top - (popHeight / 2) + (rect.height / 2);
+    topPos = Math.max(10, Math.min(window.innerHeight - popHeight - 10, topPos));
+
+    pop.style.left = `${leftPos}px`;
+    pop.style.top = `${topPos}px`;
+  }
+
+  function tutupQuickPointPopover() {
+    const pop = document.getElementById('quickPointPopover');
+    if (pop) pop.classList.remove('show');
+    activeQuickPointIndex = null;
+  }
+
+  function eksekusiQuickPoint(delta) {
+    if (activeQuickPointIndex === null) return;
+    const idx = activeQuickPointIndex;
+    tutupQuickPointPopover();
+    terapkanTambahPoin(idx, delta);
+  }
+
+  function terapkanTambahPoin(idx, delta) {
+    const p = (idx === 19) ? db.data.host : db.data.players[idx];
+    if (!p || (idx !== 19 && !p.isReady)) return;
+
+    const awal = p.poin;
+    p.poin = Math.max(0, p.poin + delta);
+    const selisih = p.poin - awal;
+
+    const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
+    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN");
+
+    if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
+    tambahLogAktivitas(namaTampil, `Poin +${delta}`, 'system', awal, p.poin, Math.abs(delta));
+  }
+
+  function simpanSetTotalLangsung() {
+    if (activeQuickPointIndex === null) return;
+    const idx = activeQuickPointIndex;
+    const val = Math.max(0, parseInt(document.getElementById('qpDirectInput').value) || 0);
+    tutupQuickPointPopover();
+
+    const p = (idx === 19) ? db.data.host : db.data.players[idx];
+    if (!p || (idx !== 19 && !p.isReady)) return;
+
+    const awal = p.poin;
+    p.poin = val;
+    const selisih = p.poin - awal;
+
+    const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
+    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "SET TOTAL");
+
+    if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
+    tambahLogAktivitas(namaTampil, `Total poin disetel ke ${p.poin}`, 'system', awal, p.poin, Math.abs(selisih));
+  }
+
+  function tampilkanPopupPoinTengah(namaPemain, deltaPoin, totalPoin, labelAtas = "UPDATE POIN") {
+    const popup = document.getElementById('centerNotifPopup');
+    if (!popup) return;
+    if (popupCenterTimer) clearTimeout(popupCenterTimer);
+
+    const tanda = deltaPoin >= 0 ? `+${deltaPoin}` : `${deltaPoin}`;
+    document.getElementById('cNotifTag').innerText = labelAtas;
+    document.getElementById('cNotifPlayer').innerText = namaPemain || "PEMAIN";
+    document.getElementById('cNotifPts').innerText = `${tanda} POIN`;
+    document.getElementById('cNotifTotal').innerText = `Total: ${totalPoin} Poin`;
+
+    popup.classList.remove('show');
+    void popup.offsetWidth;
+    popup.classList.add('show');
+
+    if (deltaPoin > 0) putarSuaraNotifPoin();
+    popupCenterTimer = setTimeout(() => { popup.classList.remove('show'); popupCenterTimer = null; }, 2200);
+  }
+
+  function tesPopupTengahManual() {
+    tampilkanPopupPoinTengah("BOBOHU", 5, 20, "TES NOTIFIKASI");
+    tambahLogAktivitas('TEST', 'Tes popup notifikasi tengah', 'system');
+  }
+
+  function toggleLogPanel() {
+    const list = document.getElementById('logList');
+    const icon = document.getElementById('iconFoldLog');
+    if (!list) return;
+    isLogFolded = !isLogFolded;
+    localStorage.setItem(LOG_FOLD_KEY, JSON.stringify(isLogFolded));
+    list.style.display = isLogFolded ? 'none' : 'flex';
+    if (icon) icon.innerText = isLogFolded ? '▶' : '▼';
+  }
+
+  function muatStatusFoldLog() {
+    const list = document.getElementById('logList');
+    const icon = document.getElementById('iconFoldLog');
+    if (!list) return;
+    list.style.display = isLogFolded ? 'none' : 'flex';
+    if (icon) icon.innerText = isLogFolded ? '▶' : '▼';
+  }
+
+  function eksekusiUrutkanManual() {
+    tutupQuickPointPopover();
+    urutkanOtomatis();
+    tambahLogAktivitas('SKOR', 'Papan skor berhasil diurutkan', 'system');
+  }
+
+  function updateStatusAudioTierUI() {
+    const elPoin = document.getElementById('statusAudio_poin');
+    if (elPoin) elPoin.innerText = customAudioPoinData ? "Audio Custom ✔" : "Synth Bawaan";
+  }
+
+  function bukaModalNotifSuara() {
+    updateStatusAudioTierUI();
+    document.getElementById('modalNotifSuara').style.display = 'flex';
+  }
+  function tutupModalNotifSuara() {
+    document.getElementById('modalNotifSuara').style.display = 'none';
+  }
+
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  function mainkanNadaSynth(freq, startOffset, duration, type = 'sine', maxGain = 0.25) {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const startTime = audioCtx.currentTime + startOffset;
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, startTime);
+    gain.gain.setValueAtTime(maxGain, startTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(startTime); osc.stop(startTime + duration);
+  }
+
+  function putarSuaraPoinBawaan() {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    mainkanNadaSynth(587.33, 0.00, 0.12, 'triangle', 0.26);
+    mainkanNadaSynth(739.99, 0.10, 0.12, 'triangle', 0.26);
+    mainkanNadaSynth(880.00, 0.20, 0.28, 'sine', 0.28);
+  }
+
+  function putarSuaraNotifPoin() {
+    if (customAudioPoinData) {
+      try { const audio = new Audio(customAudioPoinData); audio.play().catch(() => putarSuaraPoinBawaan()); } catch (e) { putarSuaraPoinBawaan(); }
+    } else {
+      putarSuaraPoinBawaan();
+    }
+  }
+
+  function unggahAudioPoin(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 800 * 1024) { alert("Ukuran audio terlalu besar! Gunakan file di bawah 800KB."); e.target.value = ''; return; }
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      customAudioPoinData = evt.target.result;
+      try { localStorage.setItem(AUDIO_POIN_KEY, customAudioPoinData); updateStatusAudioTierUI(); putarSuaraNotifPoin(); } catch (err) { alert("Gagal menyimpan audio!"); }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function resetAudioPoin() {
+    customAudioPoinData = null; localStorage.removeItem(AUDIO_POIN_KEY);
+    const inp = document.getElementById('audioInput_poin'); if (inp) inp.value = '';
+    updateStatusAudioTierUI(); putarSuaraNotifPoin();
+  }
+
+  function putarTerompetDanTepukTangan() {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const nada = [
+      { f: 523.25, d: 0.15 }, { f: 659.25, d: 0.15 }, { f: 783.99, d: 0.18 },
+      { f: 1046.50, d: 0.45 }, { f: 783.99, d: 0.15 }, { f: 1046.50, d: 0.7 }
+    ];
+    let offset = 0;
+    nada.forEach(n => {
+      mainkanNadaSynth(n.f, offset, n.d, 'sawtooth', 0.2);
+      offset += n.d * 0.95;
+    });
+  }
+
+  function simpanDB() { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+  function tutupSemuaDropdown() { document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show')); }
+
+  function toggleDropdownReset(e) {
+    e.stopPropagation(); const el = document.getElementById('dropdownReset');
+    const wasOpen = el.classList.contains('show'); tutupSemuaDropdown(); if (!wasOpen) el.classList.add('show');
+  }
+
+  window.addEventListener('click', () => { tutupSemuaDropdown(); tutupQuickPointPopover(); });
+
+  /* MODAL KONFIRMASI RESET MURNI YA / TIDAK */
+  function bukaModalKonfirmasiReset(tipe) {
+    tutupSemuaDropdown(); tipeResetPending = tipe;
+    const title = document.getElementById('resetTabelModalTitle');
+    if (tipe === 'POINT') {
+      title.innerText = "Reset Semua Poin ke 0?";
+    } else {
+      title.innerText = "Kosongkan Seluruh Kursi?";
+    }
+    document.getElementById('modalConfirmResetTabel').style.display = 'flex';
+  }
+
+  function tutupModalKonfirmasiResetTabel() { document.getElementById('modalConfirmResetTabel').style.display = 'none'; tipeResetPending = null; }
+
+  function eksekusiResetTabelPasti() {
+    if (tipeResetPending === 'POINT') {
+      db.data.players.forEach(p => { p.poin = 0; });
+      if (db.data.host) { db.data.host.poin = 0; }
+      simpanDB(); urutkanOtomatis();
+      tambahLogAktivitas('RESET', `Semua poin direset ke 0`, 'system');
+    } else if (tipeResetPending === 'SEMUA') {
+      db.data = buatDataTabelKosong();
+      simpanDB(); renderIsiTabel();
+      tambahLogAktivitas('RESET', `Seluruh data tabel dikosongkan`, 'system');
+    }
+    tutupModalKonfirmasiResetTabel();
+  }
+
+  let fireworksInterval = null;
+  function pasangAvatarPodium(elemId, avatarUrl, nama) {
+    const box = document.getElementById(elemId);
+    if (!box) return;
+    const inisial = (nama && nama !== '-' && nama !== 'Kosong' && nama !== 'Belum Ada') ? nama.charAt(0).toUpperCase() : '?';
+    if (avatarUrl) {
+      box.innerHTML = `<img src="${avatarUrl}" alt="${nama}" onerror="this.outerHTML='<span>${inisial}</span>'">`;
+    } else {
+      box.innerHTML = `<span>${inisial}</span>`;
+    }
+  }
+
+  function tampilkanLayarPemenang() {
+    tutupQuickPointPopover();
+    const sorted = [...db.data.players].filter(p => p.isReady && (p.nick || p.user || p.robloxUser)).sort((a, b) => b.poin - a.poin);
+    const p1 = sorted[0] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
+    const p2 = sorted[1] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
+    const p3 = sorted[2] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
+
+    const n1 = p1.nick || p1.user || 'Belum Ada';
+    const n2 = p2.nick || p2.user || 'Belum Ada';
+    const n3 = p3.nick || p3.user || 'Belum Ada';
+
+    document.getElementById('winName1').innerText = n1;
+    document.getElementById('winNick1').innerText = p1.user ? `@${p1.user}` : (p1.robloxUser ? `@${p1.robloxUser}` : '-');
+    document.getElementById('winScore1').innerText = p1.poin;
+    pasangAvatarPodium('winAvatarBox1', p1.avatar, n1);
+
+    document.getElementById('winName2').innerText = n2;
+    document.getElementById('winNick2').innerText = p2.user ? `@${p2.user}` : (p2.robloxUser ? `@${p2.robloxUser}` : '-');
+    document.getElementById('winScore2').innerText = p2.poin;
+    pasangAvatarPodium('winAvatarBox2', p2.avatar, n2);
+
+    document.getElementById('winName3').innerText = n3;
+    document.getElementById('winNick3').innerText = p3.user ? `@${p3.user}` : (p3.robloxUser ? `@${p3.robloxUser}` : '-');
+    document.getElementById('winScore3').innerText = p3.poin;
+    pasangAvatarPodium('winAvatarBox3', p3.avatar, n3);
+
+    document.getElementById('winnerOverlay').classList.add('active');
+    putarTerompetDanTepukTangan();
+    mulaiAnimasiPetasan();
+  }
+
+  function tutupLayarPemenang() {
+    document.getElementById('winnerOverlay').classList.remove('active');
+    if (fireworksInterval) { clearInterval(fireworksInterval); fireworksInterval = null; }
+  }
+
+  function mulaiAnimasiPetasan() {
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    let particles = [];
+    function createFirework(x, y) {
+      const colors = ['#facc15', '#38bdf8', '#fb923c', '#4ade80', '#f43f5e', '#ffffff'];
+      for (let i = 0; i < 35; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 6 + 2;
+        particles.push({
+          x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1, decay: Math.random() * 0.025 + 0.015
+        });
+      }
+    }
+    if (fireworksInterval) clearInterval(fireworksInterval);
+    fireworksInterval = setInterval(() => {
+      createFirework(Math.random() * canvas.width * 0.8 + canvas.width * 0.1, Math.random() * canvas.height * 0.5 + 50);
+    }, 550);
+
+    function loop() {
+      if (!document.getElementById('winnerOverlay').classList.contains('active')) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); return;
+      }
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx; p.y += p.vy; p.vy += 0.06; p.alpha -= p.decay;
+        if (p.alpha <= 0) particles.splice(i, 1);
+        else {
+          ctx.globalAlpha = p.alpha; ctx.fillStyle = p.color;
+          ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1; requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  function bukaModalInputNama(index) {
+    if (index === 19) return; // Kursi 20 (Host) langsung diedit di tabel tanpa popup
+    tutupQuickPointPopover();
+    const p = db.data.players[index];
+
+    document.getElementById('editPlayerIndex').value = index;
+    document.getElementById('modalInputJudul').innerText = `Edit Peserta Kursi ${index + 1}`;
+    document.getElementById('inputUserRoblox').value = p.robloxUser || '';
+    document.getElementById('inputNamaTikTok').value = p.user || '';
+    document.getElementById('inputDisplayName').value = p.nick || '';
+    document.getElementById('inputAvatarUrl').value = p.avatar || '';
+
+    updateModalPreviewUI(p.robloxUser || '', p.nick || '', p.avatar || '');
+    document.getElementById('modalSearchStatus').innerText = '';
+
+    document.getElementById('modalInputNama').style.display = 'flex';
+    setTimeout(() => { document.getElementById('inputUserRoblox').focus(); }, 100);
+  }
+
+  function updateModalPreviewUI(robloxUser, nick, avatarUrl) {
+    const prevImg = document.getElementById('modalAvatarPreview');
+    const emptyBox = document.getElementById('modalAvatarEmpty');
+    const txtUser = document.getElementById('modalPreviewUser');
+    const txtNick = document.getElementById('modalPreviewNick');
+
+    txtUser.innerText = robloxUser ? `@${robloxUser}` : '@username_roblox';
+    txtNick.innerText = nick ? nick : '-';
+
+    if (avatarUrl) {
+      prevImg.src = avatarUrl; prevImg.style.display = 'block'; emptyBox.style.display = 'none';
+    } else {
+      prevImg.style.display = 'none'; emptyBox.style.display = 'flex';
+    }
+  }
+
+  function tutupModalNama() { document.getElementById('modalInputNama').style.display = 'none'; }
+
+  function resetFormModalNama() {
+    const idx = parseInt(document.getElementById('editPlayerIndex').value);
+    document.getElementById('inputUserRoblox').value = '';
+    document.getElementById('inputNamaTikTok').value = '';
+    document.getElementById('inputDisplayName').value = '';
+    document.getElementById('inputAvatarUrl').value = '';
+    updateModalPreviewUI('', '', '');
+    document.getElementById('modalSearchStatus').innerText = '';
+
+    if (!isNaN(idx) && idx >= 0 && db.data.players[idx]) {
+      const namaLama = db.data.players[idx].nick || db.data.players[idx].user || `Kursi ${idx + 1}`;
+      db.data.players[idx].robloxUser = ''; db.data.players[idx].user = ''; db.data.players[idx].nick = ''; db.data.players[idx].avatar = '';
+      db.data.players[idx].poin = 0; db.data.players[idx].isReady = false; db.data.players[idx].isPaid = false;
+      tutupModalNama(); urutkanOtomatis();
+      tambahLogAktivitas('RESET', `${namaLama} dihapus & kursi digeser ke bawah`, 'system');
+    }
+  }
+
+  function fetchWithTimeout(resource, options = {}) {
+    const { timeout = 3500 } = options;
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    return fetch(resource, {
+      ...options,
+      signal: controller.signal
+    }).finally(() => clearTimeout(id));
+  }
+
+  async function mulaiCariAkunRobloxAuto() {
+  const rawInput = document.getElementById('inputUserRoblox').value.trim().replace(/^@+/, '');
+  const statusEl = document.getElementById('modalSearchStatus');
+  const btnCari = document.getElementById('btnCariRoblox');
+
+  if (!rawInput) {
+    statusEl.style.color = '#f87171';
+    statusEl.innerText = 'Ketik username Roblox terlebih dahulu!';
+    return;
+  }
+
+  btnCari.disabled = true;
+  btnCari.innerText = '⏳...';
+  statusEl.style.color = '#38bdf8';
+  statusEl.innerText = 'Mencari akun...';
+
+  try {
+    // Memanggil API perantara internal Vercel Anda sendiri
+    const res = await fetch(`/api/cari-roblox?username=${encodeURIComponent(rawInput)}`);
+    const data = await res.json();
+
+    btnCari.disabled = false;
+    btnCari.innerText = 'Cari';
+
+    if (res.ok && data.sukses) {
+      document.getElementById('inputUserRoblox').value = data.userName;
+      document.getElementById('inputDisplayName').value = data.displayName;
+      document.getElementById('inputAvatarUrl').value = data.avatarUrl;
+
+      if (!document.getElementById('inputNamaTikTok').value.trim()) {
+        document.getElementById('inputNamaTikTok').value = data.displayName;
+      }
+
+      updateModalPreviewUI(data.userName, data.displayName, data.avatarUrl);
+      statusEl.style.color = '#4ade80';
+      statusEl.innerText = 'Akun Roblox & Foto ditemukan! ✔';
+    } else {
+      statusEl.style.color = '#f87171';
+      statusEl.innerText = data.pesan || 'Akun tidak ditemukan!';
+    }
+  } catch (err) {
+    btnCari.disabled = false;
+    btnCari.innerText = 'Cari';
+    statusEl.style.color = '#f87171';
+    statusEl.innerText = 'Gagal terhubung ke API!';
+  }
+}
+
+  function simpanDataModalNama() {
+    const idx = parseInt(document.getElementById('editPlayerIndex').value);
+    if (isNaN(idx)) return;
+
+    const robloxU = document.getElementById('inputUserRoblox').value.trim().replace(/^@+/, '');
+    let namaPemain = document.getElementById('inputNamaTikTok').value.trim();
+    let displayN = document.getElementById('inputDisplayName').value.trim().replace(/^@+/, '');
+    let avatarA = document.getElementById('inputAvatarUrl').value.trim();
+
+    if (robloxU && !namaPemain) namaPemain = displayN || robloxU;
+    if (robloxU && !displayN) displayN = namaPemain || robloxU;
+    if ((robloxU || namaPemain || displayN) && !avatarA) {
+      const inisialNama = displayN || namaPemain || robloxU;
+      avatarA = `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(inisialNama)}&backgroundColor=0284c7`;
+    }
+
+    const p = db.data.players[idx];
+    p.robloxUser = robloxU;
+    p.user = namaPemain;
+    p.nick = displayN;
+    p.avatar = avatarA;
+
+    const adaIsi = Boolean(robloxU || namaPemain || displayN);
+    p.isReady = adaIsi;
+
+    if (!adaIsi) {
+      p.poin = 0; p.avatar = ''; p.isPaid = false;
+    }
+    tutupModalNama();
+    urutkanOtomatis();
+    tambahLogAktivitas('EDIT', `Kursi ${idx + 1} diperbarui: ${p.nick || p.user || '(Kosong)'}`, 'system');
+  }
+
+  /* FITUR KHUSUS HOST (KURSI 20 DIEDIT LANGSUNG DI TABEL DENGAN FORMAT CEPAT) */
+  function simpanHostLangsung(field, val) {
+    if (!db.data.host) return;
+    const cleanVal = (val || '').trim();
+    db.data.host[field] = cleanVal;
+    if (field === 'user' && !db.data.host.nick) db.data.host.nick = cleanVal;
+    if (field === 'nick' && !db.data.host.user) db.data.host.user = cleanVal;
+    simpanDB();
+    tambahLogAktivitas('HOST', `Host diubah: ${db.data.host.user} / ${db.data.host.nick}`, 'system');
+  }
+
+  function bukaModalPoin() { 
+    const qpArr = (db.warnaPoin && Array.isArray(db.warnaPoin.quickPoints)) ? db.warnaPoin.quickPoints : DEFAULT_QUICK_POINTS;
+    document.getElementById('inputPresetPoinCepat').value = qpArr.join(', ');
+    document.getElementById('modalPoin').style.display = 'flex'; 
+  }
+
+  function tutupModalPoin() { document.getElementById('modalPoin').style.display = 'none'; }
+  function tutupModalDiLuar(e) {
+    if (e.target.id === 'modalPoin') tutupModalPoin();
+    if (e.target.id === 'modalInputNama') tutupModalNama();
+    if (e.target.id === 'modalNotifSuara') tutupModalNotifSuara();
+    if (e.target.id === 'modalConfirmResetTabel') tutupModalKonfirmasiResetTabel();
+  }
+
+  function simpanPoinWarna() {
+    const rawPreset = document.getElementById('inputPresetPoinCepat').value || '';
+    const parsedPreset = rawPreset.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n) && n > 0);
+    db.warnaPoin.quickPoints = parsedPreset.length > 0 ? parsedPreset : DEFAULT_QUICK_POINTS;
+    simpanDB();
+    renderTombolQuickPoint();
+    tambahLogAktivitas('POIN', `Preset angka poin cepat diperbarui`, 'system');
+  }
+
+  /* TOGGLE STATUS CEKLIS (DONE / READY - AMAN DARI BANNED TIKTOK) */
+  function togglePayStatus(index, ev) {
+    if (ev) ev.stopPropagation();
+    const p = (index === 19) ? db.data.host : db.data.players[index];
+    if (!p) return;
+    p.isPaid = !p.isPaid;
+    simpanDB(); renderIsiTabel();
+    tambahLogAktivitas(p.nick || p.user || (index === 19 ? 'Host' : `Kursi ${index+1}`), `Status: ${p.isPaid ? 'DONE ✔' : 'READY'}`, 'system');
+  }
+
+  function inisialisasiStrukturTabel() {
+    const tbL = document.getElementById('bodyLeft');
+    const tbR = document.getElementById('bodyRight');
+    tbL.innerHTML = ''; tbR.innerHTML = '';
+
+    for (let i = 0; i < 19; i++) {
+      const tr = document.createElement('tr');
+      tr.id = `row-kursi-${i}`;
+      tr.innerHTML = `
+        <td class="td-no">${i + 1}</td>
+        <td class="cell-click-popup cell-nama-target" title="Klik untuk edit data pemain">
+          <div style="padding-left:4px;"><span class="name-tiktok name-empty">(Kosong)</span></div>
+        </td>
+        <td class="cell-click-popup cell-roblox-target" title="Klik untuk edit data Roblox">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div class="avatar-wrap">${renderAvatarHtml('', '')}</div>
+            <div style="flex:1; min-width:0;"><span class="name-roblox-display name-empty">-</span></div>
+          </div>
+        </td>
+        <td class="col-point">
+          <div class="score-box">
+            <div class="score-val" title="Klik untuk Poin Cepat">0</div>
+          </div>
+        </td>
+      `;
+      if (i < 10) tbL.appendChild(tr); else tbR.appendChild(tr);
+    }
+
+    // KURSI 20: HOST BISA LANGSUNG EDIT NAMA & DISPLAY DI TABEL (TANPA POPUP)
+    const trHost = document.createElement('tr');
+    trHost.className = "host-row";
+    trHost.id = "row-kursi-19";
+    trHost.innerHTML = `
+      <td class="td-no">20</td>
+      <td>
+        <div style="display:flex; align-items:center; gap:4px; padding:0 2px;">
+          <input type="text" id="hostInputUser" class="host-inline-input" value="${db.data.host.user || 'Host'}" placeholder="Nama Host..." onchange="simpanHostLangsung('user', this.value)" onkeydown="if(event.key==='Enter')this.blur()">
+          <span class="pay-status-tag done" title="Host">✔ HOST</span>
+        </div>
+      </td>
+      <td>
+        <div style="display:flex; align-items:center; gap:6px; padding:0 2px;">
+          <div class="host-avatar-wrap"><div class="avatar-placeholder" style="color:var(--host-text); background:#1e293b;">H</div></div>
+          <input type="text" id="hostInputNick" class="host-inline-input" value="${db.data.host.nick || 'Host'}" placeholder="Display..." onchange="simpanHostLangsung('nick', this.value)" onkeydown="if(event.key==='Enter')this.blur()">
+        </div>
+      </td>
+      <td class="col-point">
+        <div class="score-box">
+          <div class="score-val host-score" onclick="bukaQuickPointPopover(19, event)" title="Klik untuk tambah poin Host">0</div>
+        </div>
+      </td>
+    `;
+    tbR.appendChild(trHost);
+  }
+
+  function renderAvatarHtml(avatarUrl, nama) {
+    if (avatarUrl) return `<img class="avatar-mini" src="${avatarUrl}" alt="Avatar" loading="lazy">`;
+    const inisial = nama ? nama.charAt(0).toUpperCase() : '-';
+    return `<div class="avatar-placeholder">${inisial}</div>`;
+  }
+
+  function renderIsiTabel() {
+    db.data.players.forEach((p, idx) => {
+      let tr = document.getElementById(`row-kursi-${idx}`);
+      if (!tr) return;
+
+      const adaPemain = !!(p.user || p.robloxUser || p.nick);
+      p.isReady = adaPemain;
+
+      tr.classList.remove('rank-1', 'rank-2', 'rank-3');
+      if (p.isReady && p.poin > 0) {
+        if (idx === 0) tr.classList.add("rank-1");
+        else if (idx === 1) tr.classList.add("rank-2");
+        else if (idx === 2) tr.classList.add("rank-3");
+      }
+
+      // BADGE AMAN TIKTOK (DONE ✔ / READY)
+      const badgePayHtml = adaPemain
+        ? `<span class="pay-status-tag ${p.isPaid ? 'done' : 'ready'}" onclick="togglePayStatus(${idx}, event)" title="Klik untuk ganti status">${p.isPaid ? '✔ DONE' : '— READY'}</span>`
+        : '';
+
+      const cellNama = tr.querySelector('.cell-nama-target');
+      if (cellNama) {
+        cellNama.onclick = () => bukaModalInputNama(idx);
+        cellNama.innerHTML = `
+          <div style="padding-left:4px; display:flex; align-items:center; justify-content:space-between;">
+            <span class="name-tiktok ${!p.user ? 'name-empty' : ''}">${p.user || '(Kosong)'}</span>
+            <div style="display:flex; align-items:center; flex-shrink:0;">${badgePayHtml}</div>
+          </div>`;
+      }
+
+      const cellRoblox = tr.querySelector('.cell-roblox-target');
+      if (cellRoblox) {
+        cellRoblox.onclick = () => bukaModalInputNama(idx);
+        const avHtml = renderAvatarHtml(p.avatar, p.nick || p.user);
+        const nickHtml = `<span class="name-roblox-display ${!p.nick ? 'name-empty' : ''}">${p.nick || '-'}</span>`;
+        cellRoblox.innerHTML = `
+          <div style="display:flex; align-items:center; gap:6px;">
+            <div class="avatar-wrap">${avHtml}</div>
+            <div style="flex:1; min-width:0; display:flex; align-items:center;">${nickHtml}</div>
+          </div>`;
+      }
+
+      const scoreVal = tr.querySelector('.score-val');
+      if (scoreVal) {
+        if (p.isReady) {
+          scoreVal.innerText = p.poin;
+          scoreVal.className = 'score-val';
+          scoreVal.onclick = (ev) => bukaQuickPointPopover(idx, ev);
+        } else {
+          scoreVal.innerText = '-';
+          scoreVal.className = 'score-val score-standby';
+          scoreVal.onclick = () => bukaModalInputNama(idx);
+        }
+      }
+    });
+
+    const h = db.data.host || { user: 'Host Turnamen', nick: 'Host', poin: 0 };
+    const trHost = document.getElementById('row-kursi-19');
+    if (trHost) {
+      const inpUser = document.getElementById('hostInputUser');
+      const inpNick = document.getElementById('hostInputNick');
+      if (inpUser && document.activeElement !== inpUser) inpUser.value = h.user || '';
+      if (inpNick && document.activeElement !== inpNick) inpNick.value = h.nick || '';
+      const hostScoreEl = trHost.querySelector('.host-score');
+      if (hostScoreEl) hostScoreEl.innerText = h.poin;
+    }
+  }
+
+  function urutkanOtomatis() {
+    for (let i = 0; i < 19; i++) {
+      const el = document.getElementById(`row-kursi-${i}`);
+      if (el) { el.classList.remove('moving-row', 'rank-up', 'rank-down'); el.style.transform = ''; }
+    }
+
+    const posisiLama = {}; const oldIndexMap = {};
+    db.data.players.forEach((p, idx) => {
+      oldIndexMap[p.id] = idx;
+      const el = document.getElementById(`row-kursi-${idx}`);
+      if (el) posisiLama[p.id] = el.getBoundingClientRect().top;
+    });
+
+    const punyaIsi = (p) => Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()));
+    db.data.players.forEach(p => { p.isReady = punyaIsi(p); });
+
+    const aktifSiap = db.data.players.filter(p => punyaIsi(p));
+    const kursiKosong = db.data.players.filter(p => !punyaIsi(p));
+
+    aktifSiap.sort((a, b) => b.poin - a.poin);
+    db.data.players = [...aktifSiap, ...kursiKosong];
+
+    const animRankMap = {};
+    db.data.players.forEach((p, newIdx) => {
+      const oldIdx = oldIndexMap[p.id];
+      if (oldIdx !== undefined && punyaIsi(p)) {
+        if (newIdx < oldIdx) animRankMap[p.id] = 'up';
+        else if (newIdx > oldIdx) animRankMap[p.id] = 'down';
+      }
+    });
+
+    simpanDB(); renderIsiTabel();
+
+    requestAnimationFrame(() => {
+      db.data.players.forEach((p, idx) => {
+        if (posisiLama[p.id] !== undefined) {
+          const el = document.getElementById(`row-kursi-${idx}`);
+          if (el) {
+            const posisiBaru = el.getBoundingClientRect().top;
+            const deltaY = posisiLama[p.id] - posisiBaru;
+            if (animRankMap[p.id] === 'up') el.classList.add('rank-up');
+            else if (animRankMap[p.id] === 'down') el.classList.add('rank-down');
+
+            if (deltaY !== 0) {
+              el.style.transform = `translateY(${deltaY}px)`;
+              void el.offsetHeight;
+              el.classList.add('moving-row');
+              el.style.transform = 'translateY(0)';
+              setTimeout(() => { el.classList.remove('moving-row'); el.style.transform = ''; }, 580);
+            }
+          }
+        }
+      });
+    });
+
+    setTimeout(() => {
+      document.querySelectorAll('.rank-up, .rank-down').forEach(el => el.classList.remove('rank-up', 'rank-down'));
+    }, 1400);
+  }
+
+  function tambahLogAktivitas(entitas, keterangan, tipe = 'system', poinAwal = null, poinAkhir = null, delta = null) {
+    const list = document.getElementById('logList');
+    if (!list) return;
+    const emptyText = document.getElementById('emptyLogText');
+    if (emptyText) emptyText.remove();
+
+    const d = new Date();
+    const waktuStr = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`;
+    const itemEl = document.createElement('div');
+    itemEl.className = `log-item tier-${tipe}`;
+
+    let transisiHtml = '';
+    if (poinAwal !== null && poinAkhir !== null && delta !== null) {
+      const tanda = poinAkhir >= poinAwal ? '+' : '-';
+      transisiHtml = `<div class="log-item-pts-wrap"><span class="log-item-transisi">${poinAwal} ➔ ${poinAkhir}</span> <span class="log-item-pts">${tanda}${Math.abs(delta)}</span></div>`;
+    }
+
+    itemEl.innerHTML = `
+      <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+        <span class="log-item-time">[${waktuStr}]</span>
+        <span class="log-item-user">${entitas}</span>: <span class="log-item-text">${keterangan}</span>
+      </div>
+      ${transisiHtml}
+    `;
+    list.insertBefore(itemEl, list.firstChild);
+    if (list.children.length > 40) list.removeChild(list.lastChild);
+  }
+
+  function hapusLogAktivitas() {
+    document.getElementById('logList').innerHTML = `<div style="color: #64748b; font-style: italic; padding: 4px;" id="emptyLogText">Log telah dibersihkan</div>`;
+  }
+
+  function terapkanUkuranKolomTersimpan() {
+    if (!savedColWidths) return;
+    Object.keys(savedColWidths).forEach(colName => {
+      const w = savedColWidths[colName];
+      document.querySelectorAll(`col[data-col="${colName}"]`).forEach(c => { c.style.width = w; });
+      document.querySelectorAll(`th[data-col="${colName}"]`).forEach(th => { th.style.width = w; });
+    });
+  }
+
+  function inisialisasiResizeKolom() {
+    terapkanUkuranKolomTersimpan();
+    document.querySelectorAll('th .col-resizer').forEach(resizer => {
+      resizer.addEventListener('pointerdown', function(e) {
+        e.preventDefault(); e.stopPropagation();
+        const th = this.parentElement;
+        const colName = th.getAttribute('data-col');
+        if (!colName) return;
+
+        const startX = e.clientX;
+        const startWidth = th.offsetWidth;
+        const minW = MIN_WIDTHS[colName] || 40;
+
+        th.classList.add('resizing');
+        document.body.classList.add('resizing-active');
+
+        function onPointerMove(moveEvent) {
+          const deltaX = moveEvent.clientX - startX;
+          const widthStr = Math.max(minW, startWidth + deltaX) + 'px';
+          document.querySelectorAll(`col[data-col="${colName}"]`).forEach(colEl => { colEl.style.width = widthStr; });
+          document.querySelectorAll(`th[data-col="${colName}"]`).forEach(thEl => { thEl.style.width = widthStr; });
+          savedColWidths[colName] = widthStr;
+        }
+
+        function onPointerUp() {
+          th.classList.remove('resizing');
+          document.body.classList.remove('resizing-active');
+          window.removeEventListener('pointermove', onPointerMove);
+          window.removeEventListener('pointerup', onPointerUp);
+          try { localStorage.setItem(COL_WIDTHS_KEY, JSON.stringify(savedColWidths)); } catch (_) {}
+        }
+
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+      });
+    });
+  }
+
+  setInterval(() => {
+    hapusLogAktivitas();
+    tambahLogAktivitas('SISTEM', 'Cache log aktivitas dibersihkan otomatis', 'system');
+  }, 15 * 60 * 1000);
+
+  window.addEventListener('DOMContentLoaded', () => {
+    try { if (window.resizeTo) window.resizeTo(1060, 725); } catch (_) {}
+    muatStatusFoldLog();
+    inisialisasiStrukturTabel();
+    renderIsiTabel();
+    inisialisasiResizeKolom();
+    tambahLogAktivitas('SISTEM', 'Scoreboard Siap Digunakan', 'system');
+  });
+</script>
+</body>
+</html>
