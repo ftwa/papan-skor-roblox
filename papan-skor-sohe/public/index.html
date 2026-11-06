@@ -1518,11 +1518,7 @@
     });
   }
 
-  setInterval(() => {
-    hapusLogAktivitas();
-    tambahLogAktivitas('SISTEM', 'Cache log aktivitas dibersihkan otomatis', 'system');
-  }, 15 * 60 * 1000);
-
+ 
   window.addEventListener('DOMContentLoaded', () => {
     try { if (window.resizeTo) window.resizeTo(1060, 725); } catch (_) {}
     muatStatusFoldLog();
