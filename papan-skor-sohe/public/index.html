@@ -14,12 +14,9 @@
       --border-color: #1e293b;
       --primary: #38bdf8;
       --primary-hover: #0284c7;
-      --color-name: #38bdf8;
-      --color-display: #f472b6;
-      --color-point: #fb7185;
-      --rank1-bg: rgba(254, 240, 138, 0.12);
-      --rank2-bg: rgba(56, 189, 248, 0.12);
-      --rank3-bg: rgba(251, 146, 60, 0.12);
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --color-point: #f8fafc;
       --host-bg: rgba(168, 85, 247, 0.12);
       --host-text: #c084fc;
     }
@@ -93,7 +90,7 @@
     .dropdown-content button:hover { background: #1e293b; color: var(--primary); }
     .dropdown.show .dropdown-content { display: block; }
 
-    /* POPUP NOTIFIKASI BARU: CYBER HUD STYLE */
+    /* POPUP NOTIFIKASI CYBER HUD STYLE */
     .center-notif-popup {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
       width: 270px; min-height: 180px; background: rgba(13, 20, 36, 0.96); backdrop-filter: blur(16px);
@@ -114,11 +111,11 @@
       line-height: 1.15; max-width: 100%; overflow: hidden; text-overflow: ellipsis;
     }
     .c-notif-pts-box {
-      width: 100%; background: rgba(244, 63, 94, 0.12); border: 1px solid rgba(244, 63, 94, 0.4);
+      width: 100%; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.4);
       border-radius: 10px; padding: 6px 10px; margin-top: 4px;
     }
-    .c-notif-pts-main { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 900; color: #fb7185; }
-    .c-notif-pts-total { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #fecdd3; margin-top: 2px; }
+    .c-notif-pts-main { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 900; color: #38bdf8; }
+    .c-notif-pts-total { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #bae6fd; margin-top: 2px; }
 
     /* POPOVER POIN CEPAT */
     .quick-point-popover {
@@ -176,54 +173,137 @@
 
     .td-no { background: #111a2e !important; font-weight: 800; color: #94a3b8; font-size: 13.5px; border-right: 1.5px solid #1e293b !important; }
     
-    /* BADGE STATUS AMAN (PENGGANTI PAID/UNPAID: DONE & READY) */
+    /* BADGE STATUS TEGAS & JELAS */
     .pay-status-tag {
       display: inline-flex; align-items: center; justify-content: center;
-      font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px;
+      font-size: 10px; font-weight: 900; padding: 2.5px 7px; border-radius: 5px;
       margin-left: 4px; flex-shrink: 0; cursor: pointer; font-family: 'JetBrains Mono', monospace;
-      user-select: none; letter-spacing: 0.3px;
+      user-select: none; letter-spacing: 0.4px; transition: transform 0.1s ease;
     }
+    .pay-status-tag:hover { transform: scale(1.05); }
+    
+    /* Hijau Emerald Terang Solid */
     .pay-status-tag.done {
-      background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.5);
+      background: #059669; color: #ffffff; border: 1.5px solid #10b981;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.45);
     }
+    
+    /* Abu-abu Slate Pekat Berborder Terang */
     .pay-status-tag.ready {
-      background: #141f36; color: #64748b; border: 1px solid #28354d;
+      background: #1e293b; color: #94a3b8; border: 1.5px solid #475569;
     }
+
+    /* IKON PALET CAT */
+    .btn-color-palette {
+      font-size: 13px;
+      cursor: pointer;
+      margin-left: 5px;
+      user-select: none;
+      filter: grayscale(0.2);
+      transition: transform 0.12s ease;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-color-palette:hover {
+      transform: scale(1.25);
+      filter: grayscale(0);
+    }
+
+    /* MENU MINI PALET WARNA (POPUP WARNA) */
+    .color-picker-mini {
+      display: none; position: absolute; z-index: 36000; background: #0f172a;
+      border: 1px solid #334155; border-radius: 8px; padding: 5px 6px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.65); gap: 5px; align-items: center;
+    }
+    .color-picker-mini.show { display: flex; }
+    .cp-dot {
+      width: 16px; height: 16px; border-radius: 50%; cursor: pointer; border: 1px solid transparent;
+      transition: transform 0.1s;
+    }
+    .cp-dot:hover { transform: scale(1.2); border-color: #fff; }
+    .cp-dot.c-blue { background: #38bdf8; }
+    .cp-dot.c-pink { background: #f472b6; }
+    .cp-dot.c-red { background: #fb7185; }
+    .cp-dot.c-reset { background: #475569; position: relative; }
+    .cp-dot.c-reset::after { content: "×"; color: #fff; font-size: 11px; position: absolute; top: -1px; left: 4px; font-weight: 900; }
 
     .cell-click-popup { cursor: pointer; border-radius: 5px; padding: 2px 4px; text-align: left; }
     .cell-click-popup:hover { background: #141f36; }
     
-    .name-tiktok { font-size: 14px; font-weight: 700; color: var(--color-name); word-break: break-all; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
-    .name-roblox-display { font-size: 13px; font-weight: 700; color: var(--color-display); word-break: break-all; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
+    /* DEFAULT NAMA & DISPLAY SESUAI TEMA GELAP */
+    .name-tiktok { font-size: 14px; font-weight: 700; color: #f8fafc; word-break: break-all; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
+    .name-roblox-display { font-size: 13px; font-weight: 700; color: #cbd5e1; word-break: break-all; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
     .name-empty { font-size: 12.5px; font-weight: 600; color: #475569; font-style: italic; }
+
+    /* INLINE INPUT HOST (DEFAULT UNGU JIKA BELUM DIBERI WARNA) */
+    tr.host-row td { background: var(--host-bg); color: var(--host-text); border-bottom: 2px solid #9333ea; }
+    .host-inline-input {
+      width: 100%; background: transparent; border: 1px dashed rgba(192, 132, 252, 0.4);
+      color: #f3e8ff; font-size: 13.5px; font-weight: 700; border-radius: 5px; padding: 4px 6px; outline: none;
+    }
+    .host-inline-input:focus { border-style: solid; border-color: #c084fc; background: rgba(192, 132, 252, 0.12); }
+    .host-inline-input::placeholder { color: #64748b; font-style: italic; font-weight: 600; }
+
+    /* =========================================================
+       LATAR BELAKANG SATU BARIS PENUH (TERMASUK HOST KURSI 20)
+       ========================================================= */
+    /* 1. Baris Biru Langit */
+    tr.tag-blue td, tr.tag-blue.host-row td { 
+      background: #bfdbfe !important; 
+      color: #0f172a !important; 
+      border-bottom: 1px solid #93c5fd !important;
+      border-right-color: #93c5fd !important;
+    }
+    tr.tag-blue .name-tiktok { color: #0f172a !important; font-weight: 800; }
+    tr.tag-blue .name-roblox-display { color: #1e40af !important; font-weight: 700; }
+    tr.tag-blue .td-no { background: #93c5fd !important; color: #1e3a8a !important; }
+    tr.tag-blue .score-val { background: #ffffff !important; color: #0f172a !important; border-color: #93c5fd !important; }
+    tr.tag-blue .pay-status-tag.ready { background: #ffffff; color: #475569; border-color: #cbd5e1; }
+    tr.tag-blue .host-inline-input { color: #0f172a !important; border-color: #93c5fd; }
+    tr.tag-blue .host-inline-input::placeholder { color: #475569 !important; }
+
+    /* 2. Baris Pink Pastel */
+    tr.tag-pink td, tr.tag-pink.host-row td { 
+      background: #fbcfe8 !important; 
+      color: #0f172a !important; 
+      border-bottom: 1px solid #f472b6 !important;
+      border-right-color: #f472b6 !important;
+    }
+    tr.tag-pink .name-tiktok { color: #831843 !important; font-weight: 800; }
+    tr.tag-pink .name-roblox-display { color: #9d174d !important; font-weight: 700; }
+    tr.tag-pink .td-no { background: #f472b6 !important; color: #ffffff !important; }
+    tr.tag-pink .score-val { background: #ffffff !important; color: #831843 !important; border-color: #f472b6 !important; }
+    tr.tag-pink .pay-status-tag.ready { background: #ffffff; color: #831843; border-color: #fbcfe8; }
+    tr.tag-pink .host-inline-input { color: #831843 !important; border-color: #f472b6; }
+    tr.tag-pink .host-inline-input::placeholder { color: #9d174d !important; }
+
+    /* 3. Baris Merah Terang Solid */
+    tr.tag-red td, tr.tag-red.host-row td { 
+      background: #e11d48 !important; 
+      color: #ffffff !important; 
+      border-bottom: 1px solid #be123c !important;
+      border-right-color: #be123c !important;
+    }
+    tr.tag-red .name-tiktok { color: #ffffff !important; font-weight: 900; }
+    tr.tag-red .name-roblox-display { color: #ffe4e6 !important; font-weight: 700; }
+    tr.tag-red .td-no { background: #be123c !important; color: #ffffff !important; }
+    tr.tag-red .score-val { background: #ffffff !important; color: #be123c !important; border-color: #ffffff !important; }
+    tr.tag-red .pay-status-tag.ready { background: #9f1239; color: #ffe4e6; border-color: #be123c; }
+    tr.tag-red .host-inline-input { color: #ffffff !important; border-color: rgba(255, 255, 255, 0.4); }
+    tr.tag-red .host-inline-input::placeholder { color: #fecdd3 !important; }
 
     .avatar-mini { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; background: #141f36; border: 1px solid #334155; flex-shrink: 0; }
     .avatar-placeholder { width: 30px; height: 30px; border-radius: 50%; background: #141f36; border: 1px solid #334155; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #94a3b8; }
 
     .score-box { display: flex; justify-content: center; align-items: center; white-space: nowrap; }
     .score-val { 
-      min-width: 52px; font-size: 19px; font-weight: 900; color: var(--color-point); 
+      min-width: 52px; font-size: 18px; font-weight: 900; color: var(--color-point); 
       text-align: center; border-radius: 6px; outline: none; cursor: pointer; 
-      padding: 3px 8px; background: rgba(251, 113, 133, 0.1); border: 1px solid rgba(251, 113, 133, 0.35); 
+      padding: 3px 8px; background: #141f36; border: 1px solid #28354d; 
       font-family: 'JetBrains Mono', monospace; line-height: 1; flex-shrink: 0; user-select: none;
     }
-    .score-val:hover:not(.score-standby) { background: rgba(251, 113, 133, 0.22); border-color: #fb7185; transform: scale(1.05); }
+    .score-val:hover:not(.score-standby) { background: #1e2b45; border-color: #38bdf8; transform: scale(1.05); }
     .score-standby { color: #475569 !important; background: transparent !important; border-color: transparent !important; cursor: pointer !important; font-size: 15px; }
-
-    tr.rank-1 td { background: var(--rank1-bg) !important; font-weight: 800; border-bottom: 2px solid #ca8a04; }
-    tr.rank-1 .score-val { color: #facc15 !important; background: rgba(250, 204, 21, 0.18); border-color: #ca8a04; }
-    tr.rank-2 td { background: var(--rank2-bg) !important; font-weight: 800; border-bottom: 2px solid #0284c7; }
-    tr.rank-2 .score-val { color: #38bdf8 !important; background: rgba(56, 189, 248, 0.18); border-color: #0284c7; }
-    tr.rank-3 td { background: var(--rank3-bg) !important; font-weight: 800; border-bottom: 2px solid #ea580c; }
-    tr.rank-3 .score-val { color: #fb923c !important; background: rgba(251, 146, 60, 0.18); border-color: #ea580c; }
-
-    /* INLINE INPUT HOST (KURSI 20 LANGSUNG EDIT DI TABEL) */
-    tr.host-row td { background: var(--host-bg) !important; color: var(--host-text); border-bottom: 2px solid #9333ea; }
-    .host-inline-input {
-      width: 100%; background: transparent; border: 1px dashed rgba(192, 132, 252, 0.4);
-      color: #f3e8ff; font-size: 13.5px; font-weight: 700; border-radius: 5px; padding: 4px 6px; outline: none;
-    }
-    .host-inline-input:focus { border-style: solid; border-color: #c084fc; background: rgba(192, 132, 252, 0.12); }
 
     /* LOG PANEL */
     .log-panel { margin-top: 10px; background: #0a101f; border-radius: 10px; border: 1px solid #1e293b; padding: 8px 12px; position: relative; z-index: 10; }
@@ -279,7 +359,7 @@
 <body class="view-match">
 
 <div class="container" id="mainContainer">
-  <!-- BAR ATAS: TANPA DROPDOWN TEST (MURNI TOMBOL NOTIF), URUTKAN & PODIUM DI KANAN -->
+  <!-- BAR ATAS -->
   <div class="top-bar">
     <div class="top-left">
       <button class="btn-action-soft" onclick="bukaModalPoin()">Point Preset</button>
@@ -303,14 +383,13 @@
         🏆 PODIUM
       </button>
 
-      <!-- MURNI TOMBOL NOTIF (TANPA DROPDOWN) -->
       <button class="btn-notif-trigger" onclick="tesPopupTengahManual()" title="Tes Tampilan Notifikasi Tengah">
         🔔 NOTIF
       </button>
     </div>
   </div>
 
-  <!-- TABEL 20 KURSI (GELAP & BORDER TEGAS) -->
+  <!-- TABEL 20 KURSI -->
   <div class="grid-tables">
     <div class="table-container">
       <table id="tableLeft">
@@ -367,6 +446,14 @@
   </div>
 </div>
 
+<!-- MINI PALET WARNA (BIRU, PINK, MERAH, RESET) -->
+<div class="color-picker-mini" id="miniColorPicker" onclick="event.stopPropagation()">
+  <span class="cp-dot c-blue" title="Biru Langit" onclick="pilihWarnaKustom('blue')"></span>
+  <span class="cp-dot c-pink" title="Pink Pastel" onclick="pilihWarnaKustom('pink')"></span>
+  <span class="cp-dot c-red" title="Merah Solid" onclick="pilihWarnaKustom('red')"></span>
+  <span class="cp-dot c-reset" title="Reset Default" onclick="pilihWarnaKustom('')"></span>
+</div>
+
 <!-- POPOVER POIN CEPAT -->
 <div class="quick-point-popover" id="quickPointPopover" onclick="event.stopPropagation()">
   <div class="qp-header">
@@ -390,7 +477,7 @@
   </div>
 </div>
 
-<!-- MODAL KONFIRMASI RESET MURNI YA / TIDAK (SANGAT SIMPEL) -->
+<!-- MODAL KONFIRMASI RESET MURNI YA / TIDAK -->
 <div class="modal-overlay" id="modalConfirmResetTabel" onclick="tutupModalDiLuar(event)">
   <div class="modal-box" style="width: 280px; text-align: center; padding: 18px 16px;">
     <div id="resetTabelModalTitle" style="font-family:'Outfit',sans-serif; font-size:15px; font-weight:800; color:#f87171; margin-bottom:12px;">
@@ -403,11 +490,11 @@
   </div>
 </div>
 
-<!-- MODAL INPUT NAMA PESERTA (KURSI 1-19) -->
+<!-- MODAL INPUT NAMA PESERTA -->
 <div class="modal-overlay" id="modalInputNama" onclick="tutupModalDiLuar(event)">
   <div class="modal-box">
     <div class="modal-header">
-      <span class="modal-title" id="modalInputJudul">Edit Peserta</span>
+      <span class="modal-title" id="modalInputJudul">Kursi 1</span>
       <button class="btn-close-modal" onclick="tutupModalNama()">×</button>
     </div>
     <input type="hidden" id="editPlayerIndex" value="-1">
@@ -419,7 +506,7 @@
         No Foto
       </div>
       <div style="flex:1; overflow:hidden;">
-        <div id="modalPreviewNick" style="font-size:13.5px; font-weight:800; color:#f472b6; overflow:hidden; text-overflow:ellipsis;">-</div>
+        <div id="modalPreviewNick" style="font-size:13.5px; font-weight:800; color:#f8fafc; overflow:hidden; text-overflow:ellipsis;">-</div>
         <div id="modalPreviewUser" style="font-size:11px; font-weight:700; color:#38bdf8; overflow:hidden; text-overflow:ellipsis;">@username_roblox</div>
       </div>
     </div>
@@ -467,7 +554,7 @@
   </div>
 </div>
 
-<!-- MODAL SETTINGS AUDIO (MURNI AUDIO TANPA FITUR BACKGROUND) -->
+<!-- MODAL SETTINGS AUDIO -->
 <div class="modal-overlay" id="modalNotifSuara" onclick="tutupModalDiLuar(event)">
   <div class="modal-box" style="width: 340px;">
     <div class="modal-header">
@@ -546,7 +633,7 @@
 </div>
 
 <script>
-  const DB_KEY = 'single_leaderboard_cyber_hud_v1';
+  const DB_KEY = 'single_leaderboard_cyber_hud_v2';
   const AUDIO_POIN_KEY = 'galatama_custom_sound_mitos';
   const COL_WIDTHS_KEY = 'galatama_single_col_widths_cyber_v1';
   const LOG_FOLD_KEY = 'galatama_log_is_folded';
@@ -560,12 +647,12 @@
       players.push({ 
         id: `p_kursi_${Date.now()}_${i}_${Math.random().toString(36).substr(2, 4)}`, 
         robloxUser: '', user: '', nick: '', avatar: '', poin: 0, 
-        isReady: false, isPaid: false
+        isReady: false, isPaid: false, colorTag: ''
       });
     }
     return {
       players: players,
-      host: { id: `p_host_${Date.now()}`, robloxUser: 'Host', user: 'Host Turnamen', nick: 'Host', avatar: '', poin: 0, isReady: true, isPaid: true }
+      host: { id: `p_host_${Date.now()}`, robloxUser: '', user: '', nick: '', avatar: '', poin: 0, isReady: true, isPaid: true, colorTag: '' }
     };
   }
 
@@ -586,15 +673,17 @@
       const punyaNama = Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()));
       p.isReady = punyaNama;
       if (p.isPaid === undefined) p.isPaid = false;
+      if (p.colorTag === undefined) p.colorTag = '';
     });
   }
   if (db.data && db.data.host) {
     if (!db.data.host.id) db.data.host.id = `p_host_init`;
     if (db.data.host.avatar === undefined) db.data.host.avatar = '';
-    if (!db.data.host.user) db.data.host.user = 'Host Turnamen';
-    if (!db.data.host.nick) db.data.host.nick = 'Host';
+    if (db.data.host.user === undefined) db.data.host.user = '';
+    if (db.data.host.nick === undefined) db.data.host.nick = '';
     db.data.host.isReady = true;
     db.data.host.isPaid = true;
+    if (db.data.host.colorTag === undefined) db.data.host.colorTag = '';
   }
 
   let customAudioPoinData = localStorage.getItem(AUDIO_POIN_KEY) || null;
@@ -602,10 +691,49 @@
   let tipeResetPending = null;
   let popupCenterTimer = null;
   let activeQuickPointIndex = null;
+  let activeColorTagIndex = null;
 
   let savedColWidths = JSON.parse(localStorage.getItem(COL_WIDTHS_KEY)) || {
     no: "38px", nama: "210px", display: "180px", point: "95px"
   };
+
+  /* FITUR PILIH WARNA KUSTOM TIAP BARIS */
+  function bukaMiniColorPicker(idx, ev) {
+    if (ev) ev.stopPropagation();
+    activeColorTagIndex = idx;
+    const picker = document.getElementById('miniColorPicker');
+    if (!picker) return;
+
+    picker.classList.add('show');
+    const rect = ev.currentTarget.getBoundingClientRect();
+    let leftPos = rect.right + 6;
+    if (leftPos + 90 > window.innerWidth) leftPos = rect.left - 90;
+    picker.style.left = `${leftPos}px`;
+    picker.style.top = `${rect.top - 4}px`;
+  }
+
+  function tutupMiniColorPicker() {
+    const picker = document.getElementById('miniColorPicker');
+    if (picker) picker.classList.remove('show');
+    activeColorTagIndex = null;
+  }
+
+  function pilihWarnaKustom(warna) {
+    if (activeColorTagIndex === null) return;
+    const idx = activeColorTagIndex;
+    tutupMiniColorPicker();
+
+    if (idx === 19) {
+      if (!db.data.host) db.data.host = { user: '', nick: '', poin: 0, isReady: true, isPaid: true, colorTag: '' };
+      db.data.host.colorTag = warna;
+    } else {
+      const p = db.data.players[idx];
+      if (p) p.colorTag = warna;
+    }
+    
+    simpanDB();
+    renderIsiTabel();
+  }
 
   function renderTombolQuickPoint() {
     const grid = document.getElementById('qpGridButtons');
@@ -738,6 +866,7 @@
 
   function eksekusiUrutkanManual() {
     tutupQuickPointPopover();
+    tutupMiniColorPicker();
     urutkanOtomatis();
     tambahLogAktivitas('SKOR', 'Papan skor berhasil diurutkan', 'system');
   }
@@ -822,9 +951,13 @@
     const wasOpen = el.classList.contains('show'); tutupSemuaDropdown(); if (!wasOpen) el.classList.add('show');
   }
 
-  window.addEventListener('click', () => { tutupSemuaDropdown(); tutupQuickPointPopover(); });
+  window.addEventListener('click', () => { 
+    tutupSemuaDropdown(); 
+    tutupQuickPointPopover(); 
+    tutupMiniColorPicker();
+  });
 
-  /* MODAL KONFIRMASI RESET MURNI YA / TIDAK */
+  /* MODAL KONFIRMASI RESET */
   function bukaModalKonfirmasiReset(tipe) {
     tutupSemuaDropdown(); tipeResetPending = tipe;
     const title = document.getElementById('resetTabelModalTitle');
@@ -866,6 +999,7 @@
 
   function tampilkanLayarPemenang() {
     tutupQuickPointPopover();
+    tutupMiniColorPicker();
     const sorted = [...db.data.players].filter(p => p.isReady && (p.nick || p.user || p.robloxUser)).sort((a, b) => b.poin - a.poin);
     const p1 = sorted[0] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
     const p2 = sorted[1] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
@@ -942,12 +1076,13 @@
   }
 
   function bukaModalInputNama(index) {
-    if (index === 19) return; // Kursi 20 (Host) langsung diedit di tabel tanpa popup
+    if (index === 19) return;
     tutupQuickPointPopover();
+    tutupMiniColorPicker();
     const p = db.data.players[index];
 
     document.getElementById('editPlayerIndex').value = index;
-    document.getElementById('modalInputJudul').innerText = `Edit Peserta Kursi ${index + 1}`;
+    document.getElementById('modalInputJudul').innerText = `Kursi ${index + 1}`;
     document.getElementById('inputUserRoblox').value = p.robloxUser || '';
     document.getElementById('inputNamaTikTok').value = p.user || '';
     document.getElementById('inputDisplayName').value = p.nick || '';
@@ -990,69 +1125,54 @@
     if (!isNaN(idx) && idx >= 0 && db.data.players[idx]) {
       const namaLama = db.data.players[idx].nick || db.data.players[idx].user || `Kursi ${idx + 1}`;
       db.data.players[idx].robloxUser = ''; db.data.players[idx].user = ''; db.data.players[idx].nick = ''; db.data.players[idx].avatar = '';
-      db.data.players[idx].poin = 0; db.data.players[idx].isReady = false; db.data.players[idx].isPaid = false;
+      db.data.players[idx].poin = 0; db.data.players[idx].isReady = false; db.data.players[idx].isPaid = false; db.data.players[idx].colorTag = '';
       tutupModalNama(); urutkanOtomatis();
       tambahLogAktivitas('RESET', `${namaLama} dihapus & kursi digeser ke bawah`, 'system');
     }
   }
 
-  function fetchWithTimeout(resource, options = {}) {
-    const { timeout = 3500 } = options;
-    const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), timeout);
-    return fetch(resource, {
-      ...options,
-      signal: controller.signal
-    }).finally(() => clearTimeout(id));
-  }
-
   async function mulaiCariAkunRobloxAuto() {
-  const rawInput = document.getElementById('inputUserRoblox').value.trim().replace(/^@+/, '');
-  const statusEl = document.getElementById('modalSearchStatus');
-  const btnCari = document.getElementById('btnCariRoblox');
+    const rawInput = document.getElementById('inputUserRoblox').value.trim().replace(/^@+/, '');
+    const statusEl = document.getElementById('modalSearchStatus');
+    const btnCari = document.getElementById('btnCariRoblox');
 
-  if (!rawInput) {
-    statusEl.style.color = '#f87171';
-    statusEl.innerText = 'Ketik username Roblox terlebih dahulu!';
-    return;
-  }
-
-  btnCari.disabled = true;
-  btnCari.innerText = '⏳...';
-  statusEl.style.color = '#38bdf8';
-  statusEl.innerText = 'Mencari akun...';
-
-  try {
-    // Memanggil API perantara internal Vercel Anda sendiri
-    const res = await fetch(`/api/cari-roblox?username=${encodeURIComponent(rawInput)}`);
-    const data = await res.json();
-
-    btnCari.disabled = false;
-    btnCari.innerText = 'Cari';
-
-    if (res.ok && data.sukses) {
-      document.getElementById('inputUserRoblox').value = data.userName;
-      document.getElementById('inputDisplayName').value = data.displayName;
-      document.getElementById('inputAvatarUrl').value = data.avatarUrl;
-
-      if (!document.getElementById('inputNamaTikTok').value.trim()) {
-        document.getElementById('inputNamaTikTok').value = data.displayName;
-      }
-
-      updateModalPreviewUI(data.userName, data.displayName, data.avatarUrl);
-      statusEl.style.color = '#4ade80';
-      statusEl.innerText = 'Akun Roblox & Foto ditemukan! ✔';
-    } else {
+    if (!rawInput) {
       statusEl.style.color = '#f87171';
-      statusEl.innerText = data.pesan || 'Akun tidak ditemukan!';
+      statusEl.innerText = 'Ketik username Roblox terlebih dahulu!';
+      return;
     }
-  } catch (err) {
-    btnCari.disabled = false;
-    btnCari.innerText = 'Cari';
-    statusEl.style.color = '#f87171';
-    statusEl.innerText = 'Gagal terhubung ke API!';
+
+    btnCari.disabled = true;
+    btnCari.innerText = '⏳...';
+    statusEl.style.color = '#38bdf8';
+    statusEl.innerText = 'Mencari akun...';
+
+    try {
+      const res = await fetch(`/api/cari-roblox?username=${encodeURIComponent(rawInput)}`);
+      const data = await res.json();
+
+      btnCari.disabled = false;
+      btnCari.innerText = 'Cari';
+
+      if (res.ok && data.sukses) {
+        document.getElementById('inputUserRoblox').value = data.userName;
+        document.getElementById('inputDisplayName').value = data.displayName;
+        document.getElementById('inputAvatarUrl').value = data.avatarUrl;
+
+        updateModalPreviewUI(data.userName, data.displayName, data.avatarUrl);
+        statusEl.style.color = '#4ade80';
+        statusEl.innerText = 'Akun Roblox & Foto ditemukan! ✔';
+      } else {
+        statusEl.style.color = '#f87171';
+        statusEl.innerText = data.pesan || 'Akun tidak ditemukan!';
+      }
+    } catch (err) {
+      btnCari.disabled = false;
+      btnCari.innerText = 'Cari';
+      statusEl.style.color = '#f87171';
+      statusEl.innerText = 'Gagal terhubung ke API!';
+    }
   }
-}
 
   function simpanDataModalNama() {
     const idx = parseInt(document.getElementById('editPlayerIndex').value);
@@ -1080,14 +1200,13 @@
     p.isReady = adaIsi;
 
     if (!adaIsi) {
-      p.poin = 0; p.avatar = ''; p.isPaid = false;
+      p.poin = 0; p.avatar = ''; p.isPaid = false; p.colorTag = '';
     }
     tutupModalNama();
     urutkanOtomatis();
     tambahLogAktivitas('EDIT', `Kursi ${idx + 1} diperbarui: ${p.nick || p.user || '(Kosong)'}`, 'system');
   }
 
-  /* FITUR KHUSUS HOST (KURSI 20 DIEDIT LANGSUNG DI TABEL DENGAN FORMAT CEPAT) */
   function simpanHostLangsung(field, val) {
     if (!db.data.host) return;
     const cleanVal = (val || '').trim();
@@ -1095,7 +1214,7 @@
     if (field === 'user' && !db.data.host.nick) db.data.host.nick = cleanVal;
     if (field === 'nick' && !db.data.host.user) db.data.host.user = cleanVal;
     simpanDB();
-    tambahLogAktivitas('HOST', `Host diubah: ${db.data.host.user} / ${db.data.host.nick}`, 'system');
+    tambahLogAktivitas('HOST', `Host diubah: ${db.data.host.user || '(Kosong)'} / ${db.data.host.nick || '(Kosong)'}`, 'system');
   }
 
   function bukaModalPoin() { 
@@ -1121,7 +1240,6 @@
     tambahLogAktivitas('POIN', `Preset angka poin cepat diperbarui`, 'system');
   }
 
-  /* TOGGLE STATUS CEKLIS (DONE / READY - AMAN DARI BANNED TIKTOK) */
   function togglePayStatus(index, ev) {
     if (ev) ev.stopPropagation();
     const p = (index === 19) ? db.data.host : db.data.players[index];
@@ -1159,7 +1277,7 @@
       if (i < 10) tbL.appendChild(tr); else tbR.appendChild(tr);
     }
 
-    // KURSI 20: HOST BISA LANGSUNG EDIT NAMA & DISPLAY DI TABEL (TANPA POPUP)
+    // KURSI 20: HOST
     const trHost = document.createElement('tr');
     trHost.className = "host-row";
     trHost.id = "row-kursi-19";
@@ -1167,14 +1285,25 @@
       <td class="td-no">20</td>
       <td>
         <div style="display:flex; align-items:center; gap:4px; padding:0 2px;">
-          <input type="text" id="hostInputUser" class="host-inline-input" value="${db.data.host.user || 'Host'}" placeholder="Nama Host..." onchange="simpanHostLangsung('user', this.value)" onkeydown="if(event.key==='Enter')this.blur()">
+          <input type="text" id="hostInputUser" class="host-inline-input" 
+                 value="${db.data.host.user || ''}" 
+                 placeholder="(KOSONG)" 
+                 onfocus="this.select()" 
+                 onchange="simpanHostLangsung('user', this.value)" 
+                 onkeydown="if(event.key==='Enter')this.blur()">
           <span class="pay-status-tag done" title="Host">✔ HOST</span>
+          <span class="btn-color-palette" onclick="bukaMiniColorPicker(19, event)" title="Ubah warna latar baris">🎨</span>
         </div>
       </td>
       <td>
         <div style="display:flex; align-items:center; gap:6px; padding:0 2px;">
           <div class="host-avatar-wrap"><div class="avatar-placeholder" style="color:var(--host-text); background:#1e293b;">H</div></div>
-          <input type="text" id="hostInputNick" class="host-inline-input" value="${db.data.host.nick || 'Host'}" placeholder="Display..." onchange="simpanHostLangsung('nick', this.value)" onkeydown="if(event.key==='Enter')this.blur()">
+          <input type="text" id="hostInputNick" class="host-inline-input" 
+                 value="${db.data.host.nick || ''}" 
+                 placeholder="(KOSONG)" 
+                 onfocus="this.select()" 
+                 onchange="simpanHostLangsung('nick', this.value)" 
+                 onkeydown="if(event.key==='Enter')this.blur()">
         </div>
       </td>
       <td class="col-point">
@@ -1200,16 +1329,17 @@
       const adaPemain = !!(p.user || p.robloxUser || p.nick);
       p.isReady = adaPemain;
 
-      tr.classList.remove('rank-1', 'rank-2', 'rank-3');
-      if (p.isReady && p.poin > 0) {
-        if (idx === 0) tr.classList.add("rank-1");
-        else if (idx === 1) tr.classList.add("rank-2");
-        else if (idx === 2) tr.classList.add("rank-3");
+      tr.classList.remove('tag-blue', 'tag-pink', 'tag-red');
+      if (p.colorTag) {
+        tr.classList.add(`tag-${p.colorTag}`);
       }
 
-      // BADGE AMAN TIKTOK (DONE ✔ / READY)
+      const colorIconHtml = adaPemain 
+        ? `<span class="btn-color-palette" onclick="bukaMiniColorPicker(${idx}, event)" title="Ubah warna latar baris">🎨</span>` 
+        : '';
+
       const badgePayHtml = adaPemain
-        ? `<span class="pay-status-tag ${p.isPaid ? 'done' : 'ready'}" onclick="togglePayStatus(${idx}, event)" title="Klik untuk ganti status">${p.isPaid ? '✔ DONE' : '— READY'}</span>`
+        ? `<span class="pay-status-tag ${p.isPaid ? 'done' : 'ready'}" onclick="togglePayStatus(${idx}, event)" title="Klik untuk ganti status">${p.isPaid ? '✔ DONE' : '— READY'}</span>${colorIconHtml}`
         : '';
 
       const cellNama = tr.querySelector('.cell-nama-target');
@@ -1248,9 +1378,14 @@
       }
     });
 
-    const h = db.data.host || { user: 'Host Turnamen', nick: 'Host', poin: 0 };
+    const h = db.data.host || { user: '', nick: '', poin: 0, colorTag: '' };
     const trHost = document.getElementById('row-kursi-19');
     if (trHost) {
+      trHost.classList.remove('tag-blue', 'tag-pink', 'tag-red');
+      if (h.colorTag) {
+        trHost.classList.add(`tag-${h.colorTag}`);
+      }
+
       const inpUser = document.getElementById('hostInputUser');
       const inpNick = document.getElementById('hostInputNick');
       if (inpUser && document.activeElement !== inpUser) inpUser.value = h.user || '';
@@ -1263,7 +1398,7 @@
   function urutkanOtomatis() {
     for (let i = 0; i < 19; i++) {
       const el = document.getElementById(`row-kursi-${i}`);
-      if (el) { el.classList.remove('moving-row', 'rank-up', 'rank-down'); el.style.transform = ''; }
+      if (el) { el.classList.remove('moving-row'); el.style.transform = ''; }
     }
 
     const posisiLama = {}; const oldIndexMap = {};
@@ -1282,15 +1417,6 @@
     aktifSiap.sort((a, b) => b.poin - a.poin);
     db.data.players = [...aktifSiap, ...kursiKosong];
 
-    const animRankMap = {};
-    db.data.players.forEach((p, newIdx) => {
-      const oldIdx = oldIndexMap[p.id];
-      if (oldIdx !== undefined && punyaIsi(p)) {
-        if (newIdx < oldIdx) animRankMap[p.id] = 'up';
-        else if (newIdx > oldIdx) animRankMap[p.id] = 'down';
-      }
-    });
-
     simpanDB(); renderIsiTabel();
 
     requestAnimationFrame(() => {
@@ -1300,9 +1426,6 @@
           if (el) {
             const posisiBaru = el.getBoundingClientRect().top;
             const deltaY = posisiLama[p.id] - posisiBaru;
-            if (animRankMap[p.id] === 'up') el.classList.add('rank-up');
-            else if (animRankMap[p.id] === 'down') el.classList.add('rank-down');
-
             if (deltaY !== 0) {
               el.style.transform = `translateY(${deltaY}px)`;
               void el.offsetHeight;
@@ -1314,10 +1437,6 @@
         }
       });
     });
-
-    setTimeout(() => {
-      document.querySelectorAll('.rank-up, .rank-down').forEach(el => el.classList.remove('rank-up', 'rank-down'));
-    }, 1400);
   }
 
   function tambahLogAktivitas(entitas, keterangan, tipe = 'system', poinAwal = null, poinAkhir = null, delta = null) {
