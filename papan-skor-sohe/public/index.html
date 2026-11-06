@@ -182,13 +182,11 @@
     }
     .pay-status-tag:hover { transform: scale(1.05); }
     
-    /* Hijau Emerald Terang Solid */
     .pay-status-tag.done {
       background: #059669; color: #ffffff; border: 1.5px solid #10b981;
       box-shadow: 0 0 8px rgba(16, 185, 129, 0.45);
     }
     
-    /* Abu-abu Slate Pekat Berborder Terang */
     .pay-status-tag.ready {
       background: #1e293b; color: #94a3b8; border: 1.5px solid #475569;
     }
@@ -209,7 +207,7 @@
       filter: grayscale(0);
     }
 
-    /* MENU MINI PALET WARNA (POPUP WARNA) */
+    /* MENU MINI PALET WARNA */
     .color-picker-mini {
       display: none; position: absolute; z-index: 36000; background: #0f172a;
       border: 1px solid #334155; border-radius: 8px; padding: 5px 6px;
@@ -230,12 +228,11 @@
     .cell-click-popup { cursor: pointer; border-radius: 5px; padding: 2px 4px; text-align: left; }
     .cell-click-popup:hover { background: #141f36; }
     
-    /* DEFAULT NAMA & DISPLAY SESUAI TEMA GELAP */
     .name-tiktok { font-size: 14px; font-weight: 700; color: #f8fafc; word-break: break-all; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
     .name-roblox-display { font-size: 13px; font-weight: 700; color: #cbd5e1; word-break: break-all; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
     .name-empty { font-size: 12.5px; font-weight: 600; color: #475569; font-style: italic; }
 
-    /* INLINE INPUT HOST (DEFAULT UNGU JIKA BELUM DIBERI WARNA) */
+    /* INLINE INPUT HOST */
     tr.host-row td { background: var(--host-bg); color: var(--host-text); border-bottom: 2px solid #9333ea; }
     .host-inline-input {
       width: 100%; background: transparent; border: 1px dashed rgba(192, 132, 252, 0.4);
@@ -244,10 +241,7 @@
     .host-inline-input:focus { border-style: solid; border-color: #c084fc; background: rgba(192, 132, 252, 0.12); }
     .host-inline-input::placeholder { color: #64748b; font-style: italic; font-weight: 600; }
 
-    /* =========================================================
-       LATAR BELAKANG SATU BARIS PENUH (TERMASUK HOST KURSI 20)
-       ========================================================= */
-    /* 1. Baris Biru Langit */
+    /* LATAR WARNA KUSTOM BARIS */
     tr.tag-blue td, tr.tag-blue.host-row td { 
       background: #bfdbfe !important; 
       color: #0f172a !important; 
@@ -262,7 +256,6 @@
     tr.tag-blue .host-inline-input { color: #0f172a !important; border-color: #93c5fd; }
     tr.tag-blue .host-inline-input::placeholder { color: #475569 !important; }
 
-    /* 2. Baris Pink Pastel */
     tr.tag-pink td, tr.tag-pink.host-row td { 
       background: #fbcfe8 !important; 
       color: #0f172a !important; 
@@ -277,7 +270,6 @@
     tr.tag-pink .host-inline-input { color: #831843 !important; border-color: #f472b6; }
     tr.tag-pink .host-inline-input::placeholder { color: #9d174d !important; }
 
-    /* 3. Baris Merah Terang Solid */
     tr.tag-red td, tr.tag-red.host-row td { 
       background: #e11d48 !important; 
       color: #ffffff !important; 
@@ -313,19 +305,98 @@
     .log-list { max-height: 110px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-top: 6px; }
     .log-item { display: flex; justify-content: space-between; align-items: center; padding: 3px 6px; background: #0e1629; border-radius: 5px; border-left: 3px solid #38bdf8; color: #e2e8f0; }
 
-    /* MODAL TEMA MODERN GELAP */
-    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4, 7, 15, 0.85); backdrop-filter: blur(5px); z-index: 9999; justify-content: center; align-items: center; padding: 12px; }
-    .modal-box { background: #0d1424; width: 330px; max-width: 96vw; border-radius: 12px; border: 1px solid #28354d; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; color: #f8fafc; }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 6px; }
-    .modal-title { font-family: 'Outfit', sans-serif; font-size: 13.5px; font-weight: 800; color: #f8fafc; }
-    .btn-close-modal { background: none; border: none; font-size: 17px; font-weight: 800; color: #ef4444; cursor: pointer; }
-    .form-group { display: flex; flex-direction: column; gap: 4px; }
-    .form-group label { font-size: 11px; font-weight: 700; color: #94a3b8; }
-    .form-input { padding: 7px 9px; border-radius: 5px; border: 1px solid #28354d; background: #141f36; font-size: 13.5px; font-weight: 700; color: #ffffff; outline: none; width: 100%; }
-    .form-input:focus { border-color: var(--primary); }
-    .modal-btn-row { display: flex; gap: 6px; margin-top: 4px; }
-    .btn-modal-save { flex: 1; background: var(--primary); color: #070b14; border: none; padding: 7px; border-radius: 5px; font-weight: 800; font-size: 12.5px; cursor: pointer; }
-    .btn-modal-clear { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #ef4444; padding: 7px 10px; border-radius: 5px; font-weight: 700; font-size: 11.5px; cursor: pointer; }
+    /* MODAL TEMA MODAL CYBER TACTICAL HUD (BARU & LEBIH KEREN) */
+    .modal-overlay { 
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+      background: rgba(3, 7, 18, 0.88); backdrop-filter: blur(8px); 
+      z-index: 9999; justify-content: center; align-items: center; padding: 12px; 
+    }
+    .modal-box-hud {
+      background: linear-gradient(180deg, #0d1527 0%, #080d19 100%);
+      width: 360px; max-width: 95vw; border-radius: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 25px rgba(56, 189, 248, 0.15);
+      padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; color: #f8fafc;
+      position: relative; overflow: hidden;
+    }
+    .modal-box-hud::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #0284c7, #38bdf8, #818cf8);
+    }
+    .modal-header-hud {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid rgba(30, 41, 59, 0.8); padding-bottom: 8px;
+    }
+    .modal-title-wrap { display: flex; flex-direction: column; }
+    .modal-sub-hud { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 800; letter-spacing: 1.5px; color: #38bdf8; text-transform: uppercase; }
+    .modal-title-hud { font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 900; color: #ffffff; letter-spacing: 0.5px; }
+    
+    .btn-close-hud {
+      background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3);
+      width: 28px; height: 28px; border-radius: 8px; font-size: 15px; font-weight: 900;
+      color: #f87171; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.12s ease;
+    }
+    .btn-close-hud:hover { background: #ef4444; color: #ffffff; transform: rotate(90deg); }
+
+    /* KARTU PREVIEW PROFILE HOLO */
+    .hud-player-card {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 10px 12px; border-radius: 12px; position: relative;
+    }
+    .hud-avatar-box {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: #020617; border: 2px solid #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; flex-shrink: 0;
+    }
+    .hud-avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+    .hud-avatar-empty { font-size: 10px; font-weight: 800; color: #64748b; font-family: 'JetBrains Mono', monospace; }
+
+    .hud-meta-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+    .hud-nick-txt { font-family: 'Outfit', sans-serif; font-size: 14.5px; font-weight: 800; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hud-user-txt { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #38bdf8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* FIELD FORM HUD */
+    .hud-field-group { display: flex; flex-direction: column; gap: 4px; }
+    .hud-label {
+      font-size: 10.5px; font-weight: 800; color: #94a3b8;
+      letter-spacing: 0.5px; text-transform: uppercase; font-family: 'Outfit', sans-serif;
+    }
+    .hud-input-row { display: flex; gap: 6px; }
+    .hud-input {
+      width: 100%; padding: 8px 10px; border-radius: 7px;
+      border: 1px solid #1e293b; background: rgba(10, 16, 31, 0.95);
+      font-size: 13.5px; font-weight: 700; color: #f8fafc; outline: none;
+      transition: all 0.14s ease;
+    }
+    .hud-input:focus { border-color: #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.25); background: #0c1527; }
+    .hud-btn-search {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff; border: 1px solid #38bdf8; padding: 0 14px;
+      border-radius: 7px; font-weight: 800; font-size: 11.5px;
+      cursor: pointer; transition: all 0.14s ease; white-space: nowrap;
+    }
+    .hud-btn-search:hover { filter: brightness(1.15); transform: translateY(-1px); }
+
+    /* ACTION BUTTONS */
+    .hud-action-row { display: flex; gap: 8px; margin-top: 6px; }
+    .btn-hud-reset {
+      flex: 1; background: rgba(239, 68, 68, 0.12); color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.35); padding: 9px;
+      border-radius: 8px; font-weight: 800; font-size: 12px; cursor: pointer;
+      transition: all 0.14s ease;
+    }
+    .btn-hud-reset:hover { background: #ef4444; color: #ffffff; border-color: #ef4444; }
+    .btn-hud-save {
+      flex: 2; background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+      color: #070b14; border: 1px solid #38bdf8; padding: 9px;
+      border-radius: 8px; font-weight: 900; font-size: 12.5px; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(14, 165, 233, 0.3); transition: all 0.14s ease;
+    }
+    .btn-hud-save:hover { filter: brightness(1.15); transform: translateY(-1px); }
 
     /* OVERLAY PODIUM PEMENANG */
     .winner-overlay { display: none; position: fixed; inset: 0; background: radial-gradient(circle at 50% 30%, rgba(15, 23, 42, 0.96), rgba(3, 7, 18, 0.98)); backdrop-filter: blur(12px); z-index: 30000; justify-content: center; align-items: center; flex-direction: column; padding: 20px; }
@@ -446,7 +517,7 @@
   </div>
 </div>
 
-<!-- MINI PALET WARNA (BIRU, PINK, MERAH, RESET) -->
+<!-- MINI PALET WARNA -->
 <div class="color-picker-mini" id="miniColorPicker" onclick="event.stopPropagation()">
   <span class="cp-dot c-blue" title="Biru Langit" onclick="pilihWarnaKustom('blue')"></span>
   <span class="cp-dot c-pink" title="Pink Pastel" onclick="pilihWarnaKustom('pink')"></span>
@@ -479,104 +550,115 @@
 
 <!-- MODAL KONFIRMASI RESET MURNI YA / TIDAK -->
 <div class="modal-overlay" id="modalConfirmResetTabel" onclick="tutupModalDiLuar(event)">
-  <div class="modal-box" style="width: 280px; text-align: center; padding: 18px 16px;">
-    <div id="resetTabelModalTitle" style="font-family:'Outfit',sans-serif; font-size:15px; font-weight:800; color:#f87171; margin-bottom:12px;">
+  <div class="modal-box-hud" style="width: 290px; text-align: center; padding: 20px 16px;">
+    <div id="resetTabelModalTitle" style="font-family:'Outfit',sans-serif; font-size:16px; font-weight:800; color:#f87171; margin-bottom:14px;">
       Reset Poin?
     </div>
-    <div class="modal-btn-row" style="gap: 8px;">
-      <button class="btn-action-soft" style="flex:1; justify-content:center; padding:8px;" onclick="tutupModalKonfirmasiResetTabel()">Tidak</button>
-      <button class="btn-action-soft" style="flex:1; justify-content:center; background:#dc2626; border-color:#ef4444; color:#fff; font-weight:800; padding:8px;" onclick="eksekusiResetTabelPasti()">Ya</button>
+    <div class="hud-action-row" style="gap: 8px;">
+      <button class="btn-hud-reset" style="padding:8px;" onclick="tutupModalKonfirmasiResetTabel()">Tidak</button>
+      <button class="btn-hud-save" style="background:#dc2626; border-color:#ef4444; color:#fff; padding:8px;" onclick="eksekusiResetTabelPasti()">Ya</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL INPUT NAMA PESERTA -->
+<!-- MODAL INPUT NAMA PESERTA: REDESAIN CYBER HUD TACTICAL -->
 <div class="modal-overlay" id="modalInputNama" onclick="tutupModalDiLuar(event)">
-  <div class="modal-box">
-    <div class="modal-header">
-      <span class="modal-title" id="modalInputJudul">Kursi 1</span>
-      <button class="btn-close-modal" onclick="tutupModalNama()">×</button>
+  <div class="modal-box-hud">
+    <div class="modal-header-hud">
+      <div class="modal-title-wrap">
+        <span class="modal-sub-hud"></span>
+        <span class="modal-title-hud" id="modalInputJudul">Kursi 1</span>
+      </div>
+      <button class="btn-close-hud" onclick="tutupModalNama()" title="Tutup (Esc)">✕</button>
     </div>
     <input type="hidden" id="editPlayerIndex" value="-1">
     <input type="hidden" id="inputAvatarUrl" value="">
 
-    <div style="display:flex; align-items:center; gap:10px; background:#141f36; border:1px solid #28354d; padding:8px; border-radius:6px;">
-      <img id="modalAvatarPreview" src="" alt="Avatar" style="width:44px; height:44px; border-radius:50%; object-fit:cover; display:none;">
-      <div id="modalAvatarEmpty" style="width:44px; height:44px; border-radius:50%; background:#0a101f; border:1px dashed #475569; display:flex; align-items:center; justify-content:center; font-size:10px; color:#64748b;">
-        No Foto
+    <!-- PROFILE CARD HOLO -->
+    <div class="hud-player-card">
+      <div class="hud-avatar-box">
+        <img id="modalAvatarPreview" src="" alt="Avatar" style="display:none;">
+        <div id="modalAvatarEmpty" class="hud-avatar-empty">NO PIC</div>
       </div>
-      <div style="flex:1; overflow:hidden;">
-        <div id="modalPreviewNick" style="font-size:13.5px; font-weight:800; color:#f8fafc; overflow:hidden; text-overflow:ellipsis;">-</div>
-        <div id="modalPreviewUser" style="font-size:11px; font-weight:700; color:#38bdf8; overflow:hidden; text-overflow:ellipsis;">@username_roblox</div>
+      <div class="hud-meta-info">
+        <span id="modalPreviewNick" class="hud-nick-txt">-</span>
+        <span id="modalPreviewUser" class="hud-user-txt">@username_roblox</span>
       </div>
     </div>
 
-    <div class="form-group">
-      <label>Username Roblox :</label>
-      <div style="display:flex; gap:6px;">
-        <input type="text" id="inputUserRoblox" class="form-input" placeholder="contoh: Bobohu" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();mulaiCariAkunRobloxAuto();}">
-        <button type="button" id="btnCariRoblox" class="btn-action-soft" style="padding:0 12px; font-size:11.5px; white-space:nowrap; background:#0284c7; color:#fff;" onclick="mulaiCariAkunRobloxAuto()">
+    <!-- FORM INPUTS -->
+    <div class="hud-field-group">
+      <label class="hud-label">Roblox Account ID</label>
+      <div class="hud-input-row">
+        <input type="text" id="inputUserRoblox" class="hud-input" placeholder="contoh: Username" autocomplete="off" onkeydown="if(event.key==='Enter'){event.preventDefault();mulaiCariAkunRobloxAuto();}">
+        <button type="button" id="btnCariRoblox" class="hud-btn-search" onclick="mulaiCariAkunRobloxAuto()">
           Cari
         </button>
       </div>
-      <span id="modalSearchStatus" style="font-size:10px; font-weight:700; color:#94a3b8; min-height:14px; margin-top:2px;"></span>
+      <span id="modalSearchStatus" style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:#94a3b8; min-height:14px; margin-top:2px;"></span>
     </div>
 
-    <div class="form-group">
-      <label>Nama Pemain :</label>
-      <input type="text" id="inputNamaTikTok" class="form-input" placeholder="Nama tim/pemain..." onkeydown="if(event.key==='Enter')simpanDataModalNama()">
+    <div class="hud-field-group">
+      <label class="hud-label">Nama Pemain (Tim / Peserta)</label>
+      <input type="text" id="inputNamaTikTok" class="hud-input" placeholder="Ketik nama pemain..." onkeydown="if(event.key==='Enter')simpanDataModalNama()">
     </div>
 
-    <div class="form-group">
-      <label>Display Name Roblox :</label>
-      <input type="text" id="inputDisplayName" class="form-input" placeholder="Otomatis / manual" onkeydown="if(event.key==='Enter')simpanDataModalNama()">
+    <div class="hud-field-group">
+      <label class="hud-label">Display Name Roblox</label>
+      <input type="text" id="inputDisplayName" class="hud-input" placeholder="Otomatis / manual" onkeydown="if(event.key==='Enter')simpanDataModalNama()">
     </div>
 
-    <div class="modal-btn-row">
-      <button class="btn-modal-clear" type="button" onclick="resetFormModalNama()">Reset</button>
-      <button class="btn-modal-save" type="button" onclick="simpanDataModalNama()">Simpan</button>
+    <div class="hud-action-row">
+      <button class="btn-hud-reset" type="button" onclick="resetFormModalNama()">Reset </button>
+      <button class="btn-hud-save" type="button" onclick="simpanDataModalNama()">Simpan </button>
     </div>
   </div>
 </div>
 
 <!-- MODAL PRESET ANGKA POIN -->
 <div class="modal-overlay" id="modalPoin" onclick="tutupModalDiLuar(event)">
-  <div class="modal-box" style="width: 320px;">
-    <div class="modal-header">
-      <span class="modal-title">Preset Angka Poin Cepat</span>
-      <button class="btn-close-modal" onclick="tutupModalPoin()">×</button>
+  <div class="modal-box-hud" style="width: 320px;">
+    <div class="modal-header-hud">
+      <div class="modal-title-wrap">
+        <span class="modal-sub-hud">SETTINGS</span>
+        <span class="modal-title-hud">Preset Poin Cepat</span>
+      </div>
+      <button class="btn-close-hud" onclick="tutupModalPoin()">✕</button>
     </div>
-    <div class="form-group" style="margin-top:4px;">
-      <label>Daftar Angka (Pisahkan koma):</label>
-      <input type="text" id="inputPresetPoinCepat" class="form-input" style="font-family:'JetBrains Mono',monospace;" value="1, 2, 3, 4, 5" onchange="simpanPoinWarna()">
+    <div class="hud-field-group" style="margin-top:6px;">
+      <label class="hud-label">Daftar Angka (Pisahkan koma):</label>
+      <input type="text" id="inputPresetPoinCepat" class="hud-input" style="font-family:'JetBrains Mono',monospace;" value="1, 2, 3, 4, 5" onchange="simpanPoinWarna()">
     </div>
-    <button class="btn-modal-save" style="margin-top:6px;" onclick="tutupModalPoin()">Selesai</button>
+    <button class="btn-hud-save" style="margin-top:8px;" onclick="tutupModalPoin()">Selesai</button>
   </div>
 </div>
 
 <!-- MODAL SETTINGS AUDIO -->
 <div class="modal-overlay" id="modalNotifSuara" onclick="tutupModalDiLuar(event)">
-  <div class="modal-box" style="width: 340px;">
-    <div class="modal-header">
-      <span class="modal-title">Pengaturan Suara Poin</span>
-      <button class="btn-close-modal" onclick="tutupModalNotifSuara()">×</button>
+  <div class="modal-box-hud" style="width: 340px;">
+    <div class="modal-header-hud">
+      <div class="modal-title-wrap">
+        <span class="modal-sub-hud">AUDIO MODULE</span>
+        <span class="modal-title-hud">Suara Poin</span>
+      </div>
+      <button class="btn-close-hud" onclick="tutupModalNotifSuara()">✕</button>
     </div>
 
-    <div class="audio-tier-card" style="border-left: 3px solid #10b981; margin-top:4px;">
-      <div class="audio-tier-top">
-        <span style="color:#34d399;">🔔 Efek Suara Poin</span>
-        <span id="statusAudio_poin" style="font-size:10px; color:#4ade80;">Synth Bawaan</span>
+    <div style="background:rgba(15,23,42,0.7); border:1px solid #1e293b; border-left:3px solid #10b981; border-radius:8px; padding:10px; margin-top:4px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-size:12px; font-weight:800; color:#34d399;">🔔 Sound FX Poin</span>
+        <span id="statusAudio_poin" style="font-size:10px; font-weight:800; color:#4ade80; font-family:'JetBrains Mono',monospace;">Synth Bawaan</span>
       </div>
-      <div class="audio-tier-actions">
-        <input type="file" id="audioInput_poin" accept="audio/*" style="font-size:10px; max-width:170px;" onchange="unggahAudioPoin(event)">
-        <div style="display:flex; gap:3px;">
-          <button type="button" class="btn-action-soft" style="padding:2px 7px; font-size:10px;" onclick="putarSuaraNotifPoin()">🔊 Tes</button>
-          <button type="button" class="btn-action-soft" style="padding:2px 7px; font-size:10px;" onclick="resetAudioPoin()">Reset</button>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <input type="file" id="audioInput_poin" accept="audio/*" style="font-size:11px; color:#94a3b8;" onchange="unggahAudioPoin(event)">
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-action-soft" style="flex:1; justify-content:center; padding:5px;" onclick="putarSuaraNotifPoin()">🔊 Tes Audio</button>
+          <button type="button" class="btn-action-soft" style="flex:1; justify-content:center; padding:5px;" onclick="resetAudioPoin()">Reset</button>
         </div>
       </div>
     </div>
 
-    <button class="btn-modal-save" style="margin-top:8px;" onclick="tutupModalNotifSuara()">Tutup</button>
+    <button class="btn-hud-save" style="margin-top:8px;" onclick="tutupModalNotifSuara()">Tutup</button>
   </div>
 </div>
 
@@ -957,6 +1039,19 @@
     tutupMiniColorPicker();
   });
 
+  /* KEYBOARD SHORTCUT GLOBAL (ESC UNTUK MENUTUP SEMUA MODAL) */
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      tutupModalNama();
+      tutupModalPoin();
+      tutupModalNotifSuara();
+      tutupModalKonfirmasiResetTabel();
+      tutupQuickPointPopover();
+      tutupMiniColorPicker();
+      tutupLayarPemenang();
+    }
+  });
+
   /* MODAL KONFIRMASI RESET */
   function bukaModalKonfirmasiReset(tipe) {
     tutupSemuaDropdown(); tipeResetPending = tipe;
@@ -1316,8 +1411,10 @@
   }
 
   function renderAvatarHtml(avatarUrl, nama) {
-    if (avatarUrl) return `<img class="avatar-mini" src="${avatarUrl}" alt="Avatar" loading="lazy">`;
     const inisial = nama ? nama.charAt(0).toUpperCase() : '-';
+    if (avatarUrl) {
+      return `<img class="avatar-mini" src="${avatarUrl}" alt="Avatar" loading="lazy" onerror="this.outerHTML='<div class=\\\'avatar-placeholder\\\'>${inisial}</div>'">`;
+    }
     return `<div class="avatar-placeholder">${inisial}</div>`;
   }
 
@@ -1518,7 +1615,6 @@
     });
   }
 
- 
   window.addEventListener('DOMContentLoaded', () => {
     try { if (window.resizeTo) window.resizeTo(1060, 725); } catch (_) {}
     muatStatusFoldLog();
