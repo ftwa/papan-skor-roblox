@@ -1386,7 +1386,7 @@
                  onfocus="this.select()" 
                  onchange="simpanHostLangsung('user', this.value)" 
                  onkeydown="if(event.key==='Enter')this.blur()">
-          <span class="pay-status-tag done" title="Host">✔ HOST</span>
+          <span class="pay-status-tag done" title="Host">HOST</span>
           <span class="btn-color-palette" onclick="bukaMiniColorPicker(19, event)" title="Ubah warna latar baris">🎨</span>
         </div>
       </td>
@@ -1436,7 +1436,7 @@
         : '';
 
       const badgePayHtml = adaPemain
-        ? `<span class="pay-status-tag ${p.isPaid ? 'done' : 'ready'}" onclick="togglePayStatus(${idx}, event)" title="Klik untuk ganti status">${p.isPaid ? '✔ DONE' : '— READY'}</span>${colorIconHtml}`
+        ? `<span class="pay-status-tag ${p.isPaid ? 'done' : 'ready'}" onclick="togglePayStatus(${idx}, event)" title="Klik untuk ganti status">${p.isPaid ? '✔' : '— READY'}</span>${colorIconHtml}`
         : '';
 
       const cellNama = tr.querySelector('.cell-nama-target');
