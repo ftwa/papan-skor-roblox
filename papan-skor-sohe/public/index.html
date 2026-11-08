@@ -90,7 +90,7 @@
     .dropdown-content button:hover { background: #1e293b; color: var(--primary); }
     .dropdown.show .dropdown-content { display: block; }
 
-    /* POPUP NOTIFIKASI CYBER HUD STYLE */
+    /* POPUP NOTIFIKASI CYBER HUD STYLE (DEFAULT BIRU) */
     .center-notif-popup {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
       width: 270px; min-height: 180px; background: rgba(13, 20, 36, 0.96); backdrop-filter: blur(16px);
@@ -98,13 +98,14 @@
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(56, 189, 248, 0.25); z-index: 25000;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
       padding: 16px; text-align: center; opacity: 0; pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.2s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, box-shadow 0.2s;
     }
     .center-notif-popup.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
     .c-notif-tag {
       font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 800; color: #38bdf8;
       background: rgba(56, 189, 248, 0.12); padding: 3px 10px; border-radius: 99px;
       border: 1px solid rgba(56, 189, 248, 0.35); letter-spacing: 1px; text-transform: uppercase;
+      transition: all 0.2s ease;
     }
     .c-notif-name {
       font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: #ffffff;
@@ -113,9 +114,53 @@
     .c-notif-pts-box {
       width: 100%; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.4);
       border-radius: 10px; padding: 6px 10px; margin-top: 4px;
+      transition: all 0.2s ease;
     }
-    .c-notif-pts-main { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 900; color: #38bdf8; }
-    .c-notif-pts-total { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #bae6fd; margin-top: 2px; }
+    .c-notif-pts-main { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 900; color: #38bdf8; transition: color 0.2s ease; }
+    .c-notif-pts-total { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #bae6fd; margin-top: 2px; transition: color 0.2s ease; }
+
+    /* VARIAN WARNA POPUP NOTIFIKASI */
+    /* Ungu */
+    .center-notif-popup.theme-purple {
+      border-color: rgba(168, 85, 247, 0.85);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(168, 85, 247, 0.35);
+    }
+    .center-notif-popup.theme-purple .c-notif-tag {
+      color: #d8b4fe; background: rgba(168, 85, 247, 0.2); border-color: rgba(168, 85, 247, 0.5);
+    }
+    .center-notif-popup.theme-purple .c-notif-pts-box {
+      background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.5);
+    }
+    .center-notif-popup.theme-purple .c-notif-pts-main { color: #d8b4fe; }
+    .center-notif-popup.theme-purple .c-notif-pts-total { color: #f3e8ff; }
+
+    /* Pink */
+    .center-notif-popup.theme-pink {
+      border-color: rgba(244, 114, 182, 0.85);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(244, 114, 182, 0.35);
+    }
+    .center-notif-popup.theme-pink .c-notif-tag {
+      color: #f472b6; background: rgba(244, 114, 182, 0.2); border-color: rgba(244, 114, 182, 0.5);
+    }
+    .center-notif-popup.theme-pink .c-notif-pts-box {
+      background: rgba(244, 114, 182, 0.15); border-color: rgba(244, 114, 182, 0.5);
+    }
+    .center-notif-popup.theme-pink .c-notif-pts-main { color: #f472b6; }
+    .center-notif-popup.theme-pink .c-notif-pts-total { color: #fce7f3; }
+
+    /* Merah */
+    .center-notif-popup.theme-red {
+      border-color: rgba(244, 63, 94, 0.85);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(244, 63, 94, 0.35);
+    }
+    .center-notif-popup.theme-red .c-notif-tag {
+      color: #fb7185; background: rgba(244, 63, 94, 0.2); border-color: rgba(244, 63, 94, 0.5);
+    }
+    .center-notif-popup.theme-red .c-notif-pts-box {
+      background: rgba(244, 63, 94, 0.15); border-color: rgba(244, 63, 94, 0.5);
+    }
+    .center-notif-popup.theme-red .c-notif-pts-main { color: #fb7185; }
+    .center-notif-popup.theme-red .c-notif-pts-total { color: #ffe4e6; }
 
     /* POPOVER POIN CEPAT */
     .quick-point-popover {
@@ -173,7 +218,7 @@
 
     .td-no { background: #111a2e !important; font-weight: 800; color: #94a3b8; font-size: 13.5px; border-right: 1.5px solid #1e293b !important; }
     
-    /* BADGE STATUS TEGAS & JELAS */
+    /* BADGE STATUS */
     .pay-status-tag {
       display: inline-flex; align-items: center; justify-content: center;
       font-size: 10px; font-weight: 900; padding: 2.5px 7px; border-radius: 5px;
@@ -207,7 +252,7 @@
       filter: grayscale(0);
     }
 
-    /* MENU MINI PALET WARNA */
+    /* MINI PALET WARNA */
     .color-picker-mini {
       display: none; position: absolute; z-index: 36000; background: #0f172a;
       border: 1px solid #334155; border-radius: 8px; padding: 5px 6px;
@@ -271,7 +316,6 @@
     tr.tag-pink .host-inline-input { color: #831843 !important; border-color: #f472b6; }
     tr.tag-pink .host-inline-input::placeholder { color: #9d174d !important; }
 
-    /* WARNA UNGU KUSTOM BARIS */
     tr.tag-purple td, tr.tag-purple.host-row td { 
       background: #4c1d95 !important; 
       color: #f5f3ff !important; 
@@ -321,7 +365,7 @@
     .log-list { max-height: 110px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-top: 6px; }
     .log-item { display: flex; justify-content: space-between; align-items: center; padding: 3px 6px; background: #0e1629; border-radius: 5px; border-left: 3px solid #38bdf8; color: #e2e8f0; }
 
-    /* MODAL TEMA MODAL CYBER TACTICAL HUD */
+    /* MODAL TEMA CYBER HUD */
     .modal-overlay { 
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
       background: rgba(3, 7, 18, 0.88); backdrop-filter: blur(8px); 
@@ -533,7 +577,7 @@
   </div>
 </div>
 
-<!-- MINI PALET WARNA (DITAMBAHKAN UNGU) -->
+<!-- MINI PALET WARNA (BIRU, PINK, UNGU, MERAH) -->
 <div class="color-picker-mini" id="miniColorPicker" onclick="event.stopPropagation()">
   <span class="cp-dot c-blue" title="Biru Langit" onclick="pilihWarnaKustom('blue')"></span>
   <span class="cp-dot c-pink" title="Pink Pastel" onclick="pilihWarnaKustom('pink')"></span>
@@ -895,7 +939,7 @@
     const selisih = p.poin - awal;
 
     const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
-    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN");
+    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN", p.colorTag);
 
     if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
     tambahLogAktivitas(namaTampil, `Poin +${delta}`, 'system', awal, p.poin, Math.abs(delta));
@@ -915,16 +959,22 @@
     const selisih = p.poin - awal;
 
     const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
-    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "SET TOTAL");
+    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "SET TOTAL", p.colorTag);
 
     if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
     tambahLogAktivitas(namaTampil, `Total poin disetel ke ${p.poin}`, 'system', awal, p.poin, Math.abs(selisih));
   }
 
-  function tampilkanPopupPoinTengah(namaPemain, deltaPoin, totalPoin, labelAtas = "UPDATE POIN") {
+  /* POPUP NOTIFIKASI OTOMATIS IKUT WARNA BARIS */
+  function tampilkanPopupPoinTengah(namaPemain, deltaPoin, totalPoin, labelAtas = "UPDATE POIN", warnaTag = "") {
     const popup = document.getElementById('centerNotifPopup');
     if (!popup) return;
     if (popupCenterTimer) clearTimeout(popupCenterTimer);
+
+    popup.classList.remove('theme-purple', 'theme-pink', 'theme-red', 'theme-blue');
+    if (warnaTag) {
+      popup.classList.add(`theme-${warnaTag}`);
+    }
 
     const tanda = deltaPoin >= 0 ? `+${deltaPoin}` : `${deltaPoin}`;
     document.getElementById('cNotifTag').innerText = labelAtas;
@@ -941,7 +991,7 @@
   }
 
   function tesPopupTengahManual() {
-    tampilkanPopupPoinTengah("BOBOHU", 5, 20, "TES NOTIFIKASI");
+    tampilkanPopupPoinTengah("BOBOHU", 5, 20, "TES NOTIFIKASI", "purple");
     tambahLogAktivitas('TEST', 'Tes popup notifikasi tengah', 'system');
   }
 
