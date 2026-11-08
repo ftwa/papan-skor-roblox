@@ -221,6 +221,7 @@
     .cp-dot:hover { transform: scale(1.2); border-color: #fff; }
     .cp-dot.c-blue { background: #38bdf8; }
     .cp-dot.c-pink { background: #f472b6; }
+    .cp-dot.c-purple { background: #a855f7; }
     .cp-dot.c-red { background: #fb7185; }
     .cp-dot.c-reset { background: #475569; position: relative; }
     .cp-dot.c-reset::after { content: "×"; color: #fff; font-size: 11px; position: absolute; top: -1px; left: 4px; font-weight: 900; }
@@ -270,6 +271,21 @@
     tr.tag-pink .host-inline-input { color: #831843 !important; border-color: #f472b6; }
     tr.tag-pink .host-inline-input::placeholder { color: #9d174d !important; }
 
+    /* WARNA UNGU KUSTOM BARIS */
+    tr.tag-purple td, tr.tag-purple.host-row td { 
+      background: #4c1d95 !important; 
+      color: #f5f3ff !important; 
+      border-bottom: 1px solid #7c3aed !important;
+      border-right-color: #7c3aed !important;
+    }
+    tr.tag-purple .name-tiktok { color: #ffffff !important; font-weight: 800; }
+    tr.tag-purple .name-roblox-display { color: #ddd6fe !important; font-weight: 700; }
+    tr.tag-purple .td-no { background: #6d28d9 !important; color: #f5f3ff !important; }
+    tr.tag-purple .score-val { background: #1e1b4b !important; color: #e9d5ff !important; border-color: #a855f7 !important; }
+    tr.tag-purple .pay-status-tag.ready { background: #3b0764; color: #e9d5ff; border-color: #7c3aed; }
+    tr.tag-purple .host-inline-input { color: #f5f3ff !important; border-color: #a855f7; }
+    tr.tag-purple .host-inline-input::placeholder { color: #c4b5fd !important; }
+
     tr.tag-red td, tr.tag-red.host-row td { 
       background: #e11d48 !important; 
       color: #ffffff !important; 
@@ -305,7 +321,7 @@
     .log-list { max-height: 110px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-top: 6px; }
     .log-item { display: flex; justify-content: space-between; align-items: center; padding: 3px 6px; background: #0e1629; border-radius: 5px; border-left: 3px solid #38bdf8; color: #e2e8f0; }
 
-    /* MODAL TEMA MODAL CYBER TACTICAL HUD (BARU & LEBIH KEREN) */
+    /* MODAL TEMA MODAL CYBER TACTICAL HUD */
     .modal-overlay { 
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
       background: rgba(3, 7, 18, 0.88); backdrop-filter: blur(8px); 
@@ -517,10 +533,11 @@
   </div>
 </div>
 
-<!-- MINI PALET WARNA -->
+<!-- MINI PALET WARNA (DITAMBAHKAN UNGU) -->
 <div class="color-picker-mini" id="miniColorPicker" onclick="event.stopPropagation()">
   <span class="cp-dot c-blue" title="Biru Langit" onclick="pilihWarnaKustom('blue')"></span>
   <span class="cp-dot c-pink" title="Pink Pastel" onclick="pilihWarnaKustom('pink')"></span>
+  <span class="cp-dot c-purple" title="Ungu Cyber" onclick="pilihWarnaKustom('purple')"></span>
   <span class="cp-dot c-red" title="Merah Solid" onclick="pilihWarnaKustom('red')"></span>
   <span class="cp-dot c-reset" title="Reset Default" onclick="pilihWarnaKustom('')"></span>
 </div>
@@ -561,7 +578,7 @@
   </div>
 </div>
 
-<!-- MODAL INPUT NAMA PESERTA: REDESAIN CYBER HUD TACTICAL -->
+<!-- MODAL INPUT NAMA PESERTA -->
 <div class="modal-overlay" id="modalInputNama" onclick="tutupModalDiLuar(event)">
   <div class="modal-box-hud">
     <div class="modal-header-hud">
@@ -789,7 +806,7 @@
     picker.classList.add('show');
     const rect = ev.currentTarget.getBoundingClientRect();
     let leftPos = rect.right + 6;
-    if (leftPos + 90 > window.innerWidth) leftPos = rect.left - 90;
+    if (leftPos + 110 > window.innerWidth) leftPos = rect.left - 110;
     picker.style.left = `${leftPos}px`;
     picker.style.top = `${rect.top - 4}px`;
   }
@@ -1039,7 +1056,6 @@
     tutupMiniColorPicker();
   });
 
-  /* KEYBOARD SHORTCUT GLOBAL (ESC UNTUK MENUTUP SEMUA MODAL) */
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       tutupModalNama();
@@ -1426,7 +1442,7 @@
       const adaPemain = !!(p.user || p.robloxUser || p.nick);
       p.isReady = adaPemain;
 
-      tr.classList.remove('tag-blue', 'tag-pink', 'tag-red');
+      tr.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red');
       if (p.colorTag) {
         tr.classList.add(`tag-${p.colorTag}`);
       }
@@ -1478,7 +1494,7 @@
     const h = db.data.host || { user: '', nick: '', poin: 0, colorTag: '' };
     const trHost = document.getElementById('row-kursi-19');
     if (trHost) {
-      trHost.classList.remove('tag-blue', 'tag-pink', 'tag-red');
+      trHost.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red');
       if (h.colorTag) {
         trHost.classList.add(`tag-${h.colorTag}`);
       }
