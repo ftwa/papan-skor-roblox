@@ -90,7 +90,7 @@
     .dropdown-content button:hover { background: #1e293b; color: var(--primary); }
     .dropdown.show .dropdown-content { display: block; }
 
-    /* POPUP NOTIFIKASI CYBER HUD STYLE (DEFAULT BIRU) */
+    /* POPUP NOTIFIKASI CYBER HUD */
     .center-notif-popup {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
       width: 270px; min-height: 180px; background: rgba(13, 20, 36, 0.96); backdrop-filter: blur(16px);
@@ -120,7 +120,6 @@
     .c-notif-pts-total { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #bae6fd; margin-top: 2px; transition: color 0.2s ease; }
 
     /* VARIAN WARNA POPUP NOTIFIKASI */
-    /* Ungu */
     .center-notif-popup.theme-purple {
       border-color: rgba(168, 85, 247, 0.85);
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(168, 85, 247, 0.35);
@@ -134,7 +133,6 @@
     .center-notif-popup.theme-purple .c-notif-pts-main { color: #d8b4fe; }
     .center-notif-popup.theme-purple .c-notif-pts-total { color: #f3e8ff; }
 
-    /* Pink */
     .center-notif-popup.theme-pink {
       border-color: rgba(244, 114, 182, 0.85);
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(244, 114, 182, 0.35);
@@ -148,7 +146,6 @@
     .center-notif-popup.theme-pink .c-notif-pts-main { color: #f472b6; }
     .center-notif-popup.theme-pink .c-notif-pts-total { color: #fce7f3; }
 
-    /* Merah */
     .center-notif-popup.theme-red {
       border-color: rgba(244, 63, 94, 0.85);
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(244, 63, 94, 0.35);
@@ -161,6 +158,20 @@
     }
     .center-notif-popup.theme-red .c-notif-pts-main { color: #fb7185; }
     .center-notif-popup.theme-red .c-notif-pts-total { color: #ffe4e6; }
+
+    /* Tema Kuning untuk Notifikasi */
+    .center-notif-popup.theme-yellow {
+      border-color: rgba(250, 204, 21, 0.85);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(250, 204, 21, 0.35);
+    }
+    .center-notif-popup.theme-yellow .c-notif-tag {
+      color: #fef08a; background: rgba(250, 204, 21, 0.2); border-color: rgba(250, 204, 21, 0.5);
+    }
+    .center-notif-popup.theme-yellow .c-notif-pts-box {
+      background: rgba(250, 204, 21, 0.15); border-color: rgba(250, 204, 21, 0.5);
+    }
+    .center-notif-popup.theme-yellow .c-notif-pts-main { color: #facc15; }
+    .center-notif-popup.theme-yellow .c-notif-pts-total { color: #fef9c3; }
 
     /* POPOVER POIN CEPAT */
     .quick-point-popover {
@@ -204,7 +215,6 @@
     th:last-child { border-right: none; }
     th .col-resizer { position: absolute; right: -4px; top: 0; bottom: 0; width: 8px; cursor: col-resize; z-index: 50; }
     th .col-resizer:hover { background: #38bdf8; }
-
     th.th-no { border-right: 1.5px solid #1e293b !important; }
 
     tbody tr { position: relative; border-bottom: 1px solid #141e33; }
@@ -226,33 +236,23 @@
       user-select: none; letter-spacing: 0.4px; transition: transform 0.1s ease;
     }
     .pay-status-tag:hover { transform: scale(1.05); }
-    
     .pay-status-tag.done {
       background: #059669; color: #ffffff; border: 1.5px solid #10b981;
       box-shadow: 0 0 8px rgba(16, 185, 129, 0.45);
     }
-    
     .pay-status-tag.ready {
       background: #1e293b; color: #94a3b8; border: 1.5px solid #475569;
     }
 
     /* IKON PALET CAT */
     .btn-color-palette {
-      font-size: 13px;
-      cursor: pointer;
-      margin-left: 5px;
-      user-select: none;
-      filter: grayscale(0.2);
-      transition: transform 0.12s ease;
-      display: inline-flex;
-      align-items: center;
+      font-size: 13px; cursor: pointer; margin-left: 5px;
+      user-select: none; filter: grayscale(0.2); transition: transform 0.12s ease;
+      display: inline-flex; align-items: center;
     }
-    .btn-color-palette:hover {
-      transform: scale(1.25);
-      filter: grayscale(0);
-    }
+    .btn-color-palette:hover { transform: scale(1.25); filter: grayscale(0); }
 
-    /* MINI PALET WARNA */
+    /* MINI PALET WARNA (BIRU, PINK, UNGU, MERAH, KUNING) */
     .color-picker-mini {
       display: none; position: absolute; z-index: 36000; background: #0f172a;
       border: 1px solid #334155; border-radius: 8px; padding: 5px 6px;
@@ -268,6 +268,7 @@
     .cp-dot.c-pink { background: #f472b6; }
     .cp-dot.c-purple { background: #a855f7; }
     .cp-dot.c-red { background: #fb7185; }
+    .cp-dot.c-yellow { background: #facc15; }
     .cp-dot.c-reset { background: #475569; position: relative; }
     .cp-dot.c-reset::after { content: "×"; color: #fff; font-size: 11px; position: absolute; top: -1px; left: 4px; font-weight: 900; }
 
@@ -278,71 +279,60 @@
     .name-roblox-display { font-size: 13px; font-weight: 700; color: #cbd5e1; word-break: break-all; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
     .name-empty { font-size: 12.5px; font-weight: 600; color: #475569; font-style: italic; }
 
-    /* INLINE INPUT HOST */
+    /* BARIS HOST */
     tr.host-row td { background: var(--host-bg); color: var(--host-text); border-bottom: 2px solid #9333ea; }
-    .host-inline-input {
-      width: 100%; background: transparent; border: 1px dashed rgba(192, 132, 252, 0.4);
-      color: #f3e8ff; font-size: 13.5px; font-weight: 700; border-radius: 5px; padding: 4px 6px; outline: none;
-    }
-    .host-inline-input:focus { border-style: solid; border-color: #c084fc; background: rgba(192, 132, 252, 0.12); }
-    .host-inline-input::placeholder { color: #64748b; font-style: italic; font-weight: 600; }
 
     /* LATAR WARNA KUSTOM BARIS */
     tr.tag-blue td, tr.tag-blue.host-row td { 
-      background: #bfdbfe !important; 
-      color: #0f172a !important; 
-      border-bottom: 1px solid #93c5fd !important;
-      border-right-color: #93c5fd !important;
+      background: #bfdbfe !important; color: #0f172a !important; 
+      border-bottom: 1px solid #93c5fd !important; border-right-color: #93c5fd !important;
     }
     tr.tag-blue .name-tiktok { color: #0f172a !important; font-weight: 800; }
     tr.tag-blue .name-roblox-display { color: #1e40af !important; font-weight: 700; }
     tr.tag-blue .td-no { background: #93c5fd !important; color: #1e3a8a !important; }
     tr.tag-blue .score-val { background: #ffffff !important; color: #0f172a !important; border-color: #93c5fd !important; }
     tr.tag-blue .pay-status-tag.ready { background: #ffffff; color: #475569; border-color: #cbd5e1; }
-    tr.tag-blue .host-inline-input { color: #0f172a !important; border-color: #93c5fd; }
-    tr.tag-blue .host-inline-input::placeholder { color: #475569 !important; }
 
     tr.tag-pink td, tr.tag-pink.host-row td { 
-      background: #fbcfe8 !important; 
-      color: #0f172a !important; 
-      border-bottom: 1px solid #f472b6 !important;
-      border-right-color: #f472b6 !important;
+      background: #fbcfe8 !important; color: #0f172a !important; 
+      border-bottom: 1px solid #f472b6 !important; border-right-color: #f472b6 !important;
     }
     tr.tag-pink .name-tiktok { color: #831843 !important; font-weight: 800; }
     tr.tag-pink .name-roblox-display { color: #9d174d !important; font-weight: 700; }
     tr.tag-pink .td-no { background: #f472b6 !important; color: #ffffff !important; }
     tr.tag-pink .score-val { background: #ffffff !important; color: #831843 !important; border-color: #f472b6 !important; }
     tr.tag-pink .pay-status-tag.ready { background: #ffffff; color: #831843; border-color: #fbcfe8; }
-    tr.tag-pink .host-inline-input { color: #831843 !important; border-color: #f472b6; }
-    tr.tag-pink .host-inline-input::placeholder { color: #9d174d !important; }
 
     tr.tag-purple td, tr.tag-purple.host-row td { 
-      background: #4c1d95 !important; 
-      color: #f5f3ff !important; 
-      border-bottom: 1px solid #7c3aed !important;
-      border-right-color: #7c3aed !important;
+      background: #4c1d95 !important; color: #f5f3ff !important; 
+      border-bottom: 1px solid #7c3aed !important; border-right-color: #7c3aed !important;
     }
     tr.tag-purple .name-tiktok { color: #ffffff !important; font-weight: 800; }
     tr.tag-purple .name-roblox-display { color: #ddd6fe !important; font-weight: 700; }
     tr.tag-purple .td-no { background: #6d28d9 !important; color: #f5f3ff !important; }
     tr.tag-purple .score-val { background: #1e1b4b !important; color: #e9d5ff !important; border-color: #a855f7 !important; }
     tr.tag-purple .pay-status-tag.ready { background: #3b0764; color: #e9d5ff; border-color: #7c3aed; }
-    tr.tag-purple .host-inline-input { color: #f5f3ff !important; border-color: #a855f7; }
-    tr.tag-purple .host-inline-input::placeholder { color: #c4b5fd !important; }
 
     tr.tag-red td, tr.tag-red.host-row td { 
-      background: #e11d48 !important; 
-      color: #ffffff !important; 
-      border-bottom: 1px solid #be123c !important;
-      border-right-color: #be123c !important;
+      background: #e11d48 !important; color: #ffffff !important; 
+      border-bottom: 1px solid #be123c !important; border-right-color: #be123c !important;
     }
     tr.tag-red .name-tiktok { color: #ffffff !important; font-weight: 900; }
     tr.tag-red .name-roblox-display { color: #ffe4e6 !important; font-weight: 700; }
     tr.tag-red .td-no { background: #be123c !important; color: #ffffff !important; }
     tr.tag-red .score-val { background: #ffffff !important; color: #be123c !important; border-color: #ffffff !important; }
     tr.tag-red .pay-status-tag.ready { background: #9f1239; color: #ffe4e6; border-color: #be123c; }
-    tr.tag-red .host-inline-input { color: #ffffff !important; border-color: rgba(255, 255, 255, 0.4); }
-    tr.tag-red .host-inline-input::placeholder { color: #fecdd3 !important; }
+
+    /* Tema Kuning untuk Baris */
+    tr.tag-yellow td, tr.tag-yellow.host-row td { 
+      background: #fef08a !important; color: #713f12 !important; 
+      border-bottom: 1px solid #facc15 !important; border-right-color: #facc15 !important;
+    }
+    tr.tag-yellow .name-tiktok { color: #713f12 !important; font-weight: 900; }
+    tr.tag-yellow .name-roblox-display { color: #854d0e !important; font-weight: 800; }
+    tr.tag-yellow .td-no { background: #facc15 !important; color: #713f12 !important; }
+    tr.tag-yellow .score-val { background: #ffffff !important; color: #713f12 !important; border-color: #facc15 !important; }
+    tr.tag-yellow .pay-status-tag.ready { background: #ffffff; color: #854d0e; border-color: #fef08a; }
 
     .avatar-mini { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; background: #141f36; border: 1px solid #334155; flex-shrink: 0; }
     .avatar-placeholder { width: 30px; height: 30px; border-radius: 50%; background: #141f36; border: 1px solid #334155; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #94a3b8; }
@@ -577,12 +567,13 @@
   </div>
 </div>
 
-<!-- MINI PALET WARNA (BIRU, PINK, UNGU, MERAH) -->
+<!-- MINI PALET WARNA (BIRU, PINK, UNGU, MERAH, KUNING) -->
 <div class="color-picker-mini" id="miniColorPicker" onclick="event.stopPropagation()">
   <span class="cp-dot c-blue" title="Biru Langit" onclick="pilihWarnaKustom('blue')"></span>
   <span class="cp-dot c-pink" title="Pink Pastel" onclick="pilihWarnaKustom('pink')"></span>
   <span class="cp-dot c-purple" title="Ungu Cyber" onclick="pilihWarnaKustom('purple')"></span>
   <span class="cp-dot c-red" title="Merah Solid" onclick="pilihWarnaKustom('red')"></span>
+  <span class="cp-dot c-yellow" title="Kuning Cyber" onclick="pilihWarnaKustom('yellow')"></span>
   <span class="cp-dot c-reset" title="Reset Default" onclick="pilihWarnaKustom('')"></span>
 </div>
 
@@ -670,8 +661,8 @@
     </div>
 
     <div class="hud-action-row">
-      <button class="btn-hud-reset" type="button" onclick="resetFormModalNama()">Reset </button>
-      <button class="btn-hud-save" type="button" onclick="simpanDataModalNama()">Simpan </button>
+      <button class="btn-hud-reset" type="button" onclick="resetFormModalNama()">Reset</button>
+      <button class="btn-hud-save" type="button" onclick="simpanDataModalNama()">Simpan</button>
     </div>
   </div>
 </div>
@@ -790,7 +781,7 @@
       players.push({ 
         id: `p_kursi_${Date.now()}_${i}_${Math.random().toString(36).substr(2, 4)}`, 
         robloxUser: '', user: '', nick: '', avatar: '', poin: 0, 
-        isReady: false, isPaid: false, colorTag: ''
+        isReady: false, isPaid: false, colorTag: '' 
       });
     }
     return {
@@ -822,6 +813,7 @@
   if (db.data && db.data.host) {
     if (!db.data.host.id) db.data.host.id = `p_host_init`;
     if (db.data.host.avatar === undefined) db.data.host.avatar = '';
+    if (db.data.host.robloxUser === undefined) db.data.host.robloxUser = db.data.host.user || '';
     if (db.data.host.user === undefined) db.data.host.user = '';
     if (db.data.host.nick === undefined) db.data.host.nick = '';
     db.data.host.isReady = true;
@@ -850,7 +842,7 @@
     picker.classList.add('show');
     const rect = ev.currentTarget.getBoundingClientRect();
     let leftPos = rect.right + 6;
-    if (leftPos + 110 > window.innerWidth) leftPos = rect.left - 110;
+    if (leftPos + 140 > window.innerWidth) leftPos = rect.left - 140;
     picker.style.left = `${leftPos}px`;
     picker.style.top = `${rect.top - 4}px`;
   }
@@ -867,7 +859,7 @@
     tutupMiniColorPicker();
 
     if (idx === 19) {
-      if (!db.data.host) db.data.host = { user: '', nick: '', poin: 0, isReady: true, isPaid: true, colorTag: '' };
+      if (!db.data.host) db.data.host = { robloxUser: '', user: '', nick: '', avatar: '', poin: 0, isReady: true, isPaid: true, colorTag: '' };
       db.data.host.colorTag = warna;
     } else {
       const p = db.data.players[idx];
@@ -971,7 +963,7 @@
     if (!popup) return;
     if (popupCenterTimer) clearTimeout(popupCenterTimer);
 
-    popup.classList.remove('theme-purple', 'theme-pink', 'theme-red', 'theme-blue');
+    popup.classList.remove('theme-purple', 'theme-pink', 'theme-red', 'theme-blue', 'theme-yellow');
     if (warnaTag) {
       popup.classList.add(`theme-${warnaTag}`);
     }
@@ -991,7 +983,7 @@
   }
 
   function tesPopupTengahManual() {
-    tampilkanPopupPoinTengah("BOBOHU", 5, 20, "TES NOTIFIKASI", "purple");
+    tampilkanPopupPoinTengah("BOBOHU", 5, 20, "TES NOTIFIKASI", "yellow");
     tambahLogAktivitas('TEST', 'Tes popup notifikasi tengah', 'system');
   }
 
@@ -1236,14 +1228,15 @@
     loop();
   }
 
+  /* MODAL INPUT: SEKARANG MENDUKUNG KURSI 20 (HOST) */
   function bukaModalInputNama(index) {
-    if (index === 19) return;
     tutupQuickPointPopover();
     tutupMiniColorPicker();
-    const p = db.data.players[index];
+    const p = (index === 19) ? db.data.host : db.data.players[index];
+    if (!p) return;
 
     document.getElementById('editPlayerIndex').value = index;
-    document.getElementById('modalInputJudul').innerText = `Kursi ${index + 1}`;
+    document.getElementById('modalInputJudul').innerText = (index === 19) ? 'Kursi 20 (Host)' : `Kursi ${index + 1}`;
     document.getElementById('inputUserRoblox').value = p.robloxUser || '';
     document.getElementById('inputNamaTikTok').value = p.user || '';
     document.getElementById('inputDisplayName').value = p.nick || '';
@@ -1283,12 +1276,25 @@
     updateModalPreviewUI('', '', '');
     document.getElementById('modalSearchStatus').innerText = '';
 
-    if (!isNaN(idx) && idx >= 0 && db.data.players[idx]) {
-      const namaLama = db.data.players[idx].nick || db.data.players[idx].user || `Kursi ${idx + 1}`;
-      db.data.players[idx].robloxUser = ''; db.data.players[idx].user = ''; db.data.players[idx].nick = ''; db.data.players[idx].avatar = '';
-      db.data.players[idx].poin = 0; db.data.players[idx].isReady = false; db.data.players[idx].isPaid = false; db.data.players[idx].colorTag = '';
-      tutupModalNama(); urutkanOtomatis();
-      tambahLogAktivitas('RESET', `${namaLama} dihapus & kursi digeser ke bawah`, 'system');
+    if (!isNaN(idx) && idx >= 0) {
+      if (idx === 19) {
+        db.data.host.robloxUser = '';
+        db.data.host.user = '';
+        db.data.host.nick = '';
+        db.data.host.avatar = '';
+        db.data.host.poin = 0;
+        db.data.host.colorTag = '';
+        tutupModalNama();
+        simpanDB();
+        renderIsiTabel();
+        tambahLogAktivitas('RESET', 'Host berhasil direset', 'system');
+      } else if (db.data.players[idx]) {
+        const namaLama = db.data.players[idx].nick || db.data.players[idx].user || `Kursi ${idx + 1}`;
+        db.data.players[idx].robloxUser = ''; db.data.players[idx].user = ''; db.data.players[idx].nick = ''; db.data.players[idx].avatar = '';
+        db.data.players[idx].poin = 0; db.data.players[idx].isReady = false; db.data.players[idx].isPaid = false; db.data.players[idx].colorTag = '';
+        tutupModalNama(); urutkanOtomatis();
+        tambahLogAktivitas('RESET', `${namaLama} dihapus & kursi digeser ke bawah`, 'system');
+      }
     }
   }
 
@@ -1351,6 +1357,19 @@
       avatarA = `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(inisialNama)}&backgroundColor=0284c7`;
     }
 
+    if (idx === 19) {
+      const h = db.data.host;
+      h.robloxUser = robloxU;
+      h.user = namaPemain;
+      h.nick = displayN;
+      h.avatar = avatarA;
+      tutupModalNama();
+      simpanDB();
+      renderIsiTabel();
+      tambahLogAktivitas('EDIT', `Host diperbarui: ${h.nick || h.user || '(Kosong)'}`, 'system');
+      return;
+    }
+
     const p = db.data.players[idx];
     p.robloxUser = robloxU;
     p.user = namaPemain;
@@ -1366,16 +1385,6 @@
     tutupModalNama();
     urutkanOtomatis();
     tambahLogAktivitas('EDIT', `Kursi ${idx + 1} diperbarui: ${p.nick || p.user || '(Kosong)'}`, 'system');
-  }
-
-  function simpanHostLangsung(field, val) {
-    if (!db.data.host) return;
-    const cleanVal = (val || '').trim();
-    db.data.host[field] = cleanVal;
-    if (field === 'user' && !db.data.host.nick) db.data.host.nick = cleanVal;
-    if (field === 'nick' && !db.data.host.user) db.data.host.user = cleanVal;
-    simpanDB();
-    tambahLogAktivitas('HOST', `Host diubah: ${db.data.host.user || '(Kosong)'} / ${db.data.host.nick || '(Kosong)'}`, 'system');
   }
 
   function bukaModalPoin() { 
@@ -1438,33 +1447,25 @@
       if (i < 10) tbL.appendChild(tr); else tbR.appendChild(tr);
     }
 
-    // KURSI 20: HOST
+    // KURSI 20: HOST DENGAN MERGE KOLOM NAMA & DISPLAY NAME
     const trHost = document.createElement('tr');
     trHost.className = "host-row";
     trHost.id = "row-kursi-19";
     trHost.innerHTML = `
       <td class="td-no">20</td>
-      <td>
-        <div style="display:flex; align-items:center; gap:4px; padding:0 2px;">
-          <input type="text" id="hostInputUser" class="host-inline-input" 
-                 value="${db.data.host.user || ''}" 
-                 placeholder="(KOSONG)" 
-                 onfocus="this.select()" 
-                 onchange="simpanHostLangsung('user', this.value)" 
-                 onkeydown="if(event.key==='Enter')this.blur()">
-          <span class="pay-status-tag done" title="Host">HOST</span>
-          <span class="btn-color-palette" onclick="bukaMiniColorPicker(19, event)" title="Ubah warna latar baris">🎨</span>
-        </div>
-      </td>
-      <td>
-        <div style="display:flex; align-items:center; gap:6px; padding:0 2px;">
-          <div class="host-avatar-wrap"><div class="avatar-placeholder" style="color:var(--host-text); background:#1e293b;">H</div></div>
-          <input type="text" id="hostInputNick" class="host-inline-input" 
-                 value="${db.data.host.nick || ''}" 
-                 placeholder="(KOSONG)" 
-                 onfocus="this.select()" 
-                 onchange="simpanHostLangsung('nick', this.value)" 
-                 onkeydown="if(event.key==='Enter')this.blur()">
+      <td colspan="2" class="cell-click-popup cell-host-merged" title="Klik untuk edit data Host" onclick="bukaModalInputNama(19)">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:0 6px;">
+          <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
+            <div class="avatar-wrap" id="hostAvatarWrap">${renderAvatarHtml(db.data.host.avatar, db.data.host.nick || db.data.host.user || 'Host')}</div>
+            <div style="display:flex; flex-direction:column; min-width:0;">
+              <span id="hostDisplayName" class="name-roblox-display" style="font-weight:800; font-size:14px; color:var(--text-main);">${db.data.host.nick || db.data.host.user || 'HOST (Belum Diatur)'}</span>
+              <span id="hostRobloxTag" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-sub); overflow:hidden; text-overflow:ellipsis;">${db.data.host.robloxUser ? '@' + db.data.host.robloxUser : '@host'}</span>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:4px; flex-shrink:0;">
+            <span class="pay-status-tag done" title="Status Host">HOST</span>
+            <span class="btn-color-palette" onclick="bukaMiniColorPicker(19, event)" title="Ubah warna latar baris">🎨</span>
+          </div>
         </div>
       </td>
       <td class="col-point">
@@ -1492,7 +1493,7 @@
       const adaPemain = !!(p.user || p.robloxUser || p.nick);
       p.isReady = adaPemain;
 
-      tr.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red');
+      tr.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow');
       if (p.colorTag) {
         tr.classList.add(`tag-${p.colorTag}`);
       }
@@ -1541,32 +1542,42 @@
       }
     });
 
-    const h = db.data.host || { user: '', nick: '', poin: 0, colorTag: '' };
+    // Render Host (Baris 20)
+    const h = db.data.host || { robloxUser: '', user: '', nick: '', avatar: '', poin: 0, colorTag: '' };
     const trHost = document.getElementById('row-kursi-19');
     if (trHost) {
-      trHost.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red');
+      trHost.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow');
       if (h.colorTag) {
         trHost.classList.add(`tag-${h.colorTag}`);
       }
 
-      const inpUser = document.getElementById('hostInputUser');
-      const inpNick = document.getElementById('hostInputNick');
-      if (inpUser && document.activeElement !== inpUser) inpUser.value = h.user || '';
-      if (inpNick && document.activeElement !== inpNick) inpNick.value = h.nick || '';
+      const hostAvatar = document.getElementById('hostAvatarWrap');
+      const hostNick = document.getElementById('hostDisplayName');
+      const hostTag = document.getElementById('hostRobloxTag');
+
+      if (hostAvatar) hostAvatar.innerHTML = renderAvatarHtml(h.avatar, h.nick || h.user || 'Host');
+      if (hostNick) {
+        hostNick.innerText = h.nick || h.user || 'HOST (Belum Diatur)';
+        hostNick.className = `name-roblox-display ${!(h.nick || h.user) ? 'name-empty' : ''}`;
+      }
+      if (hostTag) {
+        hostTag.innerText = h.robloxUser ? `@${h.robloxUser}` : (h.user ? `@${h.user}` : '@host');
+      }
+
       const hostScoreEl = trHost.querySelector('.host-score');
       if (hostScoreEl) hostScoreEl.innerText = h.poin;
     }
   }
 
+  /* SORTIR OTOMATIS: HANYA MENGURUTKAN 1-19, NO 20 TETAP DI TEMPATNYA */
   function urutkanOtomatis() {
     for (let i = 0; i < 19; i++) {
       const el = document.getElementById(`row-kursi-${i}`);
       if (el) { el.classList.remove('moving-row'); el.style.transform = ''; }
     }
 
-    const posisiLama = {}; const oldIndexMap = {};
+    const posisiLama = {};
     db.data.players.forEach((p, idx) => {
-      oldIndexMap[p.id] = idx;
       const el = document.getElementById(`row-kursi-${idx}`);
       if (el) posisiLama[p.id] = el.getBoundingClientRect().top;
     });
@@ -1580,7 +1591,8 @@
     aktifSiap.sort((a, b) => b.poin - a.poin);
     db.data.players = [...aktifSiap, ...kursiKosong];
 
-    simpanDB(); renderIsiTabel();
+    simpanDB(); 
+    renderIsiTabel();
 
     requestAnimationFrame(() => {
       db.data.players.forEach((p, idx) => {
