@@ -75,19 +75,34 @@
     }
     .btn-notif-trigger:hover { background: #047857; color: #ffffff; }
 
-    /* DROPDOWN RESET */
+    /* DROPDOWN RESET & SESI */
     .dropdown { position: relative; display: inline-block; }
     .dropdown-content {
       display: none; position: absolute; top: 100%; left: 0; margin-top: 4px;
-      background-color: #0f172a; min-width: 170px; box-shadow: 0 10px 25px rgba(0,0,0,0.55);
+      background-color: #0f172a; width: auto; min-width: 120px; box-shadow: 0 10px 25px rgba(0,0,0,0.55);
       border-radius: 8px; border: 1px solid #334155; z-index: 1000; overflow: hidden;
     }
-    .dropdown-content button {
-      width: 100%; text-align: left; padding: 8px 12px; font-size: 11.5px; font-weight: 700;
-      border: none; background: transparent; cursor: pointer; color: #e2e8f0; border-bottom: 1px solid #1e293b;
+    /* Batas maksimal tinggi list sesi dengan scrollbar */
+    .dropdown-content.scrollable-list {
+      max-height: 220px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #334155 #0f172a;
     }
-    .dropdown-content button:last-child { border-bottom: none; }
-    .dropdown-content button:hover { background: #1e293b; color: var(--primary); }
+    .dropdown-content .dropdown-item-custom {
+      width: 100%; text-align: left; padding: 8px 12px; font-size: 12px; font-weight: 700;
+      border: none; background: transparent; cursor: pointer; color: #e2e8f0; border-bottom: 1px solid #1e293b;
+      display: flex; justify-content: flex-start; align-items: center; gap: 14px; white-space: nowrap;
+    }
+    .dropdown-content .dropdown-item-custom:hover { background: #1e293b; color: var(--primary); }
+    
+    .dropdown-content .btn-tambah-sesi {
+      width: 100%; text-align: left; padding: 9px 12px; font-size: 12px; font-weight: 800;
+      border: none; background: #131d31; color: #38bdf8; cursor: pointer; border-top: 1px solid #334155;
+      display: flex; justify-content: flex-start; align-items: center; white-space: nowrap;
+    }
+    .dropdown-content .btn-tambah-sesi:hover { background: #1e2b45; color: #ffffff; }
+    
     .dropdown.show .dropdown-content { display: block; }
 
     /* POPUP NOTIFIKASI CYBER HUD */
@@ -159,7 +174,6 @@
     .center-notif-popup.theme-red .c-notif-pts-main { color: #fb7185; }
     .center-notif-popup.theme-red .c-notif-pts-total { color: #ffe4e6; }
 
-    /* Tema Kuning untuk Notifikasi */
     .center-notif-popup.theme-yellow {
       border-color: rgba(250, 204, 21, 0.85);
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(250, 204, 21, 0.35);
@@ -252,7 +266,7 @@
     }
     .btn-color-palette:hover { transform: scale(1.25); filter: grayscale(0); }
 
-    /* MINI PALET WARNA (BIRU, PINK, UNGU, MERAH, KUNING) */
+    /* MINI PALET WARNA */
     .color-picker-mini {
       display: none; position: absolute; z-index: 36000; background: #0f172a;
       border: 1px solid #334155; border-radius: 8px; padding: 5px 6px;
@@ -323,7 +337,6 @@
     tr.tag-red .score-val { background: #ffffff !important; color: #be123c !important; border-color: #ffffff !important; }
     tr.tag-red .pay-status-tag.ready { background: #9f1239; color: #ffe4e6; border-color: #be123c; }
 
-    /* Tema Kuning untuk Baris */
     tr.tag-yellow td, tr.tag-yellow.host-row td { 
       background: #fef08a !important; color: #713f12 !important; 
       border-bottom: 1px solid #facc15 !important; border-right-color: #facc15 !important;
@@ -486,11 +499,20 @@
       <button class="btn-action-soft" onclick="bukaModalPoin()">Point Preset</button>
       <button class="btn-action-soft" onclick="bukaModalNotifSuara()">Settings Audio</button>
       
+      <!-- DROPDOWN RESET -->
       <div class="dropdown" id="dropdownReset">
         <button class="btn-action-soft" onclick="toggleDropdownReset(event)">RESET ▾</button>
         <div class="dropdown-content">
           <button onclick="bukaModalKonfirmasiReset('POINT')">Reset Poin Saja</button>
           <button onclick="bukaModalKonfirmasiReset('SEMUA')">Kosongkan Semua Kursi</button>
+        </div>
+      </div>
+
+      <!-- DROPDOWN SESI -->
+      <div class="dropdown" id="dropdownSesi">
+        <button class="btn-action-soft" onclick="toggleDropdownSesi(event)"><span id="labelSesiAktif">Sesi 1</span> ▾</button>
+        <div class="dropdown-content scrollable-list" id="listDropdownSesi">
+          <!-- Item sesi dirender dinamis -->
         </div>
       </div>
     </div>
@@ -567,7 +589,7 @@
   </div>
 </div>
 
-<!-- MINI PALET WARNA (BIRU, PINK, UNGU, MERAH, KUNING) -->
+<!-- MINI PALET WARNA -->
 <div class="color-picker-mini" id="miniColorPicker" onclick="event.stopPropagation()">
   <span class="cp-dot c-blue" title="Biru Langit" onclick="pilihWarnaKustom('blue')"></span>
   <span class="cp-dot c-pink" title="Pink Pastel" onclick="pilihWarnaKustom('pink')"></span>
@@ -767,7 +789,7 @@
 </div>
 
 <script>
-  const DB_KEY = 'single_leaderboard_cyber_hud_v2';
+  const DB_KEY = 'single_leaderboard_cyber_hud_v3';
   const AUDIO_POIN_KEY = 'galatama_custom_sound_mitos';
   const COL_WIDTHS_KEY = 'galatama_single_col_widths_cyber_v1';
   const LOG_FOLD_KEY = 'galatama_log_is_folded';
@@ -792,33 +814,22 @@
 
   let db = JSON.parse(localStorage.getItem(DB_KEY)) || {
     warnaPoin: { quickPoints: DEFAULT_QUICK_POINTS },
-    data: buatDataTabelKosong()
+    sessions: {
+      "Sesi 1": buatDataTabelKosong()
+    },
+    activeSession: "Sesi 1"
   };
 
   if (!db.warnaPoin) db.warnaPoin = { quickPoints: DEFAULT_QUICK_POINTS };
-  if (!Array.isArray(db.warnaPoin.quickPoints) || db.warnaPoin.quickPoints.length === 0) db.warnaPoin.quickPoints = DEFAULT_QUICK_POINTS;
-  if (!db.data) db.data = buatDataTabelKosong();
-
-  if (db.data && db.data.players) {
-    db.data.players.forEach((p, idx) => {
-      if (!p.id) p.id = `p_init_${idx}_${Math.random().toString(36).substr(2, 4)}`;
-      if (p.avatar === undefined) p.avatar = '';
-      if (p.robloxUser === undefined) p.robloxUser = p.user || '';
-      const punyaNama = Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()));
-      p.isReady = punyaNama;
-      if (p.isPaid === undefined) p.isPaid = false;
-      if (p.colorTag === undefined) p.colorTag = '';
-    });
+  if (!db.sessions || typeof db.sessions !== 'object' || Object.keys(db.sessions).length === 0) {
+    db.sessions = { "Sesi 1": buatDataTabelKosong() };
   }
-  if (db.data && db.data.host) {
-    if (!db.data.host.id) db.data.host.id = `p_host_init`;
-    if (db.data.host.avatar === undefined) db.data.host.avatar = '';
-    if (db.data.host.robloxUser === undefined) db.data.host.robloxUser = db.data.host.user || '';
-    if (db.data.host.user === undefined) db.data.host.user = '';
-    if (db.data.host.nick === undefined) db.data.host.nick = '';
-    db.data.host.isReady = true;
-    db.data.host.isPaid = true;
-    if (db.data.host.colorTag === undefined) db.data.host.colorTag = '';
+  if (!db.activeSession || !db.sessions[db.activeSession]) {
+    db.activeSession = Object.keys(db.sessions)[0];
+  }
+
+  function getActiveData() {
+    return db.sessions[db.activeSession];
   }
 
   let customAudioPoinData = localStorage.getItem(AUDIO_POIN_KEY) || null;
@@ -831,6 +842,88 @@
   let savedColWidths = JSON.parse(localStorage.getItem(COL_WIDTHS_KEY)) || {
     no: "38px", nama: "210px", display: "180px", point: "95px"
   };
+
+  /* FITUR DROPDOWN SESI */
+  function toggleDropdownSesi(e) {
+    e.stopPropagation();
+    tutupSemuaDropdown();
+    const el = document.getElementById('dropdownSesi');
+    const wasOpen = el.classList.contains('show');
+    if (!wasOpen) {
+      renderListDropdownSesi();
+      el.classList.add('show');
+    }
+  }
+
+  function renderListDropdownSesi() {
+    const listEl = document.getElementById('listDropdownSesi');
+    if (!listEl) return;
+    
+    document.getElementById('labelSesiAktif').innerText = db.activeSession;
+
+    let html = '';
+    Object.keys(db.sessions).forEach(sesiName => {
+      const isAktif = sesiName === db.activeSession;
+      html += `
+        <div class="dropdown-item-custom" style="background: ${isAktif ? '#1e293b' : 'transparent'}; color: ${isAktif ? '#38bdf8' : '#e2e8f0'};" onclick="pilihSesi('${sesiName}', event)">
+          <span style="white-space: nowrap; margin-right: 18px;">${sesiName} ${isAktif ? '✔' : ''}</span>
+          ${Object.keys(db.sessions).length > 1 ? `<button type="button" onclick="hapusSesi('${sesiName}', event)" style="background:none; border:none; color:#f87171; font-weight:900; cursor:pointer; padding:2px 6px; margin-left:auto;" title="Hapus sesi">×</button>` : ''}
+        </div>
+      `;
+    });
+
+    html += `
+      <button type="button" class="btn-tambah-sesi" onclick="tambahSesiBaruInstan(event)">
+        +Tambah
+      </button>
+    `;
+    listEl.innerHTML = html;
+  }
+
+  function pilihSesi(sesiName, e) {
+    if (e) e.stopPropagation();
+    db.activeSession = sesiName;
+    simpanDB();
+    renderIsiTabel();
+    tutupSemuaDropdown();
+    tambahLogAktivitas('SESI', `Beralih ke ${sesiName}`, 'system');
+  }
+
+  /* Menambah sesi baru secara instan */
+  function tambahSesiBaruInstan(e) {
+    if (e) e.stopPropagation();
+    let counter = Object.keys(db.sessions).length + 1;
+    let newName = `Sesi ${counter}`;
+    while (db.sessions[newName]) {
+      counter++;
+      newName = `Sesi ${counter}`;
+    }
+
+    db.sessions[newName] = buatDataTabelKosong();
+    db.activeSession = newName;
+    simpanDB();
+    renderListDropdownSesi();
+    renderIsiTabel();
+    tambahLogAktivitas('SESI', `Sesi baru "${newName}" ditambahkan`, 'system');
+  }
+
+  function hapusSesi(sesiName, e) {
+    if (e) e.stopPropagation();
+    if (Object.keys(db.sessions).length <= 1) {
+      alert("Minimal harus ada 1 sesi!");
+      return;
+    }
+    if (confirm(`Yakin ingin menghapus sesi "${sesiName}"?`)) {
+      delete db.sessions[sesiName];
+      if (db.activeSession === sesiName) {
+        db.activeSession = Object.keys(db.sessions)[0];
+      }
+      simpanDB();
+      renderListDropdownSesi();
+      renderIsiTabel();
+      tambahLogAktivitas('SESI', `Sesi "${sesiName}" dihapus`, 'system');
+    }
+  }
 
   /* FITUR PILIH WARNA KUSTOM TIAP BARIS */
   function bukaMiniColorPicker(idx, ev) {
@@ -857,12 +950,13 @@
     if (activeColorTagIndex === null) return;
     const idx = activeColorTagIndex;
     tutupMiniColorPicker();
+    const currData = getActiveData();
 
     if (idx === 19) {
-      if (!db.data.host) db.data.host = { robloxUser: '', user: '', nick: '', avatar: '', poin: 0, isReady: true, isPaid: true, colorTag: '' };
-      db.data.host.colorTag = warna;
+      if (!currData.host) currData.host = { robloxUser: '', user: '', nick: '', avatar: '', poin: 0, isReady: true, isPaid: true, colorTag: '' };
+      currData.host.colorTag = warna;
     } else {
-      const p = db.data.players[idx];
+      const p = currData.players[idx];
       if (p) p.colorTag = warna;
     }
     
@@ -879,7 +973,8 @@
 
   function bukaQuickPointPopover(index, ev) {
     if (ev) ev.stopPropagation();
-    const p = (index === 19) ? db.data.host : db.data.players[index];
+    const currData = getActiveData();
+    const p = (index === 19) ? currData.host : currData.players[index];
     if (!p) return;
     if (index !== 19 && !p.isReady) {
       bukaModalInputNama(index);
@@ -923,7 +1018,8 @@
   }
 
   function terapkanTambahPoin(idx, delta) {
-    const p = (idx === 19) ? db.data.host : db.data.players[idx];
+    const currData = getActiveData();
+    const p = (idx === 19) ? currData.host : currData.players[idx];
     if (!p || (idx !== 19 && !p.isReady)) return;
 
     const awal = p.poin;
@@ -943,7 +1039,8 @@
     const val = Math.max(0, parseInt(document.getElementById('qpDirectInput').value) || 0);
     tutupQuickPointPopover();
 
-    const p = (idx === 19) ? db.data.host : db.data.players[idx];
+    const currData = getActiveData();
+    const p = (idx === 19) ? currData.host : currData.players[idx];
     if (!p || (idx !== 19 && !p.isReady)) return;
 
     const awal = p.poin;
@@ -957,7 +1054,6 @@
     tambahLogAktivitas(namaTampil, `Total poin disetel ke ${p.poin}`, 'system', awal, p.poin, Math.abs(selisih));
   }
 
-  /* POPUP NOTIFIKASI OTOMATIS IKUT WARNA BARIS */
   function tampilkanPopupPoinTengah(namaPemain, deltaPoin, totalPoin, labelAtas = "UPDATE POIN", warnaTag = "") {
     const popup = document.getElementById('centerNotifPopup');
     if (!popup) return;
@@ -1125,15 +1221,16 @@
   function tutupModalKonfirmasiResetTabel() { document.getElementById('modalConfirmResetTabel').style.display = 'none'; tipeResetPending = null; }
 
   function eksekusiResetTabelPasti() {
+    const currData = getActiveData();
     if (tipeResetPending === 'POINT') {
-      db.data.players.forEach(p => { p.poin = 0; });
-      if (db.data.host) { db.data.host.poin = 0; }
+      currData.players.forEach(p => { p.poin = 0; });
+      if (currData.host) { currData.host.poin = 0; }
       simpanDB(); urutkanOtomatis();
-      tambahLogAktivitas('RESET', `Semua poin direset ke 0`, 'system');
+      tambahLogAktivitas('RESET', `Semua poin ${db.activeSession} direset ke 0`, 'system');
     } else if (tipeResetPending === 'SEMUA') {
-      db.data = buatDataTabelKosong();
+      db.sessions[db.activeSession] = buatDataTabelKosong();
       simpanDB(); renderIsiTabel();
-      tambahLogAktivitas('RESET', `Seluruh data tabel dikosongkan`, 'system');
+      tambahLogAktivitas('RESET', `Seluruh data ${db.activeSession} dikosongkan`, 'system');
     }
     tutupModalKonfirmasiResetTabel();
   }
@@ -1153,7 +1250,8 @@
   function tampilkanLayarPemenang() {
     tutupQuickPointPopover();
     tutupMiniColorPicker();
-    const sorted = [...db.data.players].filter(p => p.isReady && (p.nick || p.user || p.robloxUser)).sort((a, b) => b.poin - a.poin);
+    const currData = getActiveData();
+    const sorted = [...currData.players].filter(p => p.isReady && (p.nick || p.user || p.robloxUser)).sort((a, b) => b.poin - a.poin);
     const p1 = sorted[0] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
     const p2 = sorted[1] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
     const p3 = sorted[2] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
@@ -1228,11 +1326,11 @@
     loop();
   }
 
-  /* MODAL INPUT: SEKARANG MENDUKUNG KURSI 20 (HOST) */
   function bukaModalInputNama(index) {
     tutupQuickPointPopover();
     tutupMiniColorPicker();
-    const p = (index === 19) ? db.data.host : db.data.players[index];
+    const currData = getActiveData();
+    const p = (index === 19) ? currData.host : currData.players[index];
     if (!p) return;
 
     document.getElementById('editPlayerIndex').value = index;
@@ -1276,22 +1374,23 @@
     updateModalPreviewUI('', '', '');
     document.getElementById('modalSearchStatus').innerText = '';
 
+    const currData = getActiveData();
     if (!isNaN(idx) && idx >= 0) {
       if (idx === 19) {
-        db.data.host.robloxUser = '';
-        db.data.host.user = '';
-        db.data.host.nick = '';
-        db.data.host.avatar = '';
-        db.data.host.poin = 0;
-        db.data.host.colorTag = '';
+        currData.host.robloxUser = '';
+        currData.host.user = '';
+        currData.host.nick = '';
+        currData.host.avatar = '';
+        currData.host.poin = 0;
+        currData.host.colorTag = '';
         tutupModalNama();
         simpanDB();
         renderIsiTabel();
         tambahLogAktivitas('RESET', 'Host berhasil direset', 'system');
-      } else if (db.data.players[idx]) {
-        const namaLama = db.data.players[idx].nick || db.data.players[idx].user || `Kursi ${idx + 1}`;
-        db.data.players[idx].robloxUser = ''; db.data.players[idx].user = ''; db.data.players[idx].nick = ''; db.data.players[idx].avatar = '';
-        db.data.players[idx].poin = 0; db.data.players[idx].isReady = false; db.data.players[idx].isPaid = false; db.data.players[idx].colorTag = '';
+      } else if (currData.players[idx]) {
+        const namaLama = currData.players[idx].nick || currData.players[idx].user || `Kursi ${idx + 1}`;
+        currData.players[idx].robloxUser = ''; currData.players[idx].user = ''; currData.players[idx].nick = ''; currData.players[idx].avatar = '';
+        currData.players[idx].poin = 0; currData.players[idx].isReady = false; currData.players[idx].isPaid = false; currData.players[idx].colorTag = '';
         tutupModalNama(); urutkanOtomatis();
         tambahLogAktivitas('RESET', `${namaLama} dihapus & kursi digeser ke bawah`, 'system');
       }
@@ -1357,8 +1456,9 @@
       avatarA = `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(inisialNama)}&backgroundColor=0284c7`;
     }
 
+    const currData = getActiveData();
     if (idx === 19) {
-      const h = db.data.host;
+      const h = currData.host;
       h.robloxUser = robloxU;
       h.user = namaPemain;
       h.nick = displayN;
@@ -1370,7 +1470,7 @@
       return;
     }
 
-    const p = db.data.players[idx];
+    const p = currData.players[idx];
     p.robloxUser = robloxU;
     p.user = namaPemain;
     p.nick = displayN;
@@ -1412,7 +1512,8 @@
 
   function togglePayStatus(index, ev) {
     if (ev) ev.stopPropagation();
-    const p = (index === 19) ? db.data.host : db.data.players[index];
+    const currData = getActiveData();
+    const p = (index === 19) ? currData.host : currData.players[index];
     if (!p) return;
     p.isPaid = !p.isPaid;
     simpanDB(); renderIsiTabel();
@@ -1447,7 +1548,6 @@
       if (i < 10) tbL.appendChild(tr); else tbR.appendChild(tr);
     }
 
-    // KURSI 20: HOST DENGAN MERGE KOLOM NAMA & DISPLAY NAME
     const trHost = document.createElement('tr');
     trHost.className = "host-row";
     trHost.id = "row-kursi-19";
@@ -1456,10 +1556,10 @@
       <td colspan="2" class="cell-click-popup cell-host-merged" title="Klik untuk edit data Host" onclick="bukaModalInputNama(19)">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:0 6px;">
           <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
-            <div class="avatar-wrap" id="hostAvatarWrap">${renderAvatarHtml(db.data.host.avatar, db.data.host.nick || db.data.host.user || 'Host')}</div>
+            <div class="avatar-wrap" id="hostAvatarWrap"></div>
             <div style="display:flex; flex-direction:column; min-width:0;">
-              <span id="hostDisplayName" class="name-roblox-display" style="font-weight:800; font-size:14px; color:var(--text-main);">${db.data.host.nick || db.data.host.user || 'HOST (Belum Diatur)'}</span>
-              <span id="hostRobloxTag" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-sub); overflow:hidden; text-overflow:ellipsis;">${db.data.host.robloxUser ? '@' + db.data.host.robloxUser : '@host'}</span>
+              <span id="hostDisplayName" class="name-roblox-display" style="font-weight:800; font-size:14px; color:var(--text-main);"></span>
+              <span id="hostRobloxTag" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-sub); overflow:hidden; text-overflow:ellipsis;"></span>
             </div>
           </div>
           <div style="display:flex; align-items:center; gap:4px; flex-shrink:0;">
@@ -1486,7 +1586,10 @@
   }
 
   function renderIsiTabel() {
-    db.data.players.forEach((p, idx) => {
+    const currData = getActiveData();
+    document.getElementById('labelSesiAktif').innerText = db.activeSession;
+
+    currData.players.forEach((p, idx) => {
       let tr = document.getElementById(`row-kursi-${idx}`);
       if (!tr) return;
 
@@ -1543,7 +1646,7 @@
     });
 
     // Render Host (Baris 20)
-    const h = db.data.host || { robloxUser: '', user: '', nick: '', avatar: '', poin: 0, colorTag: '' };
+    const h = currData.host || { robloxUser: '', user: '', nick: '', avatar: '', poin: 0, colorTag: '' };
     const trHost = document.getElementById('row-kursi-19');
     if (trHost) {
       trHost.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow');
@@ -1569,33 +1672,33 @@
     }
   }
 
-  /* SORTIR OTOMATIS: HANYA MENGURUTKAN 1-19, NO 20 TETAP DI TEMPATNYA */
   function urutkanOtomatis() {
     for (let i = 0; i < 19; i++) {
       const el = document.getElementById(`row-kursi-${i}`);
       if (el) { el.classList.remove('moving-row'); el.style.transform = ''; }
     }
 
+    const currData = getActiveData();
     const posisiLama = {};
-    db.data.players.forEach((p, idx) => {
+    currData.players.forEach((p, idx) => {
       const el = document.getElementById(`row-kursi-${idx}`);
       if (el) posisiLama[p.id] = el.getBoundingClientRect().top;
     });
 
     const punyaIsi = (p) => Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()));
-    db.data.players.forEach(p => { p.isReady = punyaIsi(p); });
+    currData.players.forEach(p => { p.isReady = punyaIsi(p); });
 
-    const aktifSiap = db.data.players.filter(p => punyaIsi(p));
-    const kursiKosong = db.data.players.filter(p => !punyaIsi(p));
+    const aktifSiap = currData.players.filter(p => punyaIsi(p));
+    const kursiKosong = currData.players.filter(p => !punyaIsi(p));
 
     aktifSiap.sort((a, b) => b.poin - a.poin);
-    db.data.players = [...aktifSiap, ...kursiKosong];
+    currData.players = [...aktifSiap, ...kursiKosong];
 
     simpanDB(); 
     renderIsiTabel();
 
     requestAnimationFrame(() => {
-      db.data.players.forEach((p, idx) => {
+      currData.players.forEach((p, idx) => {
         if (posisiLama[p.id] !== undefined) {
           const el = document.getElementById(`row-kursi-${idx}`);
           if (el) {
@@ -1699,7 +1802,7 @@
     inisialisasiStrukturTabel();
     renderIsiTabel();
     inisialisasiResizeKolom();
-    tambahLogAktivitas('SISTEM', 'Scoreboard Siap Digunakan', 'system');
+    tambahLogAktivitas('SISTEM', `Scoreboard Siap - Sesi Aktif: ${db.activeSession}`, 'system');
   });
 </script>
 </body>
