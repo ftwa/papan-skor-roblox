@@ -1935,7 +1935,7 @@
     { id: 'duo_10', name: 'DUO 10', color: '#14b8a6', icon: '⚔️', chairRange: 'Kursi 19 - 20', chairs: [18, 19] }
   ];
 
-  function buatDataTabelKosong() {
+  function buatSlotModeKosong() {
     const players = [];
     for (let i = 0; i < 19; i++) {
       players.push({ 
@@ -1948,6 +1948,33 @@
       players: players,
       host: { id: `p_host_${Date.now()}`, robloxUser: '', user: '', nick: '', avatar: '', avatar3d: '', userId: '', poin: 0, isReady: true, isPaid: true, colorTag: '' }
     };
+  }
+
+  function buatDataTabelKosong() {
+    return {
+      duo: buatSlotModeKosong(),
+      solo: buatSlotModeKosong()
+    };
+  }
+
+  function pastikanStrukturSession(s) {
+    if (!s || typeof s !== 'object') return buatDataTabelKosong();
+    // Migrasi data sesi versi lama agar pemain tidak hilang dan mode terpisah sempurna
+    if (s.players && Array.isArray(s.players) && (!s.duo || !s.solo)) {
+      const curM = db.gameMode || 'duo';
+      const existingData = {
+        players: s.players,
+        host: s.host || { id: `p_host_${Date.now()}`, robloxUser: '', user: '', nick: '', avatar: '', avatar3d: '', userId: '', poin: 0, isReady: true, isPaid: true, colorTag: '' }
+      };
+      if (!s[curM]) s[curM] = existingData;
+      const otherM = (curM === 'duo') ? 'solo' : 'duo';
+      if (!s[otherM]) s[otherM] = buatSlotModeKosong();
+      delete s.players;
+      delete s.host;
+    }
+    if (!s.duo) s.duo = buatSlotModeKosong();
+    if (!s.solo) s.solo = buatSlotModeKosong();
+    return s;
   }
 
   let db = JSON.parse(localStorage.getItem(DB_KEY)) || {
@@ -1973,16 +2000,22 @@
   }
 
   function getActiveData() {
-    return db.sessions[db.activeSession];
+    if (!db.sessions[db.activeSession]) {
+      db.sessions[db.activeSession] = buatDataTabelKosong();
+    }
+    const s = pastikanStrukturSession(db.sessions[db.activeSession]);
+    const mode = db.gameMode || 'duo';
+    return s[mode];
   }
   /* ==============================================================================
-     LOGIKA MODE DUO 9 TIM (18 KURSI)
+     LOGIKA MODE DUO 10 TIM (20 KURSI) & SOLO
      ============================================================================== */
   function toggleModeDuoSolo() {
     db.gameMode = (db.gameMode === 'duo') ? 'solo' : 'duo';
     simpanDB();
+    urutkanOtomatis();
     renderIsiTabel();
-    tambahLogAktivitas('MODE', `Beralih ke ${db.gameMode === 'duo' ? 'Mode Duo (18 Kursi)' : 'Mode Solo (20 Kursi)'}`, 'system');
+    tambahLogAktivitas('MODE', `Beralih ke ${db.gameMode === 'duo' ? 'Mode Pertarungan Tim Duo (10 Tim)' : 'Mode Solo (20 Kursi)'}`, 'system');
   }
 
   
@@ -2583,15 +2616,21 @@
 
   function eksekusiResetTabelPasti() {
     const currData = getActiveData();
+    const curMode = db.gameMode || 'duo';
+    const s = pastikanStrukturSession(db.sessions[db.activeSession]);
+
     if (tipeResetPending === 'POINT') {
       currData.players.forEach(p => { p.poin = 0; });
       if (currData.host) { currData.host.poin = 0; }
-      simpanDB(); urutkanOtomatis();
-      tambahLogAktivitas('RESET', `Semua poin ${db.activeSession} direset ke 0`, 'system');
+      simpanDB();
+      urutkanOtomatis();
+      tambahLogAktivitas('RESET', `Poin ${curMode === 'duo' ? 'Mode Duo' : 'Mode Solo'} (${db.activeSession}) direset ke 0`, 'system');
     } else if (tipeResetPending === 'SEMUA') {
-      db.sessions[db.activeSession] = buatDataTabelKosong();
-      simpanDB(); renderIsiTabel();
-      tambahLogAktivitas('RESET', `Seluruh data ${db.activeSession} dikosongkan`, 'system');
+      s[curMode] = buatSlotModeKosong();
+      simpanDB();
+      urutkanOtomatis();
+      renderIsiTabel();
+      tambahLogAktivitas('RESET', `Data pemain ${curMode === 'duo' ? 'Mode Duo' : 'Mode Solo'} (${db.activeSession}) dikosongkan`, 'system');
     }
     tutupModalKonfirmasiResetTabel();
   }
@@ -2599,14 +2638,30 @@
   let fireworksInterval = null;
   function dapatkanFullBody3dAvatar(p) {
     if (!p) return '';
-    // HANYA terima gambar Full Body Avatar (mengandung /Avatar/ dan BUKAN AvatarHeadshot)
+    // 1. Cek avatar3d jika sudah ada dan valid full body
     if (p.avatar3d && p.avatar3d.includes('/Avatar/') && !p.avatar3d.includes('AvatarHeadshot')) {
-      return p.avatar3d.replaceAll('/420/420/', '/720/720/').replaceAll('/352/352/', '/720/720/');
+      return p.avatar3d.replace(/\/420\/420\/|\/352\/352\//g, '/720/720/');
     }
-    if (p.avatar && p.avatar.includes('/Avatar/') && !p.avatar.includes('AvatarHeadshot')) {
-      return p.avatar.replaceAll('/420/420/', '/720/720/').replaceAll('/352/352/', '/720/720/');
+
+    const raw = p.avatar3d || p.avatar || '';
+    if (!raw) return '';
+
+    // 2. Konversi Roblox CDN Headshot langsung ke 3D Full Body HD (720x720) non-circular
+    if (raw.includes('rbxcdn.com') || raw.includes('AvatarHeadshot')) {
+      return raw
+        .replace(/AvatarHeadshot/g, 'Avatar')
+        .replace(/\/150\/150\/|\/420\/420\/|\/352\/352\//g, '/720/720/')
+        .replace(/\/isCircular=true/g, '/noFilter')
+        .replace(/\/isCircular/g, '/noFilter');
     }
-    return '';
+
+    // 3. Jika sudah format avatar roblox lainnya
+    if (raw.includes('/Avatar/') && !raw.includes('AvatarHeadshot')) {
+      return raw.replace(/\/420\/420\/|\/352\/352\//g, '/720/720/');
+    }
+
+    // 4. Fallback ke gambar custom yang ada
+    return raw;
   }
 
   const _fullBodyCache = {};
@@ -2614,6 +2669,7 @@
     if (!p) return;
     const existing = dapatkanFullBody3dAvatar(p);
     if (existing) {
+      p.avatar3d = existing;
       if (onFound) onFound(existing);
       return;
     }
@@ -2626,12 +2682,15 @@
     fetch(`/api/cari-roblox?${q}`)
       .then(r => r.json())
       .then(d => {
-        if (d && d.sukses && d.avatar3dUrl && d.avatar3dUrl.includes('/Avatar/')) {
-          _fullBodyCache[q] = d.avatar3dUrl;
-          p.avatar3d = d.avatar3dUrl;
-          if (d.userId && !p.userId) p.userId = d.userId;
-          simpanDB();
-          if (onFound) onFound(d.avatar3dUrl);
+        if (d && d.sukses) {
+          const newImg = d.avatar3dUrl || dapatkanFullBody3dAvatar({ avatar: d.avatarUrl });
+          if (newImg) {
+            _fullBodyCache[q] = newImg;
+            p.avatar3d = newImg;
+            if (d.userId && !p.userId) p.userId = d.userId;
+            simpanDB();
+            if (onFound) onFound(newImg);
+          }
         }
       })
       .catch(() => {});
@@ -2668,10 +2727,10 @@
       const av2Id = `${boxId}_img2`;
 
       const av1Html = img1 
-        ? `<img id="${av1Id}" src="${img1}" class="winner-3d-full-img" alt="${n1}" onerror="this.style.display='none'">`
+        ? `<img id="${av1Id}" src="${img1}" class="winner-3d-full-img" alt="${n1}" onerror="this.onerror=null; this.src='${p1?.avatar || ''}';">`
         : `<div id="${av1Id}" class="winner-3d-placeholder"><span style="font-size:36px; opacity:0.4;">👤</span></div>`;
       const av2Html = img2 
-        ? `<img id="${av2Id}" src="${img2}" class="winner-3d-full-img" alt="${n2}" onerror="this.style.display='none'">`
+        ? `<img id="${av2Id}" src="${img2}" class="winner-3d-full-img" alt="${n2}" onerror="this.onerror=null; this.src='${p2?.avatar || ''}';">`
         : `<div id="${av2Id}" class="winner-3d-placeholder"><span style="font-size:36px; opacity:0.4;">👤</span></div>`;
 
       box.innerHTML = av1Html + av2Html;
@@ -2701,7 +2760,7 @@
       const avId = `${boxId}_img1`;
 
       box.innerHTML = img 
-        ? `<img id="${avId}" src="${img}" class="winner-3d-full-img" alt="${n}" onerror="this.style.display='none'">`
+        ? `<img id="${avId}" src="${img}" class="winner-3d-full-img" alt="${n}" onerror="this.onerror=null; this.src='${p1?.avatar || ''}';">`
         : `<div id="${avId}" class="winner-3d-placeholder"><span style="font-size:48px; opacity:0.4;">👤</span></div>`;
 
       if (!img && p1) {
@@ -3002,7 +3061,7 @@
         document.getElementById('inputUserRoblox').value = data.userName;
         document.getElementById('inputDisplayName').value = data.displayName;
         document.getElementById('inputAvatarUrl').value = data.avatarUrl;
-        document.getElementById('inputAvatar3dUrl').value = data.avatar3dUrl || data.avatarUrl;
+        document.getElementById('inputAvatar3dUrl').value = data.avatar3dUrl || dapatkanFullBody3dAvatar({ avatar: data.avatarUrl });
         document.getElementById('inputUserId').value = data.userId || '';
 
         updateModalPreviewUI(data.userName, data.displayName, data.avatarUrl);
@@ -3028,7 +3087,7 @@
     let namaPemain = document.getElementById('inputNamaTikTok').value.trim();
     let displayN = document.getElementById('inputDisplayName').value.trim().replace(/^@+/, '');
     let avatarA = document.getElementById('inputAvatarUrl').value.trim();
-    let avatar3dA = document.getElementById('inputAvatar3dUrl').value.trim();
+    let avatar3dA = document.getElementById('inputAvatar3dUrl').value.trim() || dapatkanFullBody3dAvatar({ avatar: avatarA });
     let userIdA = document.getElementById('inputUserId').value.trim();
 
     if (robloxU && !namaPemain) namaPemain = displayN || robloxU;
@@ -3442,63 +3501,122 @@
   }
 
   function urutkanOtomatis() {
-    for (let i = 0; i < 19; i++) {
+    const currData = getActiveData();
+    const isDuo = (db.gameMode === 'duo');
+    const tbL = document.getElementById('tableLeftBody');
+    const tbR = document.getElementById('tableRightBody');
+
+    // 1. Simpan posisi lama (X & Y) semua baris kursi dan header tim untuk animasi geser (FLIP)
+    const posisiLama = {};
+    for (let i = 0; i < 20; i++) {
       const el = document.getElementById(`row-kursi-${i}`);
-      if (el) { el.classList.remove('moving-row'); el.style.transform = ''; }
+      if (el) {
+        const r = el.getBoundingClientRect();
+        posisiLama[`row-kursi-${i}`] = { top: r.top, left: r.left };
+        el.classList.remove('moving-row');
+        el.style.transform = '';
+      }
+    }
+    for (let i = 0; i < 10; i++) {
+      const el = document.getElementById(`teamHeaderRow_${i}`);
+      if (el) {
+        const r = el.getBoundingClientRect();
+        posisiLama[`teamHeaderRow_${i}`] = { top: r.top, left: r.left };
+        el.classList.remove('moving-row');
+        el.style.transform = '';
+      }
     }
 
-    const currData = getActiveData();
-    const posisiLama = {};
-    currData.players.forEach((p, idx) => {
-      const el = document.getElementById(`row-kursi-${idx}`);
-      if (el) posisiLama[p.id] = el.getBoundingClientRect().top;
-    });
+    const punyaIsi = (p) => Boolean((p?.user && p.user.trim()) || (p?.robloxUser && p.robloxUser.trim()) || (p?.nick && p.nick.trim()));
 
-    const punyaIsi = (p) => Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()));
-    currData.players.forEach(p => { p.isReady = punyaIsi(p); });
-
-    if (db.gameMode === 'duo') {
-      // Pada mode pertarungan tim: urutkan pemain internal DI DALAM masing-masing tim
-      // sehingga posisi tim (Kursi 1-2, Kursi 3-4, dst.) tetap stabil dan rapi!
-      for (let i = 0; i < 9; i++) {
-        const c1 = i * 2;
-        const c2 = i * 2 + 1;
+    if (isDuo) {
+      // ==============================================================================
+      // FITUR AUTO URUT PER TIM: Bergeser dinamis ketika total poin tim bertambah!
+      // ==============================================================================
+      // A. Urutkan internal masing-masing tim (2 pemain): pemain skor lebih tinggi di kursi atas
+      for (let tIdx = 0; tIdx < 9; tIdx++) {
+        const c1 = tIdx * 2;
+        const c2 = tIdx * 2 + 1;
         const p1 = currData.players[c1];
         const p2 = currData.players[c2];
-        const pair = [p1, p2];
-        const aktif = pair.filter(p => punyaIsi(p));
-        const kosong = pair.filter(p => !punyaIsi(p));
-        aktif.sort((a, b) => (b.poin || 0) - (a.poin || 0));
-        const sorted = [...aktif, ...kosong];
-        currData.players[c1] = sorted[0];
-        currData.players[c2] = sorted[1];
+        if (p1 && p2 && (p2.poin || 0) > (p1.poin || 0)) {
+          currData.players[c1] = p2;
+          currData.players[c2] = p1;
+        }
       }
+
+      // B. Hitung skor semua 10 tim
+      const teamScores = hitungSkorDuoTeams();
+
+      // C. Urutkan tim: total poin tertinggi di peringkat teratas (#1, #2, dst.)
+      const sortedTeams = [...teamScores].sort((a, b) => {
+        const diff = (b.totalPoints || 0) - (a.totalPoints || 0);
+        if (diff !== 0) return diff;
+        if (b.hasPlayer !== a.hasPlayer) return b.hasPlayer ? 1 : -1;
+        return a.teamIndex - b.teamIndex;
+      });
+
+      // D. Susun ulang posisi DOM Tabel Kiri (Top 5 Tim) & Tabel Kanan (Next 5 Tim)
+      if (tbL && tbR) {
+        sortedTeams.forEach((t, rankIdx) => {
+          const targetTable = (rankIdx < 5) ? tbL : tbR;
+          const divRow = document.getElementById(`teamHeaderRow_${t.teamIndex}`);
+          const r1 = document.getElementById(`row-kursi-${t.chairs[0]}`);
+          const r2 = document.getElementById(`row-kursi-${t.chairs[1]}`);
+          if (divRow) targetTable.appendChild(divRow);
+          if (r1) targetTable.appendChild(r1);
+          if (r2) targetTable.appendChild(r2);
+        });
+      }
+
     } else {
-      // Mode Solo: Urutkan bebas dari tertinggi ke terendah
+      // MODE SOLO: Urutkan individu dari poin tertinggi ke terendah
+      currData.players.forEach(p => { p.isReady = punyaIsi(p); });
       const aktifSiap = currData.players.filter(p => punyaIsi(p));
       const kursiKosong = currData.players.filter(p => !punyaIsi(p));
 
-      aktifSiap.sort((a, b) => b.poin - a.poin);
+      aktifSiap.sort((a, b) => (b.poin || 0) - (a.poin || 0));
       currData.players = [...aktifSiap, ...kursiKosong];
+
+      // Kembalikan tata letak baris Solo (Kursi 1-10 di Tabel Kiri, Kursi 11-20 di Tabel Kanan)
+      if (tbL && tbR) {
+        for (let i = 0; i < 10; i++) {
+          const el = document.getElementById(`row-kursi-${i}`);
+          if (el) tbL.appendChild(el);
+        }
+        for (let i = 10; i < 20; i++) {
+          const el = document.getElementById(`row-kursi-${i}`);
+          if (el) tbR.appendChild(el);
+        }
+      }
     }
 
     simpanDB(); 
     renderIsiTabel();
 
+    // Jalankan animasi pergeseran halus (FLIP Animation)
     requestAnimationFrame(() => {
-      currData.players.forEach((p, idx) => {
-        if (posisiLama[p.id] !== undefined) {
-          const el = document.getElementById(`row-kursi-${idx}`);
-          if (el) {
-            const posisiBaru = el.getBoundingClientRect().top;
-            const deltaY = posisiLama[p.id] - posisiBaru;
-            if (deltaY !== 0) {
-              el.style.transform = `translateY(${deltaY}px)`;
-              void el.offsetHeight;
-              el.classList.add('moving-row');
-              el.style.transform = 'translateY(0)';
-              setTimeout(() => { el.classList.remove('moving-row'); el.style.transform = ''; }, 580);
-            }
+      const animElements = [];
+      for (let i = 0; i < 20; i++) animElements.push(`row-kursi-${i}`);
+      if (isDuo) {
+        for (let i = 0; i < 10; i++) animElements.push(`teamHeaderRow_${i}`);
+      }
+
+      animElements.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && posisiLama[id]) {
+          const rectBaru = el.getBoundingClientRect();
+          const deltaY = posisiLama[id].top - rectBaru.top;
+          const deltaX = posisiLama[id].left - rectBaru.left;
+          if (Math.abs(deltaY) > 1 || Math.abs(deltaX) > 1) {
+            el.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+            void el.offsetHeight;
+            el.classList.add('moving-row');
+            el.style.transform = 'translate(0, 0)';
+            setTimeout(() => {
+              el.classList.remove('moving-row');
+              el.style.transform = '';
+            }, 580);
           }
         }
       });
