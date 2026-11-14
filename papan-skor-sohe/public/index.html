@@ -626,8 +626,8 @@
     .winner-subtitle { font-size: 10.5px; letter-spacing: 4px; color: #94a3b8; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; }
     .winner-title { font-family: 'Outfit', sans-serif; font-size: 40px; font-weight: 900; letter-spacing: 2px; margin: 0; background: linear-gradient(180deg, #FFFBEB 0%, #FACC15 60%, #D97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .podium-container { display: flex; align-items: flex-end; justify-content: center; gap: 24px; position: relative; z-index: 30008; }
-    .podium-card { position: relative; width: 250px; border-radius: 20px; padding: 26px 20px; display: flex; flex-direction: column; align-items: center; }
-    .podium-card.rank-1 { width: 275px; padding: 32px 22px; transform: translateY(-20px); background: linear-gradient(180deg, rgba(68, 52, 12, 0.9) 0%, rgba(18, 15, 10, 0.98) 100%); border: 1.5px solid rgba(250, 204, 21, 0.85); box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 30px rgba(250, 204, 21, 0.25); }
+    .podium-card { position: relative; width: 310px; border-radius: 24px; padding: 24px 20px 22px; display: flex; flex-direction: column; align-items: center; }
+    .podium-card.rank-1 { width: 345px; padding: 28px 22px 24px; transform: translateY(-22px); background: linear-gradient(180deg, rgba(68, 52, 12, 0.9) 0%, rgba(18, 15, 10, 0.98) 100%); border: 2px solid rgba(250, 204, 21, 0.9); box-shadow: 0 20px 45px rgba(0,0,0,0.85), 0 0 35px rgba(250, 204, 21, 0.35); }
     .podium-card.rank-2 { background: linear-gradient(180deg, rgba(14, 52, 75, 0.85) 0%, rgba(11, 20, 32, 0.98) 100%); border: 1.5px solid rgba(56, 189, 248, 0.75); }
     .podium-card.rank-3 { background: linear-gradient(180deg, rgba(68, 36, 22, 0.85) 0%, rgba(22, 13, 10, 0.98) 100%); border: 1.5px solid rgba(251, 146, 60, 0.75); }
     .title-badge { font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 2px; padding: 5px 16px; border-radius: 99px; margin-bottom: 20px; text-transform: uppercase; }
@@ -1230,16 +1230,16 @@
     .winner-3d-floating-stage {
       position: relative;
       width: 100%;
-      height: 250px;
+      height: 320px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-end;
       z-index: 5;
     }
-    .rank-1 .winner-3d-floating-stage { height: 290px; }
-    .rank-2 .winner-3d-floating-stage { height: 240px; }
-    .rank-3 .winner-3d-floating-stage { height: 240px; }
+    .rank-1 .winner-3d-floating-stage { height: 380px; }
+    .rank-2 .winner-3d-floating-stage { height: 320px; }
+    .rank-3 .winner-3d-floating-stage { height: 320px; }
 
     /* Luxury Luminous Backlight Auras */
     .winner-gojo-aura {
@@ -1249,18 +1249,18 @@
       z-index: 1;
     }
     .aura-rank-1 {
-      width: 270px; height: 270px; top: 10%;
-      background: radial-gradient(circle, rgba(254, 240, 138, 0.65) 0%, rgba(250, 204, 21, 0.45) 30%, rgba(234, 179, 8, 0.2) 55%, transparent 75%);
+      width: 330px; height: 330px; top: 6%;
+      background: radial-gradient(circle, rgba(254, 240, 138, 0.75) 0%, rgba(250, 204, 21, 0.5) 30%, rgba(234, 179, 8, 0.25) 55%, transparent 75%);
       animation: champAuraPulse 3.5s infinite ease-in-out;
     }
     .aura-rank-2 {
-      width: 220px; height: 220px; top: 12%;
-      background: radial-gradient(circle, rgba(224, 242, 254, 0.65) 0%, rgba(56, 189, 248, 0.45) 35%, rgba(14, 165, 233, 0.2) 60%, transparent 75%);
+      width: 280px; height: 280px; top: 8%;
+      background: radial-gradient(circle, rgba(224, 242, 254, 0.75) 0%, rgba(56, 189, 248, 0.5) 35%, rgba(14, 165, 233, 0.25) 60%, transparent 75%);
       animation: rank2AuraPulse 3.8s infinite ease-in-out 0.4s;
     }
     .aura-rank-3 {
-      width: 220px; height: 220px; top: 12%;
-      background: radial-gradient(circle, rgba(255, 237, 213, 0.65) 0%, rgba(251, 146, 60, 0.45) 35%, rgba(234, 88, 12, 0.2) 60%, transparent 75%);
+      width: 280px; height: 280px; top: 8%;
+      background: radial-gradient(circle, rgba(255, 237, 213, 0.75) 0%, rgba(251, 146, 60, 0.5) 35%, rgba(234, 88, 12, 0.25) 60%, transparent 75%);
       animation: rank3AuraPulse 3.6s infinite ease-in-out 0.8s;
     }
 
@@ -1311,32 +1311,32 @@
       transition: transform 0.3s ease;
     }
     .rank-1 .winner-3d-full-img {
-      max-height: 310px;
+      max-height: 360px !important;
       animation: winnerOriginalFloatRank1 3.2s ease-in-out infinite;
     }
     .rank-2 .winner-3d-full-img {
-      max-height: 260px;
+      max-height: 310px !important;
       animation: winnerOriginalFloatRank2 3.6s ease-in-out infinite 0.4s;
     }
     .rank-3 .winner-3d-full-img {
-      max-height: 260px;
+      max-height: 310px !important;
       animation: winnerOriginalFloatRank3 3.4s ease-in-out infinite 0.8s;
     }
 
     /* Dua avatar berdampingan di Mode Duo */
     .winner-3d-body-wrap {
-      margin-bottom: -10px;
+      margin-bottom: -14px;
     }
     .winner-3d-body-wrap.is-duo {
-      gap: 8px;
-      margin-bottom: -10px;
+      gap: 4px;
+      margin-bottom: -14px;
     }
     .winner-3d-body-wrap.is-duo .winner-3d-full-img {
-      max-width: 49%;
+      max-width: 54% !important;
     }
-    .rank-1 .winner-3d-body-wrap.is-duo .winner-3d-full-img { max-height: 285px; }
-    .rank-2 .winner-3d-body-wrap.is-duo .winner-3d-full-img { max-height: 245px; }
-    .rank-3 .winner-3d-body-wrap.is-duo .winner-3d-full-img { max-height: 245px; }
+    .rank-1 .winner-3d-body-wrap.is-duo .winner-3d-full-img { max-height: 345px !important; }
+    .rank-2 .winner-3d-body-wrap.is-duo .winner-3d-full-img { max-height: 300px !important; }
+    .rank-3 .winner-3d-body-wrap.is-duo .winner-3d-full-img { max-height: 300px !important; }
 
     /* Pedestal Stage Step */
     .podium-pedestal-step {
@@ -2355,7 +2355,8 @@
 
     if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN", p.colorTag, teamInfo);
 
-    if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
+    simpanDB();
+    urutkanOtomatis();
     tambahLogAktivitas(namaTampil, `Poin +${delta}${teamInfo ? ` (${teamInfo.name})` : ''}`, 'system', awal, p.poin, Math.abs(delta));
   }
 
@@ -2703,8 +2704,8 @@
   function autoScalePodium() {
     const scaler = document.getElementById('podiumStageScaler');
     if (!scaler) return;
-    const targetW = 1080;
-    const targetH = 680;
+    const targetW = 1180;
+    const targetH = 760;
     const winW = window.innerWidth || document.documentElement.clientWidth || 1200;
     const winH = window.innerHeight || document.documentElement.clientHeight || 800;
     const scaleX = (winW - 40) / targetW;
@@ -3510,24 +3511,38 @@
     const tbL = document.getElementById('tableLeftBody');
     const tbR = document.getElementById('tableRightBody');
 
-    // 1. Simpan posisi lama (X & Y) semua baris kursi dan header tim untuk animasi geser (FLIP)
+    // 1. Catat posisi lama setiap pemain berdasarkan unique player ID (untuk animasi geser FLIP)
     const posisiLama = {};
-    for (let i = 0; i < 20; i++) {
-      const el = document.getElementById(`row-kursi-${i}`);
-      if (el) {
-        const r = el.getBoundingClientRect();
-        posisiLama[`row-kursi-${i}`] = { top: r.top, left: r.left };
-        el.classList.remove('moving-row');
-        el.style.transform = '';
+    currData.players.forEach((p, idx) => {
+      if (p && p.id) {
+        const el = document.getElementById(`row-kursi-${idx}`);
+        if (el) posisiLama[p.id] = el.getBoundingClientRect().top;
       }
+    });
+    if (currData.host && currData.host.id) {
+      const el = document.getElementById('row-kursi-19');
+      if (el) posisiLama[currData.host.id] = el.getBoundingClientRect().top;
     }
-    for (let i = 0; i < 10; i++) {
-      const el = document.getElementById(`teamHeaderRow_${i}`);
-      if (el) {
-        const r = el.getBoundingClientRect();
-        posisiLama[`teamHeaderRow_${i}`] = { top: r.top, left: r.left };
-        el.classList.remove('moving-row');
-        el.style.transform = '';
+
+    // Pastikan DOM rows kembali ke struktur tabel standar (Tabel Kiri: Kursi 0-9, Tabel Kanan: Kursi 10-19)
+    if (tbL && tbR) {
+      tbL.innerHTML = '';
+      tbR.innerHTML = '';
+      for (let i = 0; i < 10; i++) {
+        if (isDuo && i % 2 === 0) {
+          const hdr = document.getElementById(`teamHeaderRow_${i / 2}`);
+          if (hdr) tbL.appendChild(hdr);
+        }
+        const r = document.getElementById(`row-kursi-${i}`);
+        if (r) tbL.appendChild(r);
+      }
+      for (let i = 10; i < 20; i++) {
+        if (isDuo && i % 2 === 0) {
+          const hdr = document.getElementById(`teamHeaderRow_${i / 2}`);
+          if (hdr) tbR.appendChild(hdr);
+        }
+        const r = document.getElementById(`row-kursi-${i}`);
+        if (r) tbR.appendChild(r);
       }
     }
 
@@ -3535,64 +3550,69 @@
 
     if (isDuo) {
       // ==============================================================================
-      // FITUR AUTO URUT PER TIM: Bergeser dinamis ketika total poin tim bertambah!
+      // FITUR AUTO URUT PER TIM: 1 Tim Utuh (Header + 2 Pemain) bergeser sesuai poin!
       // ==============================================================================
-      // A. Urutkan internal masing-masing tim (2 pemain): pemain skor lebih tinggi di kursi atas
-      for (let tIdx = 0; tIdx < 9; tIdx++) {
-        const c1 = tIdx * 2;
-        const c2 = tIdx * 2 + 1;
-        const p1 = currData.players[c1];
-        const p2 = currData.players[c2];
-        if (p1 && p2 && (p2.poin || 0) > (p1.poin || 0)) {
-          currData.players[c1] = p2;
-          currData.players[c2] = p1;
-        }
-      }
+      // 1. Kumpulkan 10 tim beserta 2 pemainnya
+      const teams = [];
+      for (let tIdx = 0; tIdx < 10; tIdx++) {
+        const meta = db.duoTeams[tIdx] || DEFAULT_DUO_TEAMS[tIdx];
+        const p1 = currData.players[tIdx * 2] || { id: `p_${Date.now()}_${tIdx*2}`, user:'', nick:'', robloxUser:'', poin:0, isReady:false, isPaid:false, colorTag:'' };
+        const p2 = (tIdx === 9) 
+          ? (currData.host || { id: `p_host_${Date.now()}`, user:'', nick:'', robloxUser:'', poin:0, isReady:true, isPaid:true, colorTag:'' })
+          : (currData.players[tIdx * 2 + 1] || { id: `p_${Date.now()}_${tIdx*2+1}`, user:'', nick:'', robloxUser:'', poin:0, isReady:false, isPaid:false, colorTag:'' });
 
-      // B. Hitung skor semua 10 tim
-      const teamScores = hitungSkorDuoTeams();
+        p1.isReady = punyaIsi(p1);
+        p2.isReady = punyaIsi(p2);
 
-      // C. Urutkan tim: total poin tertinggi di peringkat teratas (#1, #2, dst.)
-      const sortedTeams = [...teamScores].sort((a, b) => {
-        const diff = (b.totalPoints || 0) - (a.totalPoints || 0);
-        if (diff !== 0) return diff;
-        if (b.hasPlayer !== a.hasPlayer) return b.hasPlayer ? 1 : -1;
-        return a.teamIndex - b.teamIndex;
-      });
+        // Urutkan internal tim: pemain poin lebih tinggi di kursi pertama
+        const pair = [p1, p2];
+        pair.sort((a, b) => (b.poin || 0) - (a.poin || 0));
 
-      // D. Susun ulang posisi DOM Tabel Kiri (Top 5 Tim) & Tabel Kanan (Next 5 Tim)
-      if (tbL && tbR) {
-        sortedTeams.forEach((t, rankIdx) => {
-          const targetTable = (rankIdx < 5) ? tbL : tbR;
-          const divRow = document.getElementById(`teamHeaderRow_${t.teamIndex}`);
-          const r1 = document.getElementById(`row-kursi-${t.chairs[0]}`);
-          const r2 = document.getElementById(`row-kursi-${t.chairs[1]}`);
-          if (divRow) targetTable.appendChild(divRow);
-          if (r1) targetTable.appendChild(r1);
-          if (r2) targetTable.appendChild(r2);
+        const totalPoints = (pair[0].poin || 0) + (pair[1].poin || 0);
+        const hasPlayer = Boolean(punyaIsi(pair[0]) || punyaIsi(pair[1]));
+
+        teams.push({
+          meta: { id: meta.id, name: meta.name, color: meta.color, icon: meta.icon || '⚔️' },
+          p1: pair[0],
+          p2: pair[1],
+          totalPoints,
+          hasPlayer,
+          originalIndex: tIdx
         });
       }
 
+      // 2. Urutkan 10 tim berdasarkan total poin tim tertinggi (#1, #2, dst.)
+      teams.sort((a, b) => {
+        const diff = (b.totalPoints || 0) - (a.totalPoints || 0);
+        if (diff !== 0) return diff;
+        if (b.hasPlayer !== a.hasPlayer) return b.hasPlayer ? 1 : -1;
+        return a.originalIndex - b.originalIndex;
+      });
+
+      // 3. Masukkan kembali 10 tim yang telah terurut ke dalam slot kursi 1 s/d 20
+      teams.forEach((t, rankIdx) => {
+        db.duoTeams[rankIdx] = {
+          ...t.meta,
+          chairRange: (rankIdx === 9) ? 'Kursi 19 - 20' : `Kursi ${rankIdx * 2 + 1} - ${rankIdx * 2 + 2}`,
+          chairs: [rankIdx * 2, rankIdx * 2 + 1]
+        };
+
+        currData.players[rankIdx * 2] = t.p1;
+        if (rankIdx === 9) {
+          currData.host = t.p2;
+        } else {
+          currData.players[rankIdx * 2 + 1] = t.p2;
+        }
+      });
+
     } else {
-      // MODE SOLO: Urutkan individu dari poin tertinggi ke terendah
+      // MODE SOLO: Urutkan individu bebas dari poin tertinggi ke terendah
       currData.players.forEach(p => { p.isReady = punyaIsi(p); });
       const aktifSiap = currData.players.filter(p => punyaIsi(p));
       const kursiKosong = currData.players.filter(p => !punyaIsi(p));
 
       aktifSiap.sort((a, b) => (b.poin || 0) - (a.poin || 0));
       currData.players = [...aktifSiap, ...kursiKosong];
-
-      // Kembalikan tata letak baris Solo (Kursi 1-10 di Tabel Kiri, Kursi 11-20 di Tabel Kanan)
-      if (tbL && tbR) {
-        for (let i = 0; i < 10; i++) {
-          const el = document.getElementById(`row-kursi-${i}`);
-          if (el) tbL.appendChild(el);
-        }
-        for (let i = 10; i < 20; i++) {
-          const el = document.getElementById(`row-kursi-${i}`);
-          if (el) tbR.appendChild(el);
-        }
-      }
     }
 
     simpanDB(); 
@@ -3600,30 +3620,43 @@
 
     // Jalankan animasi pergeseran halus (FLIP Animation)
     requestAnimationFrame(() => {
-      const animElements = [];
-      for (let i = 0; i < 20; i++) animElements.push(`row-kursi-${i}`);
-      if (isDuo) {
-        for (let i = 0; i < 10; i++) animElements.push(`teamHeaderRow_${i}`);
-      }
+      currData.players.forEach((p, idx) => {
+        if (p && p.id && posisiLama[p.id] !== undefined) {
+          const el = document.getElementById(`row-kursi-${idx}`);
+          if (el) {
+            const posisiBaru = el.getBoundingClientRect().top;
+            const deltaY = posisiLama[p.id] - posisiBaru;
+            if (Math.abs(deltaY) > 2) {
+              el.style.transform = `translateY(${deltaY}px)`;
+              void el.offsetHeight;
+              el.classList.add('moving-row');
+              el.style.transform = 'translateY(0)';
+              setTimeout(() => {
+                el.classList.remove('moving-row');
+                el.style.transform = '';
+              }, 580);
+            }
+          }
+        }
+      });
 
-      animElements.forEach(id => {
-        const el = document.getElementById(id);
-        if (el && posisiLama[id]) {
-          const rectBaru = el.getBoundingClientRect();
-          const deltaY = posisiLama[id].top - rectBaru.top;
-          const deltaX = posisiLama[id].left - rectBaru.left;
-          if (Math.abs(deltaY) > 1 || Math.abs(deltaX) > 1) {
-            el.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+      if (currData.host && currData.host.id && posisiLama[currData.host.id] !== undefined) {
+        const el = document.getElementById('row-kursi-19');
+        if (el) {
+          const posisiBaru = el.getBoundingClientRect().top;
+          const deltaY = posisiLama[currData.host.id] - posisiBaru;
+          if (Math.abs(deltaY) > 2) {
+            el.style.transform = `translateY(${deltaY}px)`;
             void el.offsetHeight;
             el.classList.add('moving-row');
-            el.style.transform = 'translate(0, 0)';
+            el.style.transform = 'translateY(0)';
             setTimeout(() => {
               el.classList.remove('moving-row');
               el.style.transform = '';
             }, 580);
           }
         }
-      });
+      }
     });
   }
 
