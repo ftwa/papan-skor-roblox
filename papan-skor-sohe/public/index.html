@@ -1302,6 +1302,12 @@
       50% { transform: translateY(15px) scale(1.61); filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 35px rgba(251, 146, 60, 0.95)); }
     }
 
+    
+    .winner-3d-full-img[src*="dicebear.com"] {
+      border-radius: 20px !important;
+      max-width: 46% !important;
+      max-height: 180px !important;
+    }
     .winner-3d-full-img {
       max-width: 100%;
       object-fit: contain;
@@ -1310,15 +1316,33 @@
       will-change: transform, filter;
       transition: transform 0.3s ease;
     }
-    .rank-1 .winner-3d-full-img {
+    .rank-1 
+    .winner-3d-full-img[src*="dicebear.com"] {
+      border-radius: 20px !important;
+      max-width: 46% !important;
+      max-height: 180px !important;
+    }
+    .winner-3d-full-img {
       max-height: 360px !important;
       animation: winnerOriginalFloatRank1 3.2s ease-in-out infinite;
     }
-    .rank-2 .winner-3d-full-img {
+    .rank-2 
+    .winner-3d-full-img[src*="dicebear.com"] {
+      border-radius: 20px !important;
+      max-width: 46% !important;
+      max-height: 180px !important;
+    }
+    .winner-3d-full-img {
       max-height: 310px !important;
       animation: winnerOriginalFloatRank2 3.6s ease-in-out infinite 0.4s;
     }
-    .rank-3 .winner-3d-full-img {
+    .rank-3 
+    .winner-3d-full-img[src*="dicebear.com"] {
+      border-radius: 20px !important;
+      max-width: 46% !important;
+      max-height: 180px !important;
+    }
+    .winner-3d-full-img {
       max-height: 310px !important;
       animation: winnerOriginalFloatRank3 3.4s ease-in-out infinite 0.8s;
     }
@@ -1331,12 +1355,36 @@
       gap: 4px;
       margin-bottom: -14px;
     }
-    .winner-3d-body-wrap.is-duo .winner-3d-full-img {
+    .winner-3d-body-wrap.is-duo 
+    .winner-3d-full-img[src*="dicebear.com"] {
+      border-radius: 20px !important;
+      max-width: 46% !important;
+      max-height: 180px !important;
+    }
+    .winner-3d-full-img {
       max-width: 54% !important;
     }
-    .rank-1 .winner-3d-body-wrap.is-duo .winner-3d-full-img { max-height: 345px !important; }
-    .rank-2 .winner-3d-body-wrap.is-duo .winner-3d-full-img { max-height: 300px !important; }
-    .rank-3 .winner-3d-body-wrap.is-duo .winner-3d-full-img { max-height: 300px !important; }
+    .rank-1 .winner-3d-body-wrap.is-duo 
+    .winner-3d-full-img[src*="dicebear.com"] {
+      border-radius: 20px !important;
+      max-width: 46% !important;
+      max-height: 180px !important;
+    }
+    .winner-3d-full-img { max-height: 345px !important; }
+    .rank-2 .winner-3d-body-wrap.is-duo 
+    .winner-3d-full-img[src*="dicebear.com"] {
+      border-radius: 20px !important;
+      max-width: 46% !important;
+      max-height: 180px !important;
+    }
+    .winner-3d-full-img { max-height: 300px !important; }
+    .rank-3 .winner-3d-body-wrap.is-duo 
+    .winner-3d-full-img[src*="dicebear.com"] {
+      border-radius: 20px !important;
+      max-width: 46% !important;
+      max-height: 180px !important;
+    }
+    .winner-3d-full-img { max-height: 300px !important; }
 
     /* Pedestal Stage Step */
     .podium-pedestal-step {
@@ -2292,17 +2340,12 @@
     const currData = getActiveData();
     const p = (index === 19) ? currData.host : currData.players[index];
     if (!p) return;
-    if (index !== 19 && !p.isReady) {
-      bukaModalInputNama(index);
-      return;
-    }
-
     activeQuickPointIndex = index;
     renderTombolQuickPoint();
 
     const namaTampil = p.nick || p.user || p.robloxUser || (index === 19 ? 'Host' : `Kursi ${index + 1}`);
-    document.getElementById('qpPlayerTitle').innerText = `${namaTampil} (${p.poin} Pts)`;
-    document.getElementById('qpDirectInput').value = p.poin;
+    document.getElementById('qpPlayerTitle').innerText = `${namaTampil} (${p.poin || 0} Pts)`;
+    document.getElementById('qpDirectInput').value = p.poin || 0;
 
     const pop = document.getElementById('quickPointPopover');
     pop.classList.add('show');
@@ -2336,10 +2379,10 @@
   function terapkanTambahPoin(idx, delta) {
     const currData = getActiveData();
     const p = (idx === 19) ? currData.host : currData.players[idx];
-    if (!p || (idx !== 19 && !p.isReady)) return;
+    if (!p) return;
 
-    const awal = p.poin;
-    p.poin = Math.max(0, p.poin + delta);
+    const awal = p.poin || 0;
+    p.poin = Math.max(0, awal + delta);
     const selisih = p.poin - awal;
 
     const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
@@ -2368,9 +2411,9 @@
 
     const currData = getActiveData();
     const p = (idx === 19) ? currData.host : currData.players[idx];
-    if (!p || (idx !== 19 && !p.isReady)) return;
+    if (!p) return;
 
-    const awal = p.poin;
+    const awal = p.poin || 0;
     p.poin = val;
     const selisih = p.poin - awal;
 
@@ -3448,9 +3491,9 @@
       const scoreVal = tr.querySelector('.score-val');
       const scoreBox = tr.querySelector('.score-box');
       if (scoreVal) {
-        scoreVal.innerText = p.isReady ? p.poin : '-';
-        scoreVal.className = p.isReady ? 'score-val' : 'score-val score-standby';
-        scoreVal.onclick = p.isReady ? ((ev) => bukaQuickPointPopover(idx, ev)) : (() => bukaModalInputNama(idx));
+        scoreVal.innerText = (p.poin !== undefined && p.poin !== null) ? p.poin : 0;
+        scoreVal.className = 'score-val';
+        scoreVal.onclick = (ev) => bukaQuickPointPopover(idx, ev);
       }
       if (scoreBox) {
         scoreBox.style.flexDirection = 'row';
