@@ -3524,27 +3524,7 @@
       if (el) posisiLama[currData.host.id] = el.getBoundingClientRect().top;
     }
 
-    // Pastikan DOM rows kembali ke struktur tabel standar (Tabel Kiri: Kursi 0-9, Tabel Kanan: Kursi 10-19)
-    if (tbL && tbR) {
-      tbL.innerHTML = '';
-      tbR.innerHTML = '';
-      for (let i = 0; i < 10; i++) {
-        if (isDuo && i % 2 === 0) {
-          const hdr = document.getElementById(`teamHeaderRow_${i / 2}`);
-          if (hdr) tbL.appendChild(hdr);
-        }
-        const r = document.getElementById(`row-kursi-${i}`);
-        if (r) tbL.appendChild(r);
-      }
-      for (let i = 10; i < 20; i++) {
-        if (isDuo && i % 2 === 0) {
-          const hdr = document.getElementById(`teamHeaderRow_${i / 2}`);
-          if (hdr) tbR.appendChild(hdr);
-        }
-        const r = document.getElementById(`row-kursi-${i}`);
-        if (r) tbR.appendChild(r);
-      }
-    }
+    // Baris tabel tetap berada di DOM agar animasi transisi geser (FLIP) berjalan mulus tanpa kedip
 
     const punyaIsi = (p) => Boolean((p?.user && p.user.trim()) || (p?.robloxUser && p.robloxUser.trim()) || (p?.nick && p.nick.trim()));
 
