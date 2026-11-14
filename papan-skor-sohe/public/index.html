@@ -2012,11 +2012,7 @@
   }
 
   function renderDuoStandingsBanner() {
-    // Banner klasemen atas telah dihapus sesuai permintaan (peringkat sudah terlihat langsung di tabel bawah)
-    const btnEdit = document.getElementById('btnEditTimToolbar');
-    if (btnEdit) {
-      btnEdit.style.display = (db.gameMode === 'duo') ? '' : 'none';
-    }
+    // Banner klasemen atas telah dihilangkan agar tampilan langsung fokus ke tabel meja
   }
 
   let activeEditTeamIndex = 0;
