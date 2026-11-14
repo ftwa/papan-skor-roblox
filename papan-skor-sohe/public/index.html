@@ -268,35 +268,50 @@
 
     /* MINI PALET WARNA */
     .color-picker-mini {
-      display: none; position: absolute; z-index: 36000; background: #0f172a;
-      border: 1px solid #334155; border-radius: 8px; padding: 5px 6px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.65); gap: 5px; align-items: center;
+      position: absolute;
+      z-index: 10000;
+      display: none;
+      background: rgba(11, 18, 33, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 10px;
+      padding: 8px 10px;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 7px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.75);
     }
-    .color-picker-mini.show { display: flex; }
+    .color-picker-mini.show { display: grid !important; }
     .cp-dot {
-      width: 16px; height: 16px; border-radius: 50%; cursor: pointer; border: 1px solid transparent;
-      transition: transform 0.1s;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
-    .cp-dot:hover { transform: scale(1.2); border-color: #fff; }
+    .cp-dot:hover {
+      transform: scale(1.3);
+      border-color: #ffffff;
+      box-shadow: 0 0 8px currentColor;
+    }
     .cp-dot.c-blue { background: #38bdf8; }
     .cp-dot.c-pink { background: #f472b6; }
     .cp-dot.c-purple { background: #a855f7; }
     .cp-dot.c-red { background: #fb7185; }
     .cp-dot.c-yellow { background: #facc15; }
-    .cp-dot.c-reset { background: #475569; position: relative; }
-    .cp-dot.c-reset::after { content: "×"; color: #fff; font-size: 11px; position: absolute; top: -1px; left: 4px; font-weight: 900; }
+    .cp-dot.c-green { background: #10b981; }
+    .cp-dot.c-orange { background: #f97316; }
+    .cp-dot.c-teal { background: #14b8a6; }
+    .cp-dot.c-indigo { background: #6366f1; }
+    .cp-dot.c-cyan { background: #06b6d4; }
+    .cp-dot.c-lime { background: #84cc16; }
+    .cp-dot.c-rose { background: #ec4899; }
+    .cp-dot.c-slate { background: #64748b; }
+    .cp-dot.c-reset { background: #334155; position: relative; }
+    .cp-dot.c-reset::after { content: "×"; color: #fff; font-size: 13px; font-weight: 900; position: absolute; top: -2px; left: 4px; }
 
-    .cell-click-popup { cursor: pointer; border-radius: 5px; padding: 2px 4px; text-align: left; }
-    .cell-click-popup:hover { background: #141f36; }
-    
-    .name-tiktok { font-size: 14px; font-weight: 700; color: #f8fafc; word-break: break-all; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
-    .name-roblox-display { font-size: 13px; font-weight: 700; color: #cbd5e1; word-break: break-all; line-height: 1.15; overflow: hidden; text-overflow: ellipsis; }
-    .name-empty { font-size: 12.5px; font-weight: 600; color: #475569; font-style: italic; }
-
-    /* BARIS HOST */
-    tr.host-row td { background: var(--host-bg); color: var(--host-text); border-bottom: 2px solid #9333ea; }
-
-    /* LATAR WARNA KUSTOM BARIS */
+    /* WARNA LATAR BARIS (13 OPSI LENGKAP & BERVARIASI) */
     tr.tag-blue td, tr.tag-blue.host-row td { 
       background: #bfdbfe !important; color: #0f172a !important; 
       border-bottom: 1px solid #93c5fd !important; border-right-color: #93c5fd !important;
@@ -346,6 +361,86 @@
     tr.tag-yellow .td-no { background: #facc15 !important; color: #713f12 !important; }
     tr.tag-yellow .score-val { background: #ffffff !important; color: #713f12 !important; border-color: #facc15 !important; }
     tr.tag-yellow .pay-status-tag.ready { background: #ffffff; color: #854d0e; border-color: #fef08a; }
+
+    tr.tag-green td, tr.tag-green.host-row td { 
+      background: #a7f3d0 !important; color: #064e3b !important; 
+      border-bottom: 1px solid #6ee7b7 !important; border-right-color: #6ee7b7 !important;
+    }
+    tr.tag-green .name-tiktok { color: #064e3b !important; font-weight: 800; }
+    tr.tag-green .name-roblox-display { color: #065f46 !important; font-weight: 700; }
+    tr.tag-green .td-no { background: #10b981 !important; color: #ffffff !important; }
+    tr.tag-green .score-val { background: #ffffff !important; color: #065f46 !important; border-color: #34d399 !important; }
+    tr.tag-green .pay-status-tag.ready { background: #ffffff; color: #064e3b; border-color: #a7f3d0; }
+
+    tr.tag-orange td, tr.tag-orange.host-row td { 
+      background: #fed7aa !important; color: #7c2d12 !important; 
+      border-bottom: 1px solid #fdba74 !important; border-right-color: #fdba74 !important;
+    }
+    tr.tag-orange .name-tiktok { color: #7c2d12 !important; font-weight: 800; }
+    tr.tag-orange .name-roblox-display { color: #9a3412 !important; font-weight: 700; }
+    tr.tag-orange .td-no { background: #f97316 !important; color: #ffffff !important; }
+    tr.tag-orange .score-val { background: #ffffff !important; color: #c2410c !important; border-color: #fb923c !important; }
+    tr.tag-orange .pay-status-tag.ready { background: #ffffff; color: #7c2d12; border-color: #fed7aa; }
+
+    tr.tag-teal td, tr.tag-teal.host-row td { 
+      background: #99f6e4 !important; color: #134e4a !important; 
+      border-bottom: 1px solid #5eead4 !important; border-right-color: #5eead4 !important;
+    }
+    tr.tag-teal .name-tiktok { color: #134e4a !important; font-weight: 800; }
+    tr.tag-teal .name-roblox-display { color: #115e59 !important; font-weight: 700; }
+    tr.tag-teal .td-no { background: #14b8a6 !important; color: #ffffff !important; }
+    tr.tag-teal .score-val { background: #ffffff !important; color: #0f766e !important; border-color: #2dd4bf !important; }
+    tr.tag-teal .pay-status-tag.ready { background: #ffffff; color: #134e4a; border-color: #99f6e4; }
+
+    tr.tag-indigo td, tr.tag-indigo.host-row td { 
+      background: #312e81 !important; color: #e0e7ff !important; 
+      border-bottom: 1px solid #4338ca !important; border-right-color: #4338ca !important;
+    }
+    tr.tag-indigo .name-tiktok { color: #ffffff !important; font-weight: 800; }
+    tr.tag-indigo .name-roblox-display { color: #c7d2fe !important; font-weight: 700; }
+    tr.tag-indigo .td-no { background: #4f46e5 !important; color: #ffffff !important; }
+    tr.tag-indigo .score-val { background: #1e1b4b !important; color: #c7d2fe !important; border-color: #6366f1 !important; }
+    tr.tag-indigo .pay-status-tag.ready { background: #1e1b4b; color: #c7d2fe; border-color: #4338ca; }
+
+    tr.tag-cyan td, tr.tag-cyan.host-row td { 
+      background: #cffafe !important; color: #164e63 !important; 
+      border-bottom: 1px solid #67e8f9 !important; border-right-color: #67e8f9 !important;
+    }
+    tr.tag-cyan .name-tiktok { color: #164e63 !important; font-weight: 800; }
+    tr.tag-cyan .name-roblox-display { color: #155e75 !important; font-weight: 700; }
+    tr.tag-cyan .td-no { background: #06b6d4 !important; color: #ffffff !important; }
+    tr.tag-cyan .score-val { background: #ffffff !important; color: #0e7490 !important; border-color: #22d3ee !important; }
+    tr.tag-cyan .pay-status-tag.ready { background: #ffffff; color: #164e63; border-color: #cffafe; }
+
+    tr.tag-lime td, tr.tag-lime.host-row td { 
+      background: #d9f99d !important; color: #365314 !important; 
+      border-bottom: 1px solid #bef264 !important; border-right-color: #bef264 !important;
+    }
+    tr.tag-lime .name-tiktok { color: #365314 !important; font-weight: 800; }
+    tr.tag-lime .name-roblox-display { color: #3f6212 !important; font-weight: 700; }
+    tr.tag-lime .td-no { background: #84cc16 !important; color: #0f172a !important; }
+    tr.tag-lime .score-val { background: #ffffff !important; color: #4d7c0f !important; border-color: #a3e635 !important; }
+    tr.tag-lime .pay-status-tag.ready { background: #ffffff; color: #365314; border-color: #d9f99d; }
+
+    tr.tag-rose td, tr.tag-rose.host-row td { 
+      background: #831843 !important; color: #fdf2f8 !important; 
+      border-bottom: 1px solid #be185d !important; border-right-color: #be185d !important;
+    }
+    tr.tag-rose .name-tiktok { color: #ffffff !important; font-weight: 800; }
+    tr.tag-rose .name-roblox-display { color: #fbcfe8 !important; font-weight: 700; }
+    tr.tag-rose .td-no { background: #be185d !important; color: #ffffff !important; }
+    tr.tag-rose .score-val { background: #500724 !important; color: #fbcfe8 !important; border-color: #ec4899 !important; }
+    tr.tag-rose .pay-status-tag.ready { background: #500724; color: #fbcfe8; border-color: #be185d; }
+
+    tr.tag-slate td, tr.tag-slate.host-row td { 
+      background: #1e293b !important; color: #f8fafc !important; 
+      border-bottom: 1px solid #334155 !important; border-right-color: #334155 !important;
+    }
+    tr.tag-slate .name-tiktok { color: #f8fafc !important; font-weight: 800; }
+    tr.tag-slate .name-roblox-display { color: #94a3b8 !important; font-weight: 700; }
+    tr.tag-slate .td-no { background: #334155 !important; color: #38bdf8 !important; }
+    tr.tag-slate .score-val { background: #0f172a !important; color: #38bdf8 !important; border-color: #475569 !important; }
+    tr.tag-slate .pay-status-tag.ready { background: #0f172a; color: #94a3b8; border-color: #334155; }
 
     .avatar-mini { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; background: #141f36; border: 1px solid #334155; flex-shrink: 0; }
     .avatar-placeholder { width: 30px; height: 30px; border-radius: 50%; background: #141f36; border: 1px solid #334155; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #94a3b8; }
@@ -488,7 +583,865 @@
     .podium-score-value { font-size: 22px; font-weight: 900; color: #f8fafc; }
     .podium-score-label { font-size: 11.5px; font-weight: 700; opacity: 0.8; }
     #fireworksCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30005; }
-  </style>
+  
+    /* ==============================================================================
+       MODE PERTARUNGAN 9 TIM DUO (18 KURSI) & 3D AVATAR PODIUM
+       ============================================================================== */
+    .btn-mode-toggle {
+      font-weight: 900 !important;
+      cursor: pointer;
+      transition: all 0.2s ease !important;
+    }
+    .btn-mode-toggle.mode-is-duo {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%) !important;
+      color: #c7d2fe !important;
+      border: 1px solid #6366f1 !important;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.3) !important;
+    }
+    .btn-mode-toggle.mode-is-solo {
+      background: linear-gradient(135deg, #064e3b 0%, #065f46 100%) !important;
+      color: #a7f3d0 !important;
+      border: 1px solid #10b981 !important;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.3) !important;
+    }
+    .btn-mode-toggle:hover {
+      filter: brightness(1.2);
+      transform: translateY(-1px);
+    }
+
+    
+    /* ==============================================================================
+       KLASEMEN PERTARUNGAN TIM & TEAM DIVIDER ROWS (SESUAI DESAIN TIKTOK LIVE)
+       ============================================================================== */
+    .team-standings-banner {
+      width: 100%;
+      background: rgba(13, 20, 36, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .team-standings-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 4px;
+    }
+    .t-badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      color: #38bdf8;
+      text-transform: uppercase;
+      font-family: 'Outfit', sans-serif;
+    }
+    .live-dot-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseGlow 1.4s infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(0.9); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+    .btn-edit-teams-quick {
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+    .btn-edit-teams-quick:hover {
+      background: #38bdf8;
+      color: #040914;
+    }
+
+    /* GRID KARTU KLASEMEN TIM - 2 BARIS x 5 KOLOM */
+    .team-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      width: 100%;
+    }
+    @media (max-width: 900px) {
+      .team-cards-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .team-cards-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .team-summary-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-left: 4px solid var(--team-col, #38bdf8);
+      border-radius: 6px;
+      padding: 6px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .team-summary-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+    .team-summary-card.is-leader {
+      border-color: rgba(250, 204, 21, 0.5);
+      border-left-color: #facc15;
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.12) 0%, rgba(15, 23, 42, 0.85) 100%);
+      box-shadow: 0 0 16px rgba(250, 204, 21, 0.25);
+    }
+    .team-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+    .team-card-name {
+      font-size: 11.5px;
+      font-weight: 900;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+    .team-rank-badge {
+      font-size: 9.5px;
+      font-weight: 900;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      flex-shrink: 0;
+    }
+    .team-summary-card.is-leader .team-rank-badge {
+      background: #facc15;
+      color: #000000;
+      font-weight: 900;
+    }
+    .team-card-score-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-top: 3px;
+    }
+    .team-score-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1;
+      text-shadow: 0 0 10px currentColor;
+    }
+    .team-score-lbl {
+      font-size: 9px;
+      font-weight: 800;
+      color: #94a3b8;
+      margin-left: 2px;
+    }
+    .team-card-seats {
+      font-size: 9.5px;
+      color: #64748b;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* BARIS PEMBATAS TIM PADA TABEL (TEAM DIVIDER ROW - NAMA TIM DI TENGAH & BESAR) */
+    tr.team-divider-row {
+      background: linear-gradient(90deg, var(--team-fade, rgba(56, 189, 248, 0.2)) 0%, rgba(13, 20, 36, 0.4) 100%) !important;
+      border-top: 1.5px solid var(--team-color, #38bdf8) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    tr.team-divider-row:hover {
+      background: linear-gradient(90deg, var(--team-fade, rgba(56, 189, 248, 0.35)) 0%, rgba(20, 30, 55, 0.6) 100%) !important;
+    }
+    body.mode-solo tr.team-divider-row {
+      display: none !important;
+    }
+    body.mode-duo tr.team-divider-row {
+      display: table-row !important;
+    }
+    td.team-divider-cell {
+      padding: 6px 12px !important;
+      height: 32px !important;
+      background: inherit !important;
+      user-select: none;
+    }
+    .team-divider-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      width: 100%;
+    }
+    .team-divider-left {
+      display: flex;
+      align-items: center;
+      z-index: 2;
+    }
+    .team-divider-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      width: auto;
+      max-width: 65%;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .team-divider-name-text {
+      font-size: 18px;
+      font-weight: 900;
+      font-family: 'Outfit', sans-serif;
+      color: var(--team-color, #38bdf8) !important;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      background: transparent !important;
+      background-color: transparent !important;
+      border: none !important;
+      outline: none !important;
+      text-shadow: none !important;
+      box-shadow: none !important;
+      user-select: none;
+    }
+    tr.team-divider-row:hover .team-divider-name-text {
+      filter: brightness(1.25);
+      text-shadow: none !important;
+    }
+    .team-divider-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      z-index: 2;
+    }
+    
+    .team-divider-rank-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 1.5px 7px;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid var(--team-color, #38bdf8);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.5px;
+    }
+    .team-divider-rank-badge.is-first {
+      background: #facc15 !important;
+      color: #040914 !important;
+      border-color: #facc15 !important;
+      box-shadow: 0 0 10px rgba(250, 204, 21, 0.7) !important;
+    }
+
+    .team-divider-score {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 900;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.55);
+      padding: 2.5px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--team-color, #38bdf8);
+      letter-spacing: 0.5px;
+    }
+
+    /* INDIKATOR TIM PADA BARIS KURSI */
+    tr.has-team {
+      border-left: 4px solid var(--row-team-color, #38bdf8) !important;
+    }
+    .badge-team-tag {
+      display: inline-block;
+      font-size: 8.5px;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 3px;
+      margin-left: 4px;
+      letter-spacing: 0.5px;
+      vertical-align: middle;
+      text-transform: uppercase;
+      white-space: nowrap;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+    }
+    .badge-team-tag:hover {
+      filter: brightness(1.25);
+    }
+
+    /* MODAL EDIT TIM PER TIM */
+    .modal-team-edit-box {
+      width: 530px !important;
+      max-width: 95vw !important;
+      background: #090f1d !important;
+      border: 1px solid rgba(56, 189, 248, 0.3) !important;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.85), 0 0 25px rgba(56, 189, 248, 0.15) !important;
+      border-radius: 12px !important;
+      padding: 16px 18px !important;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    /* PREVIEW NAMA TIM DENGAN WARNANYA PADA MODAL */
+    .team-modal-preview-box {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+    }
+    .team-modal-preview-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: #64748b;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+    .team-modal-preview-bar {
+      width: 100%;
+      height: 42px;
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: none !important;
+      padding: 0 14px;
+      box-sizing: border-box;
+    }
+    .team-modal-preview-text {
+      font-size: 17px;
+      font-weight: 900;
+      font-family: 'Outfit', sans-serif;
+      color: var(--preview-team-color, #38bdf8) !important;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-shadow: none !important;
+      background: transparent !important;
+    }
+
+    .team-tab-bar {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    .team-tab-bar::-webkit-scrollbar {
+      display: none !important;
+    }
+    .team-tab-chip {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #94a3b8;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.12s ease;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .team-tab-chip:hover {
+      border-color: rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+    }
+    .team-tab-chip.active {
+      background: var(--chip-color, #38bdf8) !important;
+      color: #040914 !important;
+      font-weight: 900 !important;
+      border-color: #ffffff !important;
+      box-shadow: 0 0 12px var(--chip-color, #38bdf8);
+    }
+    .team-tab-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--chip-color, #38bdf8);
+      display: inline-block;
+    }
+    .team-tab-chip.active .team-tab-dot {
+      background: #040914;
+    }
+
+    .single-team-info-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-left: 4px solid var(--cur-team-color, #38bdf8);
+      padding: 8px 12px;
+      border-radius: 6px;
+      gap: 8px;
+    }
+    .single-team-info-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+      flex: 1;
+    }
+    .single-team-info-seats {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+    .single-team-info-players {
+      font-size: 11px;
+      color: #cbd5e1;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .single-team-info-score {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--cur-team-color, #38bdf8);
+      background: rgba(0, 0, 0, 0.45);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--cur-team-color, #38bdf8);
+      flex-shrink: 0;
+    }
+
+    .single-team-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .single-team-field-lbl {
+      font-size: 10px;
+      font-weight: 800;
+      color: #94a3b8;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .single-team-input-text {
+      background: #060b16;
+      border: 1.5px solid #1e293b;
+      color: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      outline: none;
+      width: 100%;
+      box-sizing: border-box;
+      transition: all 0.15s ease;
+    }
+    .single-team-input-text:focus {
+      border-color: var(--cur-team-color, #38bdf8);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
+    }
+
+    .single-team-icon-picker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .single-icon-btn {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 14px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+    .single-icon-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.1);
+    }
+    .single-icon-btn.active {
+      background: rgba(56, 189, 248, 0.25);
+      border-color: #38bdf8;
+      box-shadow: 0 0 8px #38bdf8;
+    }
+
+    .single-team-palette-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      align-items: center;
+    }
+    .single-color-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.12s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900;
+      color: #040914;
+    }
+    .single-color-circle:hover {
+      transform: scale(1.2);
+    }
+    .single-color-circle.active {
+      transform: scale(1.22);
+      border-color: #ffffff;
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    .single-team-preview-box {
+      background: rgba(6, 11, 22, 0.9);
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .single-team-nav-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 10px;
+      margin-top: 2px;
+      gap: 8px;
+    }
+    
+
+    /* ==============================================================================
+       3D AVATAR FLOATING STAGE & PEDESTAL AURA UNTUK PODIUM
+       ============================================================================== */
+    .podium-stage-scaler {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 1100px;
+      transition: transform 0.2s ease;
+      position: relative;
+      z-index: 30008;
+    }
+    .winner-3d-floating-stage {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      z-index: 5;
+    }
+    .rank-1 .winner-3d-floating-stage { height: 290px; }
+    .rank-2 .winner-3d-floating-stage { height: 240px; }
+    .rank-3 .winner-3d-floating-stage { height: 240px; }
+
+    /* Luxury Luminous Backlight Auras */
+    .winner-gojo-aura {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .aura-rank-1 {
+      width: 270px; height: 270px; top: 10%;
+      background: radial-gradient(circle, rgba(254, 240, 138, 0.65) 0%, rgba(250, 204, 21, 0.45) 30%, rgba(234, 179, 8, 0.2) 55%, transparent 75%);
+      animation: champAuraPulse 3.5s infinite ease-in-out;
+    }
+    .aura-rank-2 {
+      width: 220px; height: 220px; top: 12%;
+      background: radial-gradient(circle, rgba(224, 242, 254, 0.65) 0%, rgba(56, 189, 248, 0.45) 35%, rgba(14, 165, 233, 0.2) 60%, transparent 75%);
+      animation: rank2AuraPulse 3.8s infinite ease-in-out 0.4s;
+    }
+    .aura-rank-3 {
+      width: 220px; height: 220px; top: 12%;
+      background: radial-gradient(circle, rgba(255, 237, 213, 0.65) 0%, rgba(251, 146, 60, 0.45) 35%, rgba(234, 88, 12, 0.2) 60%, transparent 75%);
+      animation: rank3AuraPulse 3.6s infinite ease-in-out 0.8s;
+    }
+
+    @keyframes champAuraPulse {
+      0%, 100% { transform: scale(0.95); opacity: 0.8; filter: drop-shadow(0 0 25px rgba(250, 204, 21, 0.6)); }
+      50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 45px rgba(250, 204, 21, 0.95)); }
+    }
+    @keyframes rank2AuraPulse {
+      0%, 100% { transform: scale(0.95); opacity: 0.75; filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.55)); }
+      50% { transform: scale(1.12); opacity: 1; filter: drop-shadow(0 0 35px rgba(56, 189, 248, 0.9)); }
+    }
+    @keyframes rank3AuraPulse {
+      0%, 100% { transform: scale(0.95); opacity: 0.75; filter: drop-shadow(0 0 20px rgba(251, 146, 60, 0.55)); }
+      50% { transform: scale(1.12); opacity: 1; filter: drop-shadow(0 0 35px rgba(251, 146, 60, 0.9)); }
+    }
+
+    .winner-3d-body-wrap {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* Living Breathe & Floating Motion */
+    @keyframes winnerOriginalFloatRank1 {
+      0%, 100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 25px rgba(250, 204, 21, 0.75)); }
+      50% { transform: translateY(-8px) scale(1.025); filter: drop-shadow(0 20px 28px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 40px rgba(250, 204, 21, 0.95)); }
+    }
+    @keyframes winnerOriginalFloatRank2 {
+      0%, 100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 22px rgba(56, 189, 248, 0.7)); }
+      50% { transform: translateY(-6px) scale(1.02); filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 32px rgba(56, 189, 248, 0.9)); }
+    }
+    @keyframes winnerOriginalFloatRank3 {
+      0%, 100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 22px rgba(251, 146, 60, 0.7)); }
+      50% { transform: translateY(-6px) scale(1.02); filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 32px rgba(251, 146, 60, 0.9)); }
+    }
+
+    .winner-3d-full-img {
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
+      transform-origin: bottom center !important;
+      will-change: transform, filter;
+      transition: transform 0.3s ease;
+    }
+    .rank-1 .winner-3d-full-img {
+      max-height: 270px;
+      animation: winnerOriginalFloatRank1 3.2s ease-in-out infinite;
+    }
+    .rank-2 .winner-3d-full-img {
+      max-height: 225px;
+      animation: winnerOriginalFloatRank2 3.6s ease-in-out infinite 0.4s;
+    }
+    .rank-3 .winner-3d-full-img {
+      max-height: 225px;
+      animation: winnerOriginalFloatRank3 3.4s ease-in-out infinite 0.8s;
+    }
+
+    /* Dua avatar berdampingan di Mode Duo */
+    .winner-3d-body-wrap.is-duo {
+      gap: 6px;
+    }
+    .winner-3d-body-wrap.is-duo .winner-3d-full-img {
+      max-width: 48%;
+    }
+    .rank-1 .winner-3d-body-wrap.is-duo .winner-3d-full-img { max-height: 245px; }
+    .rank-2 .winner-3d-body-wrap.is-duo .winner-3d-full-img { max-height: 210px; }
+    .rank-3 .winner-3d-body-wrap.is-duo .winner-3d-full-img { max-height: 210px; }
+
+    /* Pedestal Stage Step */
+    .podium-pedestal-step {
+      position: relative;
+      width: 100%;
+      height: 14px;
+      margin-top: -6px;
+      z-index: 6;
+      perspective: 400px;
+    }
+    .pedestal-surface {
+      width: 100%;
+      height: 100%;
+      transform: rotateX(45deg);
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+    }
+    .rank-1 .pedestal-surface {
+      background: radial-gradient(ellipse at center, rgba(250, 204, 21, 0.6) 0%, rgba(180, 83, 9, 0.3) 70%, transparent 100%);
+      border-top: 1.5px solid #fde047;
+      box-shadow: 0 0 25px rgba(250, 204, 21, 0.6);
+    }
+    .rank-2 .pedestal-surface {
+      background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.6) 0%, rgba(3, 105, 161, 0.3) 70%, transparent 100%);
+      border-top: 1.5px solid #7dd3fc;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+    }
+    .rank-3 .pedestal-surface {
+      background: radial-gradient(ellipse at center, rgba(251, 146, 60, 0.6) 0%, rgba(194, 65, 12, 0.3) 70%, transparent 100%);
+      border-top: 1.5px solid #fdba74;
+      box-shadow: 0 0 20px rgba(251, 146, 60, 0.5);
+    }
+
+    .podium-glass-card {
+      position: relative;
+      z-index: 7;
+      width: 100%;
+      border-radius: 16px;
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 4px;
+      backdrop-filter: blur(14px);
+    }
+    .rank-1 .podium-glass-card {
+      background: linear-gradient(180deg, rgba(68, 52, 12, 0.9) 0%, rgba(18, 15, 10, 0.98) 100%);
+      border: 1.5px solid rgba(250, 204, 21, 0.85);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(250, 204, 21, 0.3);
+    }
+    .rank-2 .podium-glass-card {
+      background: linear-gradient(180deg, rgba(14, 52, 75, 0.9) 0%, rgba(11, 20, 32, 0.98) 100%);
+      border: 1.5px solid rgba(56, 189, 248, 0.75);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(56, 189, 248, 0.25);
+    }
+    .rank-3 .podium-glass-card {
+      background: linear-gradient(180deg, rgba(68, 36, 22, 0.9) 0%, rgba(22, 13, 10, 0.98) 100%);
+      border: 1.5px solid rgba(251, 146, 60, 0.75);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(251, 146, 60, 0.25);
+    }
+
+    /* TAG RANKING ATAS PODIUM (#1, #2, #3) MENEMPEL DI BORDER ATAS */
+    .podium-rank-tag {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 25;
+      font-family: 'JetBrains Mono', 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      padding: 4px 18px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .rank-1 .podium-rank-tag {
+      background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+      color: #0b0f19;
+      border: 1.5px solid #fef08a;
+      box-shadow: 0 0 20px rgba(250, 204, 21, 0.85);
+    }
+    .rank-2 .podium-rank-tag {
+      background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+      color: #040914;
+      border: 1.5px solid #bae6fd;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.75);
+    }
+    .rank-3 .podium-rank-tag {
+      background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
+      color: #040914;
+      border: 1.5px solid #fed7aa;
+      box-shadow: 0 0 20px rgba(251, 146, 60, 0.75);
+    }
+
+    /* BADGE NAMA TIM DI PODIUM */
+    .title-badge {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      padding: 5px 20px;
+      border-radius: 99px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      max-width: 95%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .rank-1 .title-badge { background: rgba(250, 204, 21, 0.22); color: #FEF08A; border: 1.5px solid #FACC15; }
+    .rank-2 .title-badge { background: rgba(56, 189, 248, 0.2); color: #BAE6FD; border: 1.5px solid #38BDF8; }
+    .rank-3 .title-badge { background: rgba(251, 146, 60, 0.2); color: #FED7AA; border: 1.5px solid #FB923C; }
+
+    /* NAMA ANGGOTA (DISPLAY NAME DITUMPUK 2 BARIS LEBIH RAPI) */
+    .player-display-name {
+      font-family: 'Outfit', sans-serif;
+      text-align: center;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      padding: 0 4px;
+      user-select: none;
+    }
+    .member-name-row {
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      color: #FFFFFF;
+      text-align: center;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.25;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+    }
+    .rank-1 .member-name-row {
+      font-size: 19px;
+      font-weight: 900;
+      color: #FFFFFF;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95);
+    }
+    .rank-2 .member-name-row {
+      font-size: 17.5px;
+      font-weight: 800;
+      color: #F8FAFC;
+    }
+    .rank-3 .member-name-row {
+      font-size: 17.5px;
+      font-weight: 800;
+      color: #F8FAFC;
+    }
+
+    .player-username {
+      display: none !important;
+    }
+</style>
 </head>
 <body class="view-match">
 
@@ -496,6 +1449,8 @@
   <!-- BAR ATAS -->
   <div class="top-bar">
     <div class="top-left">
+      <button id="btnSwitchMode" class="btn-action-soft btn-mode-toggle" onclick="toggleModeDuoSolo()" title="Klik untuk beralih mode pertarungan">👥 MODE: TIM DUO</button>
+      <button id="btnEditTimToolbar" class="btn-action-soft" onclick="bukaModalEditNamaTim(0)" style="display:none;" title="Pengaturan Tim">👥 Pengaturan Tim</button>
       <button class="btn-action-soft" onclick="bukaModalPoin()">Point Preset</button>
       <button class="btn-action-soft" onclick="bukaModalNotifSuara()">Settings Audio</button>
       
@@ -531,6 +1486,8 @@
       </button>
     </div>
   </div>
+
+  <!-- KLASEMEN BANNER DIHAPUS (SUDAH TERLIHAT DI TABEL BAWAH) -->
 
   <!-- TABEL 20 KURSI -->
   <div class="grid-tables">
@@ -594,8 +1551,16 @@
   <span class="cp-dot c-blue" title="Biru Langit" onclick="pilihWarnaKustom('blue')"></span>
   <span class="cp-dot c-pink" title="Pink Pastel" onclick="pilihWarnaKustom('pink')"></span>
   <span class="cp-dot c-purple" title="Ungu Cyber" onclick="pilihWarnaKustom('purple')"></span>
-  <span class="cp-dot c-red" title="Merah Solid" onclick="pilihWarnaKustom('red')"></span>
-  <span class="cp-dot c-yellow" title="Kuning Cyber" onclick="pilihWarnaKustom('yellow')"></span>
+  <span class="cp-dot c-red" title="Merah Crimson" onclick="pilihWarnaKustom('red')"></span>
+  <span class="cp-dot c-yellow" title="Kuning Sunny" onclick="pilihWarnaKustom('yellow')"></span>
+  <span class="cp-dot c-green" title="Hijau Mint" onclick="pilihWarnaKustom('green')"></span>
+  <span class="cp-dot c-orange" title="Oranye Sunset" onclick="pilihWarnaKustom('orange')"></span>
+  <span class="cp-dot c-teal" title="Teal Aqua" onclick="pilihWarnaKustom('teal')"></span>
+  <span class="cp-dot c-indigo" title="Indigo Royal" onclick="pilihWarnaKustom('indigo')"></span>
+  <span class="cp-dot c-cyan" title="Cyan Electric" onclick="pilihWarnaKustom('cyan')"></span>
+  <span class="cp-dot c-lime" title="Lime Neon" onclick="pilihWarnaKustom('lime')"></span>
+  <span class="cp-dot c-rose" title="Rose Magenta" onclick="pilihWarnaKustom('rose')"></span>
+  <span class="cp-dot c-slate" title="Dark Slate" onclick="pilihWarnaKustom('slate')"></span>
   <span class="cp-dot c-reset" title="Reset Default" onclick="pilihWarnaKustom('')"></span>
 </div>
 
@@ -647,6 +1612,8 @@
     </div>
     <input type="hidden" id="editPlayerIndex" value="-1">
     <input type="hidden" id="inputAvatarUrl" value="">
+    <input type="hidden" id="inputAvatar3dUrl" value="">
+    <input type="hidden" id="inputUserId" value="">
 
     <!-- PROFILE CARD HOLO -->
     <div class="hud-player-card">
@@ -736,53 +1703,121 @@
   </div>
 </div>
 
+<!-- MODAL PENGATURAN TIM (PREVIEW NAMA & WARNA - INPUT & PALET - BATAL & YES) -->
+<div class="modal-overlay" id="modalEditNamaTim" onclick="tutupModalDiLuar(event)">
+  <div class="modal-box-hud modal-team-edit-box" style="width: 400px !important; max-width: 95vw !important; padding: 20px !important; position: relative;">
+    <button class="btn-close-hud" onclick="tutupModalEditNamaTimTanpaSimpan()" title="Tutup" style="position: absolute; top: 12px; right: 12px; z-index: 10;">✕</button>
+
+    <!-- Preview Nama Tim dengan Warnanya (Sesuai Permintaan, Menggantikan Bagian Atas) -->
+    <div class="team-modal-preview-box" id="teamModalPreviewBox" style="margin-bottom: 16px;">
+      <div class="team-modal-preview-bar" id="teamModalPreviewBar">
+        <span class="team-modal-preview-text" id="teamModalPreviewText">AAAA</span>
+      </div>
+    </div>
+
+    <!-- Input Nama Tim -->
+    <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px;">
+      <label style="font-size: 11px; font-weight: 800; color: #94a3b8; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px;">NAMA TIM</label>
+      <input type="text" id="singleTeamNameInput" class="single-team-input-text" maxlength="24" 
+             placeholder="Masukkan nama tim..." 
+             style="font-size: 15px; font-weight: 800; padding: 10px 14px;"
+             oninput="updateModalTeamLivePreview()"
+             onkeydown="if(event.key === 'Enter') simpanSingleTeam()">
+    </div>
+
+    <!-- Pilihan Warna Tim -->
+    <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px;">
+      <label style="font-size: 11px; font-weight: 800; color: #94a3b8; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px;">PILIHAN WARNA</label>
+      <div class="single-team-palette-row" id="teamColorPaletteGrid" style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <!-- 12 Pilihan Warna Tim -->
+      </div>
+    </div>
+
+    <!-- Tombol Batal & Yes -->
+    <div style="display: flex; justify-content: flex-end; align-items: center; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 14px; gap: 10px;">
+      <button type="button" class="btn-hud-reset" onclick="tutupModalEditNamaTimTanpaSimpan()" style="padding: 7px 18px; font-size: 12px; font-weight: 800; min-width: 80px;">Batal</button>
+      <button type="button" class="btn-hud-save" onclick="simpanSingleTeam()" style="padding: 7px 22px; font-size: 12px; font-weight: 900; min-width: 90px;">Yes</button>
+    </div>
+  </div>
+</div>
+
 <!-- OVERLAY PODIUM PEMENANG -->
+<!-- OVERLAY PODIUM PEMENANG 3D AVATAR -->
 <div class="winner-overlay" id="winnerOverlay">
   <canvas id="fireworksCanvas"></canvas>
   <button class="btn-close-winner" onclick="tutupLayarPemenang()" title="Tutup">✕</button>
 
-  <div class="winner-header">
-    <div class="winner-subtitle">TOURNAMENT FINISHED</div>
-    <h1 class="winner-title">CONGRATULATIONS</h1>
-  </div>
-  
-  <div class="podium-container">
-    <div class="podium-card rank-2">
-      <div class="title-badge">2ND PLACE</div>
-      <div class="avatar-container">
-        <div class="avatar-inner" id="winAvatarBox2"><span>?</span></div>
-      </div>
-      <div class="player-display-name" id="winName2">-</div>
-      <div class="player-username" id="winNick2">-</div>
-      <div class="podium-score-box">
-        <span class="podium-score-value" id="winScore2">0</span>
-        <span class="podium-score-label">PTS</span>
-      </div>
+  <div class="podium-stage-scaler" id="podiumStageScaler">
+    <div class="winner-header">
+      <div class="winner-subtitle" id="winTrophyBadge">🏆 GRAND FINALS CEREMONY 🏆</div>
+      <h1 class="winner-title" id="winHeaderTitle">CONGRATULATIONS</h1>
     </div>
+    
+    <div class="podium-container">
+      <!-- Rank 2: 2nd Place -->
+      <div class="podium-card rank-2">
+        <div class="podium-rank-tag" id="winRankTag2">🥈 #2</div>
+        <div class="winner-3d-floating-stage">
+          <div class="winner-gojo-aura aura-rank-2"></div>
+          <div class="winner-3d-body-wrap" id="winAvatarBox2">
+            <span>2</span>
+          </div>
+        </div>
+        <div class="podium-pedestal-step">
+          <div class="pedestal-surface"></div>
+        </div>
+        <div class="podium-glass-card">
+          <div class="title-badge" id="winBadge2">DUO 2</div>
+          <div class="player-display-name" id="winName2">-</div>
+          <div class="podium-score-box">
+            <span class="podium-score-value" id="winScore2">0</span>
+            <span class="podium-score-label">PTS</span>
+          </div>
+        </div>
+      </div>
 
-    <div class="podium-card rank-1">
-      <div class="title-badge">CHAMPION</div>
-      <div class="avatar-container">
-        <div class="avatar-inner" id="winAvatarBox1"><span>?</span></div>
+      <!-- Rank 1: Champion -->
+      <div class="podium-card rank-1">
+        <div class="podium-rank-tag" id="winRankTag1">👑 #1</div>
+        <div class="winner-3d-floating-stage">
+          <div class="winner-gojo-aura aura-rank-1"></div>
+          <div class="winner-3d-body-wrap" id="winAvatarBox1">
+            <span>1</span>
+          </div>
+        </div>
+        <div class="podium-pedestal-step">
+          <div class="pedestal-surface"></div>
+        </div>
+        <div class="podium-glass-card">
+          <div class="title-badge" id="winBadge1">CHAMPION</div>
+          <div class="player-display-name" id="winName1">-</div>
+          <div class="podium-score-box">
+            <span class="podium-score-value" id="winScore1">0</span>
+            <span class="podium-score-label">PTS</span>
+          </div>
+        </div>
       </div>
-      <div class="player-display-name" id="winName1">-</div>
-      <div class="player-username" id="winNick1">-</div>
-      <div class="podium-score-box">
-        <span class="podium-score-value" id="winScore1">0</span>
-        <span class="podium-score-label">PTS</span>
-      </div>
-    </div>
 
-    <div class="podium-card rank-3">
-      <div class="title-badge">3RD PLACE</div>
-      <div class="avatar-container">
-        <div class="avatar-inner" id="winAvatarBox3"><span>?</span></div>
-      </div>
-      <div class="player-display-name" id="winName3">-</div>
-      <div class="player-username" id="winNick3">-</div>
-      <div class="podium-score-box">
-        <span class="podium-score-value" id="winScore3">0</span>
-        <span class="podium-score-label">PTS</span>
+      <!-- Rank 3: 3rd Place -->
+      <div class="podium-card rank-3">
+        <div class="podium-rank-tag" id="winRankTag3">🥉 #3</div>
+        <div class="winner-3d-floating-stage">
+          <div class="winner-gojo-aura aura-rank-3"></div>
+          <div class="winner-3d-body-wrap" id="winAvatarBox3">
+            <span>3</span>
+          </div>
+        </div>
+        <div class="podium-pedestal-step">
+          <div class="pedestal-surface"></div>
+        </div>
+        <div class="podium-glass-card">
+          <div class="title-badge" id="winBadge3">DUO 3</div>
+          <div class="player-display-name" id="winName3">-</div>
+          <div class="podium-score-box">
+            <span class="podium-score-value" id="winScore3">0</span>
+            <span class="podium-score-label">PTS</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -797,18 +1832,31 @@
   const DEFAULT_QUICK_POINTS = [1, 2, 3, 4, 5];
   const MIN_WIDTHS = { no: 36, nama: 100, display: 100, point: 85 };
 
+  const DEFAULT_DUO_TEAMS = [
+    { id: 'duo_1', name: 'DUO 1', color: '#f43f5e', icon: '⚔️', chairRange: 'Kursi 1 - 2', chairs: [0, 1] },
+    { id: 'duo_2', name: 'DUO 2', color: '#a855f7', icon: '⚔️', chairRange: 'Kursi 3 - 4', chairs: [2, 3] },
+    { id: 'duo_3', name: 'DUO 3', color: '#facc15', icon: '⚔️', chairRange: 'Kursi 5 - 6', chairs: [4, 5] },
+    { id: 'duo_4', name: 'DUO 4', color: '#10b981', icon: '⚔️', chairRange: 'Kursi 7 - 8', chairs: [6, 7] },
+    { id: 'duo_5', name: 'DUO 5', color: '#06b6d4', icon: '⚔️', chairRange: 'Kursi 9 - 10', chairs: [8, 9] },
+    { id: 'duo_6', name: 'DUO 6', color: '#38bdf8', icon: '⚔️', chairRange: 'Kursi 11 - 12', chairs: [10, 11] },
+    { id: 'duo_7', name: 'DUO 7', color: '#3b82f6', icon: '⚔️', chairRange: 'Kursi 13 - 14', chairs: [12, 13] },
+    { id: 'duo_8', name: 'DUO 8', color: '#818cf8', icon: '⚔️', chairRange: 'Kursi 15 - 16', chairs: [14, 15] },
+    { id: 'duo_9', name: 'DUO 9', color: '#ec4899', icon: '⚔️', chairRange: 'Kursi 17 - 18', chairs: [16, 17] },
+    { id: 'duo_10', name: 'DUO 10', color: '#14b8a6', icon: '⚔️', chairRange: 'Kursi 19 - 20', chairs: [18, 19] }
+  ];
+
   function buatDataTabelKosong() {
     const players = [];
     for (let i = 0; i < 19; i++) {
       players.push({ 
         id: `p_kursi_${Date.now()}_${i}_${Math.random().toString(36).substr(2, 4)}`, 
-        robloxUser: '', user: '', nick: '', avatar: '', poin: 0, 
+        robloxUser: '', user: '', nick: '', avatar: '', avatar3d: '', userId: '', poin: 0, 
         isReady: false, isPaid: false, colorTag: '' 
       });
     }
     return {
       players: players,
-      host: { id: `p_host_${Date.now()}`, robloxUser: '', user: '', nick: '', avatar: '', poin: 0, isReady: true, isPaid: true, colorTag: '' }
+      host: { id: `p_host_${Date.now()}`, robloxUser: '', user: '', nick: '', avatar: '', avatar3d: '', userId: '', poin: 0, isReady: true, isPaid: true, colorTag: '' }
     };
   }
 
@@ -817,9 +1865,15 @@
     sessions: {
       "Sesi 1": buatDataTabelKosong()
     },
-    activeSession: "Sesi 1"
+    activeSession: "Sesi 1",
+    gameMode: "duo",
+    duoTeams: DEFAULT_DUO_TEAMS
   };
 
+  if (!db.gameMode) db.gameMode = "duo";
+  if (!db.duoTeams || !Array.isArray(db.duoTeams) || db.duoTeams.length < 10) {
+    db.duoTeams = JSON.parse(JSON.stringify(DEFAULT_DUO_TEAMS));
+  }
   if (!db.warnaPoin) db.warnaPoin = { quickPoints: DEFAULT_QUICK_POINTS };
   if (!db.sessions || typeof db.sessions !== 'object' || Object.keys(db.sessions).length === 0) {
     db.sessions = { "Sesi 1": buatDataTabelKosong() };
@@ -831,6 +1885,141 @@
   function getActiveData() {
     return db.sessions[db.activeSession];
   }
+  /* ==============================================================================
+     LOGIKA MODE DUO 9 TIM (18 KURSI)
+     ============================================================================== */
+  function toggleModeDuoSolo() {
+    db.gameMode = (db.gameMode === 'duo') ? 'solo' : 'duo';
+    simpanDB();
+    renderIsiTabel();
+    tambahLogAktivitas('MODE', `Beralih ke ${db.gameMode === 'duo' ? 'Mode Duo (18 Kursi)' : 'Mode Solo (20 Kursi)'}`, 'system');
+  }
+
+  
+  function hitungSkorDuoTeams() {
+    const currData = getActiveData();
+    return db.duoTeams.map((t, idx) => {
+      const p1 = currData.players[t.chairs[0]] || { poin: 0, user: '', nick: '', avatar: '', avatar3d: '', isReady: false };
+      const p2 = (t.chairs[1] === 19)
+        ? (currData.host || { poin: 0, user: '', nick: '', avatar: '', avatar3d: '', isReady: false })
+        : (currData.players[t.chairs[1]] || { poin: 0, user: '', nick: '', avatar: '', avatar3d: '', isReady: false });
+      const score1 = p1.poin || 0;
+      const score2 = p2.poin || 0;
+      const totalPoints = score1 + score2;
+      const hasPlayer = Boolean(p1.isReady || p2.isReady || p1.user || p2.user || p1.robloxUser || p2.robloxUser);
+      return {
+        ...t,
+        teamIndex: idx,
+        p1,
+        p2,
+        score1,
+        score2,
+        totalPoints,
+        score: totalPoints,
+        hasPlayer
+      };
+    });
+  }
+
+  function renderDuoStandingsBanner() {
+    // Banner klasemen atas telah dihapus sesuai permintaan (peringkat sudah terlihat langsung di tabel bawah)
+    const btnEdit = document.getElementById('btnEditTimToolbar');
+    if (btnEdit) {
+      btnEdit.style.display = (db.gameMode === 'duo') ? '' : 'none';
+    }
+  }
+
+  let activeEditTeamIndex = 0;
+  let activeEditTeamColor = '#38bdf8';
+  const TEAM_COLORS = [
+    '#f43f5e', '#a855f7', '#facc15', '#10b981', '#06b6d4', 
+    '#38bdf8', '#3b82f6', '#818cf8', '#ec4899', '#14b8a6', 
+    '#f97316', '#ffffff'
+  ];
+
+  function bukaModalEditNamaTim(teamIdx = null) {
+    if (typeof teamIdx === 'number' && teamIdx >= 0 && teamIdx < db.duoTeams.length) {
+      activeEditTeamIndex = teamIdx;
+    } else if (activeEditTeamIndex === null || activeEditTeamIndex >= db.duoTeams.length) {
+      activeEditTeamIndex = 0;
+    }
+
+    const t = db.duoTeams[activeEditTeamIndex] || DEFAULT_DUO_TEAMS[activeEditTeamIndex];
+    activeEditTeamColor = t.color || '#38bdf8';
+
+    // Set input value
+    const input = document.getElementById('singleTeamNameInput');
+    if (input) input.value = t.name;
+
+    // Render palette
+    renderPaletteWarnaTim();
+
+    // Update live preview bar
+    updateModalTeamLivePreview();
+
+    document.getElementById('modalEditNamaTim').style.display = 'flex';
+    setTimeout(() => {
+      if (input) { input.focus(); input.select(); }
+    }, 50);
+  }
+
+  function pilihWarnaTimModal(c) {
+    activeEditTeamColor = c;
+    renderPaletteWarnaTim();
+    updateModalTeamLivePreview();
+  }
+
+  function updateModalTeamLivePreview() {
+    const input = document.getElementById('singleTeamNameInput');
+    const nameVal = (input ? input.value.trim() : '') || (db.duoTeams[activeEditTeamIndex]?.name || `DUO ${activeEditTeamIndex + 1}`);
+
+    const previewBar = document.getElementById('teamModalPreviewBar');
+    const previewText = document.getElementById('teamModalPreviewText');
+
+    if (previewBar) {
+      previewBar.style.borderLeft = `4px solid ${activeEditTeamColor}`;
+      previewBar.style.borderColor = activeEditTeamColor;
+      previewBar.style.boxShadow = 'none';
+    }
+    if (previewText) {
+      previewText.innerText = nameVal;
+      previewText.style.color = activeEditTeamColor;
+      previewText.style.textShadow = 'none';
+    }
+  }
+
+  function renderPaletteWarnaTim() {
+    const grid = document.getElementById('teamColorPaletteGrid');
+    if (!grid) return;
+    grid.innerHTML = TEAM_COLORS.map(c => `
+      <span class="single-color-circle ${c === activeEditTeamColor ? 'active' : ''}" 
+            style="background:${c}; width:24px; height:24px; border-radius:50%; cursor:pointer; border:2px solid ${c === activeEditTeamColor ? '#ffffff' : 'transparent'}; box-shadow:${c === activeEditTeamColor ? '0 0 10px ' + c : 'none'}; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:#040914;" 
+            onclick="pilihWarnaTimModal('${c}')">${c === activeEditTeamColor ? '✔' : ''}</span>
+    `).join('');
+  }
+
+  function simpanSingleTeam() {
+    const input = document.getElementById('singleTeamNameInput');
+    const val = input ? input.value.trim() : '';
+    if (db.duoTeams[activeEditTeamIndex]) {
+      if (val) db.duoTeams[activeEditTeamIndex].name = val;
+      if (activeEditTeamColor) db.duoTeams[activeEditTeamIndex].color = activeEditTeamColor;
+    }
+    simpanDB();
+    renderIsiTabel();
+    tutupModalEditNamaTim();
+    const t = db.duoTeams[activeEditTeamIndex];
+    tambahLogAktivitas('TIM', `Tim ${t.name} diperbarui`, 'system');
+  }
+
+  function tutupModalEditNamaTimTanpaSimpan() {
+    document.getElementById('modalEditNamaTim').style.display = 'none';
+  }
+
+  function tutupModalEditNamaTim() {
+    document.getElementById('modalEditNamaTim').style.display = 'none';
+  }
+
 
   let customAudioPoinData = localStorage.getItem(AUDIO_POIN_KEY) || null;
   let isLogFolded = JSON.parse(localStorage.getItem(LOG_FOLD_KEY)) || false;
@@ -934,10 +2123,12 @@
 
     picker.classList.add('show');
     const rect = ev.currentTarget.getBoundingClientRect();
-    let leftPos = rect.right + 6;
-    if (leftPos + 140 > window.innerWidth) leftPos = rect.left - 140;
-    picker.style.left = `${leftPos}px`;
-    picker.style.top = `${rect.top - 4}px`;
+    let leftPos = rect.right + 8;
+    if (leftPos + 220 > window.innerWidth) leftPos = rect.left - 220;
+    let topPos = rect.top - 8;
+    if (topPos + 80 > window.innerHeight) topPos = window.innerHeight - 85;
+    picker.style.left = `${Math.max(10, leftPos)}px`;
+    picker.style.top = `${Math.max(10, topPos)}px`;
   }
 
   function tutupMiniColorPicker() {
@@ -1027,10 +2218,20 @@
     const selisih = p.poin - awal;
 
     const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
-    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN", p.colorTag);
+
+    let teamInfo = null;
+    if (db.gameMode === 'duo' && idx < 18) {
+      const tIdx = Math.floor(idx / 2);
+      const team = db.duoTeams[tIdx] || { name: `TIM ${tIdx+1}`, color: '#38bdf8' };
+      const partnerIdx = (idx % 2 === 0) ? idx + 1 : idx - 1;
+      const teamScore = p.poin + (currData.players[partnerIdx]?.poin || 0);
+      teamInfo = { name: team.name, score: teamScore, color: team.color };
+    }
+
+    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN", p.colorTag, teamInfo);
 
     if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
-    tambahLogAktivitas(namaTampil, `Poin +${delta}`, 'system', awal, p.poin, Math.abs(delta));
+    tambahLogAktivitas(namaTampil, `Poin +${delta}${teamInfo ? ` (${teamInfo.name})` : ''}`, 'system', awal, p.poin, Math.abs(delta));
   }
 
   function simpanSetTotalLangsung() {
@@ -1048,13 +2249,23 @@
     const selisih = p.poin - awal;
 
     const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
-    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "SET TOTAL", p.colorTag);
+
+    let teamInfo = null;
+    if (db.gameMode === 'duo' && idx < 18) {
+      const tIdx = Math.floor(idx / 2);
+      const team = db.duoTeams[tIdx] || { name: `TIM ${tIdx+1}`, color: '#38bdf8' };
+      const partnerIdx = (idx % 2 === 0) ? idx + 1 : idx - 1;
+      const teamScore = p.poin + (currData.players[partnerIdx]?.poin || 0);
+      teamInfo = { name: team.name, score: teamScore, color: team.color };
+    }
+
+    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "SET TOTAL", p.colorTag, teamInfo);
 
     if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
-    tambahLogAktivitas(namaTampil, `Total poin disetel ke ${p.poin}`, 'system', awal, p.poin, Math.abs(selisih));
+    tambahLogAktivitas(namaTampil, `Total disetel ke ${p.poin}${teamInfo ? ` (${teamInfo.name})` : ''}`, 'system', awal, p.poin, Math.abs(selisih));
   }
 
-  function tampilkanPopupPoinTengah(namaPemain, deltaPoin, totalPoin, labelAtas = "UPDATE POIN", warnaTag = "") {
+  function tampilkanPopupPoinTengah(namaPemain, deltaPoin, totalPoin, labelAtas = "UPDATE POIN", warnaTag = "", teamInfo = null) {
     const popup = document.getElementById('centerNotifPopup');
     if (!popup) return;
     if (popupCenterTimer) clearTimeout(popupCenterTimer);
@@ -1065,10 +2276,12 @@
     }
 
     const tanda = deltaPoin >= 0 ? `+${deltaPoin}` : `${deltaPoin}`;
-    document.getElementById('cNotifTag').innerText = labelAtas;
+    document.getElementById('cNotifTag').innerText = teamInfo ? `${teamInfo.name} • ${labelAtas}` : labelAtas;
     document.getElementById('cNotifPlayer').innerText = namaPemain || "PEMAIN";
     document.getElementById('cNotifPts').innerText = `${tanda} POIN`;
-    document.getElementById('cNotifTotal').innerText = `Total: ${totalPoin} Poin`;
+    document.getElementById('cNotifTotal').innerText = teamInfo 
+      ? `Total Tim: ${teamInfo.score} Pts (Individu: ${totalPoin})` 
+      : `Total: ${totalPoin} Poin`;
 
     popup.classList.remove('show');
     void popup.offsetWidth;
@@ -1236,14 +2449,65 @@
   }
 
   let fireworksInterval = null;
-  function pasangAvatarPodium(elemId, avatarUrl, nama) {
-    const box = document.getElementById(elemId);
+  function dapatkanFullBody3dAvatar(p) {
+    if (!p) return '';
+    if (p.avatar3d && p.avatar3d.includes('Avatar') && !p.avatar3d.includes('AvatarHeadshot')) {
+      return p.avatar3d.replaceAll('/420/420/', '/720/720/').replaceAll('/352/352/', '/720/720/');
+    }
+    if (p.avatar && p.avatar.includes('rbxcdn.com')) {
+      if (p.avatar.includes('/Avatar/') && !p.avatar.includes('AvatarHeadshot')) {
+        return p.avatar.replaceAll('/420/420/', '/720/720/').replaceAll('/352/352/', '/720/720/');
+      }
+      return p.avatar;
+    }
+    if (p.avatar && !p.avatar.includes('ui-avatars') && !p.avatar.includes('dicebear')) {
+      return p.avatar;
+    }
+    return '';
+  }
+
+  function autoScalePodium() {
+    const scaler = document.getElementById('podiumStageScaler');
+    if (!scaler) return;
+    const targetW = 1080;
+    const targetH = 680;
+    const winW = window.innerWidth || document.documentElement.clientWidth || 1200;
+    const winH = window.innerHeight || document.documentElement.clientHeight || 800;
+    const scaleX = (winW - 40) / targetW;
+    const scaleY = (winH - 40) / targetH;
+    let scale = Math.min(scaleX, scaleY);
+    if (scale < 0.25) scale = 0.25;
+    if (scale > 1.25) scale = 1.25;
+    scaler.style.transform = `scale(${scale.toFixed(4)})`;
+    scaler.style.transformOrigin = 'center center';
+  }
+
+  function renderAvatar3dBox(boxId, p1, p2 = null, isDuo = false) {
+    const box = document.getElementById(boxId);
     if (!box) return;
-    const inisial = (nama && nama !== '-' && nama !== 'Kosong' && nama !== 'Belum Ada') ? nama.charAt(0).toUpperCase() : '?';
-    if (avatarUrl) {
-      box.innerHTML = `<img src="${avatarUrl}" alt="${nama}" onerror="this.outerHTML='<span>${inisial}</span>'">`;
+
+    if (isDuo) {
+      box.className = 'winner-3d-body-wrap is-duo';
+      const img1 = dapatkanFullBody3dAvatar(p1);
+      const img2 = dapatkanFullBody3dAvatar(p2);
+      const n1 = p1?.nick || p1?.user || 'P1';
+      const n2 = p2?.nick || p2?.user || 'P2';
+
+      const av1Html = img1 
+        ? `<img src="${img1}" class="winner-3d-full-img" alt="${n1}" onerror="this.outerHTML='<span style=\'font-size:32px;\'>👤</span>'">`
+        : `<span style="font-size:32px; color:#94a3b8;">👤</span>`;
+      const av2Html = img2 
+        ? `<img src="${img2}" class="winner-3d-full-img" alt="${n2}" onerror="this.outerHTML='<span style=\'font-size:32px;\'>👤</span>'">`
+        : `<span style="font-size:32px; color:#94a3b8;">👤</span>`;
+
+      box.innerHTML = av1Html + av2Html;
     } else {
-      box.innerHTML = `<span>${inisial}</span>`;
+      box.className = 'winner-3d-body-wrap';
+      const img = dapatkanFullBody3dAvatar(p1);
+      const n = p1?.nick || p1?.user || 'Juara';
+      box.innerHTML = img 
+        ? `<img src="${img}" class="winner-3d-full-img" alt="${n}" onerror="this.outerHTML='<span style=\'font-size:42px;\'>👤</span>'">`
+        : `<span style="font-size:42px; color:#94a3b8;">👤</span>`;
     }
   }
 
@@ -1251,31 +2515,123 @@
     tutupQuickPointPopover();
     tutupMiniColorPicker();
     const currData = getActiveData();
-    const sorted = [...currData.players].filter(p => p.isReady && (p.nick || p.user || p.robloxUser)).sort((a, b) => b.poin - a.poin);
-    const p1 = sorted[0] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
-    const p2 = sorted[1] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
-    const p3 = sorted[2] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
 
-    const n1 = p1.nick || p1.user || 'Belum Ada';
-    const n2 = p2.nick || p2.user || 'Belum Ada';
-    const n3 = p3.nick || p3.user || 'Belum Ada';
+    if (db.gameMode === 'duo') {
+      // KHUSUS MODE TIM: RANKING MURNI BERDASARKAN TOTAL POIN TIM (Bukan individu!)
+      const teams = hitungSkorDuoTeams();
+      // Urutkan tim dari total poin tertinggi ke terendah
+      const sortedTeams = [...teams].sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0));
 
-    document.getElementById('winName1').innerText = n1;
-    document.getElementById('winNick1').innerText = p1.user ? `@${p1.user}` : (p1.robloxUser ? `@${p1.robloxUser}` : '-');
-    document.getElementById('winScore1').innerText = p1.poin;
-    pasangAvatarPodium('winAvatarBox1', p1.avatar, n1);
+      const t1 = sortedTeams[0] || { name: 'DUO 1', color: '#facc15', totalPoints: 0, p1: null, p2: null };
+      const t2 = sortedTeams[1] || { name: 'DUO 2', color: '#38bdf8', totalPoints: 0, p1: null, p2: null };
+      const t3 = sortedTeams[2] || { name: 'DUO 3', color: '#fb923c', totalPoints: 0, p1: null, p2: null };
 
-    document.getElementById('winName2').innerText = n2;
-    document.getElementById('winNick2').innerText = p2.user ? `@${p2.user}` : (p2.robloxUser ? `@${p2.robloxUser}` : '-');
-    document.getElementById('winScore2').innerText = p2.poin;
-    pasangAvatarPodium('winAvatarBox2', p2.avatar, n2);
+      document.getElementById('winHeaderTitle').innerText = 'DUO TOURNAMENT CHAMPIONS';
+      document.getElementById('winTrophyBadge').innerText = '🏆 GRAND FINALS CEREMONY - TEAM BATTLE 🏆';
 
-    document.getElementById('winName3').innerText = n3;
-    document.getElementById('winNick3').innerText = p3.user ? `@${p3.user}` : (p3.robloxUser ? `@${p3.robloxUser}` : '-');
-    document.getElementById('winScore3').innerText = p3.poin;
-    pasangAvatarPodium('winAvatarBox3', p3.avatar, n3);
+      // Ranking #1, #2, #3 Di Bagian Atas
+      if (document.getElementById('winRankTag1')) document.getElementById('winRankTag1').innerText = '👑 #1';
+      if (document.getElementById('winRankTag2')) document.getElementById('winRankTag2').innerText = '🥈 #2';
+      if (document.getElementById('winRankTag3')) document.getElementById('winRankTag3').innerText = '🥉 #3';
+
+      // Juara 1 Tim: Badge diisi NAMA TIM SAJA, Bawahnya DISPLAY NAME (Tanpa Username @)
+      const b1 = document.getElementById('winBadge1');
+      b1.innerText = t1.name;
+      b1.style.color = t1.color || '#facc15';
+      b1.style.borderColor = t1.color || '#facc15';
+      b1.style.background = (t1.color || '#facc15') + '26';
+      b1.style.boxShadow = '0 0 14px ' + (t1.color || '#facc15') + '55';
+
+      const d1_a = t1.p1?.nick || t1.p1?.user || t1.p1?.robloxUser || 'Pemain 1';
+      const d1_b = t1.p2?.nick || t1.p2?.user || t1.p2?.robloxUser || 'Pemain 2';
+      document.getElementById('winName1').innerHTML = `<div class="member-name-row">${d1_a}</div><div class="member-name-row">${d1_b}</div>`;
+      if (document.getElementById('winNick1')) document.getElementById('winNick1').style.display = 'none';
+      document.getElementById('winScore1').innerText = t1.totalPoints;
+      renderAvatar3dBox('winAvatarBox1', t1.p1, t1.p2, true);
+
+      // Juara 2 Tim
+      const b2 = document.getElementById('winBadge2');
+      b2.innerText = t2.name;
+      b2.style.color = t2.color || '#38bdf8';
+      b2.style.borderColor = t2.color || '#38bdf8';
+      b2.style.background = (t2.color || '#38bdf8') + '26';
+      b2.style.boxShadow = '0 0 14px ' + (t2.color || '#38bdf8') + '55';
+
+      const d2_a = t2.p1?.nick || t2.p1?.user || t2.p1?.robloxUser || 'Pemain 1';
+      const d2_b = t2.p2?.nick || t2.p2?.user || t2.p2?.robloxUser || 'Pemain 2';
+      document.getElementById('winName2').innerHTML = `<div class="member-name-row">${d2_a}</div><div class="member-name-row">${d2_b}</div>`;
+      if (document.getElementById('winNick2')) document.getElementById('winNick2').style.display = 'none';
+      document.getElementById('winScore2').innerText = t2.totalPoints;
+      renderAvatar3dBox('winAvatarBox2', t2.p1, t2.p2, true);
+
+      // Juara 3 Tim
+      const b3 = document.getElementById('winBadge3');
+      b3.innerText = t3.name;
+      b3.style.color = t3.color || '#fb923c';
+      b3.style.borderColor = t3.color || '#fb923c';
+      b3.style.background = (t3.color || '#fb923c') + '26';
+      b3.style.boxShadow = '0 0 14px ' + (t3.color || '#fb923c') + '55';
+
+      const d3_a = t3.p1?.nick || t3.p1?.user || t3.p1?.robloxUser || 'Pemain 1';
+      const d3_b = t3.p2?.nick || t3.p2?.user || t3.p2?.robloxUser || 'Pemain 2';
+      document.getElementById('winName3').innerHTML = `<div class="member-name-row">${d3_a}</div><div class="member-name-row">${d3_b}</div>`;
+      if (document.getElementById('winNick3')) document.getElementById('winNick3').style.display = 'none';
+      document.getElementById('winScore3').innerText = t3.totalPoints;
+      renderAvatar3dBox('winAvatarBox3', t3.p1, t3.p2, true);
+
+    } else {
+      // Mode Solo: Urutkan individu berdasarkan poin tertinggi
+      const sorted = [...currData.players].filter(p => p.isReady && (p.nick || p.user || p.robloxUser)).sort((a, b) => (b.poin || 0) - (a.poin || 0));
+      const p1 = sorted[0] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
+      const p2 = sorted[1] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
+      const p3 = sorted[2] || { user: 'Kosong', nick: '-', avatar: '', poin: 0 };
+
+      document.getElementById('winHeaderTitle').innerText = 'CONGRATULATIONS';
+      document.getElementById('winTrophyBadge').innerText = '🏆 GRAND FINALS CEREMONY 🏆';
+
+      if (document.getElementById('winRankTag1')) document.getElementById('winRankTag1').innerText = '👑 #1';
+      if (document.getElementById('winRankTag2')) document.getElementById('winRankTag2').innerText = '🥈 #2';
+      if (document.getElementById('winRankTag3')) document.getElementById('winRankTag3').innerText = '🥉 #3';
+
+      const b1 = document.getElementById('winBadge1');
+      b1.innerText = 'CHAMPION';
+      b1.style.color = '#FEF08A';
+      b1.style.borderColor = '#FACC15';
+      b1.style.background = 'rgba(250, 204, 21, 0.25)';
+      b1.style.boxShadow = '';
+
+      const b2 = document.getElementById('winBadge2');
+      b2.innerText = '2ND PLACE';
+      b2.style.color = '#BAE6FD';
+      b2.style.borderColor = '#38BDF8';
+      b2.style.background = 'rgba(56, 189, 248, 0.2)';
+      b2.style.boxShadow = '';
+
+      const b3 = document.getElementById('winBadge3');
+      b3.innerText = '3RD PLACE';
+      b3.style.color = '#FED7AA';
+      b3.style.borderColor = '#FB923C';
+      b3.style.background = 'rgba(251, 146, 60, 0.2)';
+      b3.style.boxShadow = '';
+
+      document.getElementById('winName1').innerHTML = `<div class="member-name-row">${p1.nick || p1.user || p1.robloxUser || 'Belum Ada'}</div>`;
+      if (document.getElementById('winNick1')) document.getElementById('winNick1').style.display = 'none';
+      document.getElementById('winScore1').innerText = p1.poin || 0;
+      renderAvatar3dBox('winAvatarBox1', p1, null, false);
+
+      document.getElementById('winName2').innerHTML = `<div class="member-name-row">${p2.nick || p2.user || p2.robloxUser || 'Belum Ada'}</div>`;
+      if (document.getElementById('winNick2')) document.getElementById('winNick2').style.display = 'none';
+      document.getElementById('winScore2').innerText = p2.poin || 0;
+      renderAvatar3dBox('winAvatarBox2', p2, null, false);
+
+      document.getElementById('winName3').innerHTML = `<div class="member-name-row">${p3.nick || p3.user || p3.robloxUser || 'Belum Ada'}</div>`;
+      if (document.getElementById('winNick3')) document.getElementById('winNick3').style.display = 'none';
+      document.getElementById('winScore3').innerText = p3.poin || 0;
+      renderAvatar3dBox('winAvatarBox3', p3, null, false);
+    }
 
     document.getElementById('winnerOverlay').classList.add('active');
+    autoScalePodium();
     putarTerompetDanTepukTangan();
     mulaiAnimasiPetasan();
   }
@@ -1334,11 +2690,21 @@
     if (!p) return;
 
     document.getElementById('editPlayerIndex').value = index;
-    document.getElementById('modalInputJudul').innerText = (index === 19) ? 'Kursi 20 (Host)' : `Kursi ${index + 1}`;
+
+    let judul = (index === 19) ? 'Kursi 20 (Host)' : `Kursi ${index + 1}`;
+    if (db.gameMode === 'duo' && index < 18) {
+      const tIdx = Math.floor(index / 2);
+      const team = db.duoTeams[tIdx] || { name: `TIM ${tIdx+1}` };
+      judul = `Kursi ${index + 1} (${team.name})`;
+    }
+    document.getElementById('modalInputJudul').innerText = judul;
+
     document.getElementById('inputUserRoblox').value = p.robloxUser || '';
     document.getElementById('inputNamaTikTok').value = p.user || '';
     document.getElementById('inputDisplayName').value = p.nick || '';
     document.getElementById('inputAvatarUrl').value = p.avatar || '';
+    document.getElementById('inputAvatar3dUrl').value = p.avatar3d || '';
+    document.getElementById('inputUserId').value = p.userId || '';
 
     updateModalPreviewUI(p.robloxUser || '', p.nick || '', p.avatar || '');
     document.getElementById('modalSearchStatus').innerText = '';
@@ -1371,6 +2737,8 @@
     document.getElementById('inputNamaTikTok').value = '';
     document.getElementById('inputDisplayName').value = '';
     document.getElementById('inputAvatarUrl').value = '';
+    document.getElementById('inputAvatar3dUrl').value = '';
+    document.getElementById('inputUserId').value = '';
     updateModalPreviewUI('', '', '');
     document.getElementById('modalSearchStatus').innerText = '';
 
@@ -1381,6 +2749,8 @@
         currData.host.user = '';
         currData.host.nick = '';
         currData.host.avatar = '';
+        currData.host.avatar3d = '';
+        currData.host.userId = '';
         currData.host.poin = 0;
         currData.host.colorTag = '';
         tutupModalNama();
@@ -1390,6 +2760,7 @@
       } else if (currData.players[idx]) {
         const namaLama = currData.players[idx].nick || currData.players[idx].user || `Kursi ${idx + 1}`;
         currData.players[idx].robloxUser = ''; currData.players[idx].user = ''; currData.players[idx].nick = ''; currData.players[idx].avatar = '';
+        currData.players[idx].avatar3d = ''; currData.players[idx].userId = '';
         currData.players[idx].poin = 0; currData.players[idx].isReady = false; currData.players[idx].isPaid = false; currData.players[idx].colorTag = '';
         tutupModalNama(); urutkanOtomatis();
         tambahLogAktivitas('RESET', `${namaLama} dihapus & kursi digeser ke bawah`, 'system');
@@ -1424,10 +2795,12 @@
         document.getElementById('inputUserRoblox').value = data.userName;
         document.getElementById('inputDisplayName').value = data.displayName;
         document.getElementById('inputAvatarUrl').value = data.avatarUrl;
+        document.getElementById('inputAvatar3dUrl').value = data.avatar3dUrl || data.avatarUrl;
+        document.getElementById('inputUserId').value = data.userId || '';
 
         updateModalPreviewUI(data.userName, data.displayName, data.avatarUrl);
         statusEl.style.color = '#4ade80';
-        statusEl.innerText = 'Akun Roblox & Foto ditemukan! ✔';
+        statusEl.innerText = 'Akun Roblox & Foto 3D ditemukan! ✔';
       } else {
         statusEl.style.color = '#f87171';
         statusEl.innerText = data.pesan || 'Akun tidak ditemukan!';
@@ -1448,6 +2821,8 @@
     let namaPemain = document.getElementById('inputNamaTikTok').value.trim();
     let displayN = document.getElementById('inputDisplayName').value.trim().replace(/^@+/, '');
     let avatarA = document.getElementById('inputAvatarUrl').value.trim();
+    let avatar3dA = document.getElementById('inputAvatar3dUrl').value.trim();
+    let userIdA = document.getElementById('inputUserId').value.trim();
 
     if (robloxU && !namaPemain) namaPemain = displayN || robloxU;
     if (robloxU && !displayN) displayN = namaPemain || robloxU;
@@ -1463,6 +2838,8 @@
       h.user = namaPemain;
       h.nick = displayN;
       h.avatar = avatarA;
+      h.avatar3d = avatar3dA || avatarA;
+      h.userId = userIdA;
       tutupModalNama();
       simpanDB();
       renderIsiTabel();
@@ -1475,12 +2852,14 @@
     p.user = namaPemain;
     p.nick = displayN;
     p.avatar = avatarA;
+    p.avatar3d = avatar3dA || avatarA;
+    p.userId = userIdA;
 
     const adaIsi = Boolean(robloxU || namaPemain || displayN);
     p.isReady = adaIsi;
 
     if (!adaIsi) {
-      p.poin = 0; p.avatar = ''; p.isPaid = false; p.colorTag = '';
+      p.poin = 0; p.avatar = ''; p.avatar3d = ''; p.userId = ''; p.isPaid = false; p.colorTag = '';
     }
     tutupModalNama();
     urutkanOtomatis();
@@ -1497,6 +2876,7 @@
   function tutupModalDiLuar(e) {
     if (e.target.id === 'modalPoin') tutupModalPoin();
     if (e.target.id === 'modalInputNama') tutupModalNama();
+    if (e.target.id === 'modalEditNamaTim') tutupModalEditNamaTim();
     if (e.target.id === 'modalNotifSuara') tutupModalNotifSuara();
     if (e.target.id === 'modalConfirmResetTabel') tutupModalKonfirmasiResetTabel();
   }
@@ -1523,13 +2903,48 @@
   function inisialisasiStrukturTabel() {
     const tbL = document.getElementById('bodyLeft');
     const tbR = document.getElementById('bodyRight');
+    if (!tbL || !tbR) return;
     tbL.innerHTML = ''; tbR.innerHTML = '';
 
-    for (let i = 0; i < 19; i++) {
+    const isDuo = (db.gameMode === 'duo');
+
+    function buatTeamDividerRow(teamIdx) {
+      const t = db.duoTeams[teamIdx] || { name: `DUO ${teamIdx+1}`, color: '#38bdf8' };
+      const trDiv = document.createElement('tr');
+      trDiv.className = 'team-divider-row';
+      trDiv.id = `teamHeaderRow_${teamIdx}`;
+      trDiv.style.setProperty('--team-color', t.color);
+      trDiv.style.setProperty('--team-fade', t.color + '26');
+      trDiv.title = `Klik untuk edit ${t.name}`;
+      trDiv.innerHTML = `
+        <td colspan="4" class="team-divider-cell" onclick="bukaModalEditNamaTim(${teamIdx})" title="Klik untuk ubah nama atau warna tim">
+          <div class="team-divider-wrap">
+            <div class="team-divider-left">
+              <span class="team-divider-rank-badge" id="teamDividerRank_${teamIdx}">#${teamIdx+1}</span>
+            </div>
+            <div class="team-divider-center">
+              <span class="team-divider-name-text" id="teamDividerLabel_${teamIdx}" style="color: ${t.color};">${t.name}</span>
+            </div>
+            <div class="team-divider-right">
+              <span class="team-divider-score" id="teamDividerScore_${teamIdx}">0 PTS</span>
+            </div>
+          </div>
+        </td>
+      `;
+      return trDiv;
+    }
+
+    // Tabel Kiri: 5 Tim (DUO 1 s/d DUO 5 = Kursi 1 s/d 10)
+    for (let i = 0; i < 10; i++) {
+      if (i % 2 === 0) {
+        tbL.appendChild(buatTeamDividerRow(i / 2));
+      }
+
+      const noVal = isDuo ? ((i % 2 === 0) ? 1 : 2) : (i + 1);
       const tr = document.createElement('tr');
       tr.id = `row-kursi-${i}`;
       tr.innerHTML = `
-        <td class="td-no">${i + 1}</td>
+        <td class="td-no">${noVal}</td>
         <td class="cell-click-popup cell-nama-target" title="Klik untuk edit data pemain">
           <div style="padding-left:4px;"><span class="name-tiktok name-empty">(Kosong)</span></div>
         </td>
@@ -1545,14 +2960,69 @@
           </div>
         </td>
       `;
-      if (i < 10) tbL.appendChild(tr); else tbR.appendChild(tr);
+      tbL.appendChild(tr);
     }
 
+    // Tabel Kanan: Tim 6 s/d Tim 9 (Kursi 11 s/d 18)
+    for (let i = 10; i < 18; i++) {
+      if (i % 2 === 0) {
+        tbR.appendChild(buatTeamDividerRow(i / 2));
+      }
+
+      const noVal = isDuo ? ((i % 2 === 0) ? 1 : 2) : (i + 1);
+      const tr = document.createElement('tr');
+      tr.id = `row-kursi-${i}`;
+      tr.innerHTML = `
+        <td class="td-no">${noVal}</td>
+        <td class="cell-click-popup cell-nama-target" title="Klik untuk edit data pemain">
+          <div style="padding-left:4px;"><span class="name-tiktok name-empty">(Kosong)</span></div>
+        </td>
+        <td class="cell-click-popup cell-roblox-target" title="Klik untuk edit data Roblox">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div class="avatar-wrap">${renderAvatarHtml('', '')}</div>
+            <div style="flex:1; min-width:0;"><span class="name-roblox-display name-empty">-</span></div>
+          </div>
+        </td>
+        <td class="col-point">
+          <div class="score-box">
+            <div class="score-val" title="Klik untuk Poin Cepat">0</div>
+          </div>
+        </td>
+      `;
+      tbR.appendChild(tr);
+    }
+
+    // Tim 10: Kursi 19 & Kursi 20 (Host)
+    tbR.appendChild(buatTeamDividerRow(9));
+
+    // Kursi 19 (idx 18) - Player 1 of Team 10
+    const tr19 = document.createElement('tr');
+    tr19.id = 'row-kursi-18';
+    tr19.innerHTML = `
+      <td class="td-no">${isDuo ? 1 : 19}</td>
+      <td class="cell-click-popup cell-nama-target" title="Klik untuk edit data pemain">
+        <div style="padding-left:4px;"><span class="name-tiktok name-empty">(Kosong)</span></div>
+      </td>
+      <td class="cell-click-popup cell-roblox-target" title="Klik untuk edit data Roblox">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div class="avatar-wrap">${renderAvatarHtml('', '')}</div>
+          <div style="flex:1; min-width:0;"><span class="name-roblox-display name-empty">-</span></div>
+        </div>
+      </td>
+      <td class="col-point">
+        <div class="score-box">
+          <div class="score-val" title="Klik untuk Poin Cepat">0</div>
+        </div>
+      </td>
+    `;
+    tbR.appendChild(tr19);
+
+    // Kursi 20 / Host (idx 19) - Player 2 of Team 10
     const trHost = document.createElement('tr');
     trHost.className = "host-row";
     trHost.id = "row-kursi-19";
     trHost.innerHTML = `
-      <td class="td-no">20</td>
+      <td class="td-no">${isDuo ? 2 : 20}</td>
       <td colspan="2" class="cell-click-popup cell-host-merged" title="Klik untuk edit data Host" onclick="bukaModalInputNama(19)">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:0 6px;">
           <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
@@ -1562,7 +3032,7 @@
               <span id="hostRobloxTag" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-sub); overflow:hidden; text-overflow:ellipsis;"></span>
             </div>
           </div>
-          <div style="display:flex; align-items:center; gap:4px; flex-shrink:0;">
+          <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
             <span class="pay-status-tag done" title="Status Host">HOST</span>
             <span class="btn-color-palette" onclick="bukaMiniColorPicker(19, event)" title="Ubah warna latar baris">🎨</span>
           </div>
@@ -1589,16 +3059,86 @@
     const currData = getActiveData();
     document.getElementById('labelSesiAktif').innerText = db.activeSession;
 
+    const isDuo = (db.gameMode === 'duo');
+    document.body.classList.toggle('mode-duo', isDuo);
+    document.body.classList.toggle('mode-solo', !isDuo);
+
+    const btnMode = document.getElementById('btnSwitchMode');
+    if (btnMode) {
+      btnMode.innerHTML = isDuo ? '👥 MODE: TIM DUO' : '👤 MODE: SOLO (20)';
+      btnMode.className = isDuo ? 'btn-action-soft btn-mode-toggle mode-is-duo' : 'btn-action-soft btn-mode-toggle mode-is-solo';
+      btnMode.title = `Klik untuk ganti mode (Saat ini: ${isDuo ? 'Mode Pertarungan Tim Duo (10 Tim)' : 'Mode Solo (20 Kursi)'})`;
+    }
+
+    // Hitung total poin tim dan ranking tim
+    const teamScores = hitungSkorDuoTeams();
+    const sortedTeams = [...teamScores].sort((a, b) => b.totalPoints - a.totalPoints);
+
+    // Perbarui Team Divider Rows di tabel
+    if (isDuo) {
+      teamScores.forEach(t => {
+        const divRow = document.getElementById(`teamHeaderRow_${t.teamIndex}`);
+        const rankEl = document.getElementById(`teamDividerRank_${t.teamIndex}`);
+        const scoreEl = document.getElementById(`teamDividerScore_${t.teamIndex}`);
+        const labelEl = document.getElementById(`teamDividerLabel_${t.teamIndex}`);
+
+        const rank = sortedTeams.findIndex(st => st.id === t.id) + 1;
+        const isLeader = (rank === 1 && t.totalPoints > 0);
+
+        if (divRow) {
+          divRow.style.setProperty('--team-color', t.color);
+          divRow.style.setProperty('--team-fade', t.color + '26');
+          divRow.style.display = 'table-row';
+        }
+        if (rankEl) {
+          rankEl.innerText = `#${rank}`;
+          rankEl.className = `team-divider-rank-badge ${isLeader ? 'is-first' : ''}`;
+        }
+        if (scoreEl) {
+          scoreEl.innerText = `${t.totalPoints} PTS`;
+          scoreEl.style.borderColor = t.color;
+        }
+        if (labelEl) {
+          labelEl.innerText = t.name;
+          labelEl.style.color = t.color;
+        }
+      });
+    } else {
+      for (let i = 0; i < 10; i++) {
+        const divRow = document.getElementById(`teamHeaderRow_${i}`);
+        if (divRow) divRow.style.display = 'none';
+      }
+    }
+
+    // Render Baris Kursi (0 s/d 18) - Kursi 19 (idx 18) SELALU TAMPIL!
     currData.players.forEach((p, idx) => {
       let tr = document.getElementById(`row-kursi-${idx}`);
       if (!tr) return;
+      tr.style.display = '';
+
+      // Penomoran: di mode duo hanya 1 dan 2 per tim, di mode solo 1 s/d 20
+      const tdNo = tr.querySelector('.td-no');
+      if (tdNo) {
+        tdNo.innerText = isDuo ? ((idx % 2 === 0) ? '1' : '2') : (idx + 1);
+      }
 
       const adaPemain = !!(p.user || p.robloxUser || p.nick);
       p.isReady = adaPemain;
 
-      tr.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow');
+      tr.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow', 'tag-green', 'tag-orange', 'tag-teal', 'tag-indigo', 'tag-cyan', 'tag-lime', 'tag-rose', 'tag-slate');
       if (p.colorTag) {
         tr.classList.add(`tag-${p.colorTag}`);
+      }
+
+      // Pengaturan aksen border tim (nama tim HANYA di atas, TIDAK di sebelah nama!)
+      if (isDuo && idx < 19) {
+        const tIdx = Math.floor(idx / 2);
+        const team = db.duoTeams[tIdx] || { name: `DUO ${tIdx+1}`, color: '#38bdf8' };
+        tr.classList.add('has-team');
+        tr.style.setProperty('--row-team-color', team.color);
+      } else {
+        tr.classList.remove('has-team');
+        tr.style.removeProperty('--row-team-color');
       }
 
       const colorIconHtml = adaPemain 
@@ -1609,12 +3149,15 @@
         ? `<span class="pay-status-tag ${p.isPaid ? 'done' : 'ready'}" onclick="togglePayStatus(${idx}, event)" title="Klik untuk ganti status">${p.isPaid ? '✔' : '— READY'}</span>${colorIconHtml}`
         : '';
 
+      // Nama Pemain bersih: HANYA nama tiktok, TIDAK ADA badge tim di samping nama!
       const cellNama = tr.querySelector('.cell-nama-target');
       if (cellNama) {
         cellNama.onclick = () => bukaModalInputNama(idx);
         cellNama.innerHTML = `
           <div style="padding-left:4px; display:flex; align-items:center; justify-content:space-between;">
-            <span class="name-tiktok ${!p.user ? 'name-empty' : ''}">${p.user || '(Kosong)'}</span>
+            <div style="display:flex; align-items:center; min-width:0; overflow:hidden;">
+              <span class="name-tiktok ${!p.user ? 'name-empty' : ''}">${p.user || '(Kosong)'}</span>
+            </div>
             <div style="display:flex; align-items:center; flex-shrink:0;">${badgePayHtml}</div>
           </div>`;
       }
@@ -1632,26 +3175,43 @@
       }
 
       const scoreVal = tr.querySelector('.score-val');
+      const scoreBox = tr.querySelector('.score-box');
       if (scoreVal) {
-        if (p.isReady) {
-          scoreVal.innerText = p.poin;
-          scoreVal.className = 'score-val';
-          scoreVal.onclick = (ev) => bukaQuickPointPopover(idx, ev);
-        } else {
-          scoreVal.innerText = '-';
-          scoreVal.className = 'score-val score-standby';
-          scoreVal.onclick = () => bukaModalInputNama(idx);
-        }
+        scoreVal.innerText = p.isReady ? p.poin : '-';
+        scoreVal.className = p.isReady ? 'score-val' : 'score-val score-standby';
+        scoreVal.onclick = p.isReady ? ((ev) => bukaQuickPointPopover(idx, ev)) : (() => bukaModalInputNama(idx));
+      }
+      if (scoreBox) {
+        scoreBox.style.flexDirection = 'row';
+        const oldMini = scoreBox.querySelector('.team-mini-score');
+        if (oldMini) oldMini.remove();
       }
     });
 
-    // Render Host (Baris 20)
+    // Render Host (Baris 20 / Player 2 of Team 10) - SELALU TAMPIL!
     const h = currData.host || { robloxUser: '', user: '', nick: '', avatar: '', poin: 0, colorTag: '' };
     const trHost = document.getElementById('row-kursi-19');
     if (trHost) {
-      trHost.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow');
+      trHost.style.display = '';
+
+      // Penomoran Host: nomor 2 di mode tim duo, nomor 20 di mode solo
+      const tdNoHost = trHost.querySelector('.td-no');
+      if (tdNoHost) {
+        tdNoHost.innerText = isDuo ? '2' : '20';
+      }
+
+      trHost.classList.remove('tag-blue', 'tag-pink', 'tag-purple', 'tag-red', 'tag-yellow', 'tag-green', 'tag-orange', 'tag-teal', 'tag-indigo', 'tag-cyan', 'tag-lime', 'tag-rose', 'tag-slate');
       if (h.colorTag) {
         trHost.classList.add(`tag-${h.colorTag}`);
+      }
+
+      if (isDuo) {
+        const team10 = db.duoTeams[9] || { name: 'DUO 10', color: '#14b8a6' };
+        trHost.classList.add('has-team');
+        trHost.style.setProperty('--row-team-color', team10.color);
+      } else {
+        trHost.classList.remove('has-team');
+        trHost.style.removeProperty('--row-team-color');
       }
 
       const hostAvatar = document.getElementById('hostAvatarWrap');
@@ -1670,6 +3230,8 @@
       const hostScoreEl = trHost.querySelector('.host-score');
       if (hostScoreEl) hostScoreEl.innerText = h.poin;
     }
+
+    renderDuoStandingsBanner();
   }
 
   function urutkanOtomatis() {
@@ -1688,11 +3250,30 @@
     const punyaIsi = (p) => Boolean((p.user && p.user.trim()) || (p.robloxUser && p.robloxUser.trim()) || (p.nick && p.nick.trim()));
     currData.players.forEach(p => { p.isReady = punyaIsi(p); });
 
-    const aktifSiap = currData.players.filter(p => punyaIsi(p));
-    const kursiKosong = currData.players.filter(p => !punyaIsi(p));
+    if (db.gameMode === 'duo') {
+      // Pada mode pertarungan tim: urutkan pemain internal DI DALAM masing-masing tim
+      // sehingga posisi tim (Kursi 1-2, Kursi 3-4, dst.) tetap stabil dan rapi!
+      for (let i = 0; i < 9; i++) {
+        const c1 = i * 2;
+        const c2 = i * 2 + 1;
+        const p1 = currData.players[c1];
+        const p2 = currData.players[c2];
+        const pair = [p1, p2];
+        const aktif = pair.filter(p => punyaIsi(p));
+        const kosong = pair.filter(p => !punyaIsi(p));
+        aktif.sort((a, b) => (b.poin || 0) - (a.poin || 0));
+        const sorted = [...aktif, ...kosong];
+        currData.players[c1] = sorted[0];
+        currData.players[c2] = sorted[1];
+      }
+    } else {
+      // Mode Solo: Urutkan bebas dari tertinggi ke terendah
+      const aktifSiap = currData.players.filter(p => punyaIsi(p));
+      const kursiKosong = currData.players.filter(p => !punyaIsi(p));
 
-    aktifSiap.sort((a, b) => b.poin - a.poin);
-    currData.players = [...aktifSiap, ...kursiKosong];
+      aktifSiap.sort((a, b) => b.poin - a.poin);
+      currData.players = [...aktifSiap, ...kursiKosong];
+    }
 
     simpanDB(); 
     renderIsiTabel();
@@ -1795,6 +3376,8 @@
       });
     });
   }
+
+  window.addEventListener('resize', autoScalePodium);
 
   window.addEventListener('DOMContentLoaded', () => {
     try { if (window.resizeTo) window.resizeTo(1060, 725); } catch (_) {}
