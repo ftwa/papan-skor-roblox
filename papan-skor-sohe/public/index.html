@@ -105,6 +105,68 @@
     
     .dropdown.show .dropdown-content { display: block; }
 
+    /* DROPDOWN RESET ELEGAN */
+    .dropdown-reset-content {
+      min-width: 220px !important;
+      background: rgba(13, 20, 36, 0.96) !important;
+      border: 1px solid rgba(56, 189, 248, 0.3) !important;
+      border-radius: 10px !important;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.8), 0 0 15px rgba(56, 189, 248, 0.2) !important;
+      backdrop-filter: blur(14px) !important;
+      padding: 6px !important;
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .dropdown.show .dropdown-reset-content {
+      display: flex !important;
+    }
+    .dropdown-item-action {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 7px;
+      color: #e2e8f0;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Outfit', sans-serif;
+      transition: all 0.15s ease;
+      box-sizing: border-box;
+    }
+    .dropdown-item-action:hover {
+      background: rgba(56, 189, 248, 0.14);
+      border-color: rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+    }
+    .dropdown-item-action.item-danger:hover {
+      background: rgba(244, 63, 94, 0.16);
+      border-color: rgba(244, 63, 94, 0.35);
+      color: #fb7185;
+    }
+    .dd-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .dd-text-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .dd-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .dd-desc {
+      font-size: 10px;
+      color: #94a3b8;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 2px;
+    }
+
     /* POPUP NOTIFIKASI CYBER HUD */
     .center-notif-popup {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
@@ -1450,16 +1512,27 @@
   <div class="top-bar">
     <div class="top-left">
       <button id="btnSwitchMode" class="btn-action-soft btn-mode-toggle" onclick="toggleModeDuoSolo()" title="Klik untuk beralih mode pertarungan">👥 MODE: TIM DUO</button>
-      <button id="btnEditTimToolbar" class="btn-action-soft" onclick="bukaModalEditNamaTim(0)" style="display:none;" title="Pengaturan Tim">👥 Pengaturan Tim</button>
       <button class="btn-action-soft" onclick="bukaModalPoin()">Point Preset</button>
       <button class="btn-action-soft" onclick="bukaModalNotifSuara()">Settings Audio</button>
       
       <!-- DROPDOWN RESET -->
       <div class="dropdown" id="dropdownReset">
         <button class="btn-action-soft" onclick="toggleDropdownReset(event)">RESET ▾</button>
-        <div class="dropdown-content">
-          <button onclick="bukaModalKonfirmasiReset('POINT')">Reset Poin Saja</button>
-          <button onclick="bukaModalKonfirmasiReset('SEMUA')">Kosongkan Semua Kursi</button>
+        <div class="dropdown-content dropdown-reset-content">
+          <button class="dropdown-item-action" onclick="bukaModalKonfirmasiReset('POINT')">
+            <span class="dd-icon">🔄</span>
+            <div class="dd-text-wrap">
+              <span class="dd-title">Reset Poin Saja</span>
+              <span class="dd-desc">Nol-kan skor semua pemain</span>
+            </div>
+          </button>
+          <button class="dropdown-item-action item-danger" onclick="bukaModalKonfirmasiReset('SEMUA')">
+            <span class="dd-icon">🗑️</span>
+            <div class="dd-text-wrap">
+              <span class="dd-title">Kosongkan Meja</span>
+              <span class="dd-desc">Hapus seluruh data pemain</span>
+            </div>
+          </button>
         </div>
       </div>
 
@@ -1676,16 +1749,17 @@
 
 <!-- MODAL SETTINGS AUDIO -->
 <div class="modal-overlay" id="modalNotifSuara" onclick="tutupModalDiLuar(event)">
-  <div class="modal-box-hud" style="width: 340px;">
+  <div class="modal-box-hud" style="width: 360px;">
     <div class="modal-header-hud">
       <div class="modal-title-wrap">
         <span class="modal-sub-hud">AUDIO MODULE</span>
-        <span class="modal-title-hud">Suara Poin</span>
+        <span class="modal-title-hud">Settings Audio</span>
       </div>
       <button class="btn-close-hud" onclick="tutupModalNotifSuara()">✕</button>
     </div>
 
-    <div style="background:rgba(15,23,42,0.7); border:1px solid #1e293b; border-left:3px solid #10b981; border-radius:8px; padding:10px; margin-top:4px;">
+    <!-- 1. Suara Poin FX -->
+    <div style="background:rgba(15,23,42,0.7); border:1px solid #1e293b; border-left:3px solid #10b981; border-radius:8px; padding:10px; margin-top:8px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <span style="font-size:12px; font-weight:800; color:#34d399;">🔔 Sound FX Poin</span>
         <span id="statusAudio_poin" style="font-size:10px; font-weight:800; color:#4ade80; font-family:'JetBrains Mono',monospace;">Synth Bawaan</span>
@@ -1699,7 +1773,22 @@
       </div>
     </div>
 
-    <button class="btn-hud-save" style="margin-top:8px;" onclick="tutupModalNotifSuara()">Tutup</button>
+    <!-- 2. Suara Podium / Perayaan Juara -->
+    <div style="background:rgba(15,23,42,0.7); border:1px solid #1e293b; border-left:3px solid #facc15; border-radius:8px; padding:10px; margin-top:10px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-size:12px; font-weight:800; color:#fde047;">🏆 Sound Perayaan Podium</span>
+        <span id="statusAudio_podium" style="font-size:10px; font-weight:800; color:#facc15; font-family:'JetBrains Mono',monospace;">Fanfare Bawaan</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <input type="file" id="audioInput_podium" accept="audio/*" style="font-size:11px; color:#94a3b8;" onchange="unggahAudioPodium(event)">
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-action-soft" style="flex:1; justify-content:center; padding:5px;" onclick="putarSuaraPodiumPreview()">🔊 Tes Audio</button>
+          <button type="button" class="btn-action-soft" style="flex:1; justify-content:center; padding:5px;" onclick="resetAudioPodium()">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-hud-save" style="margin-top:14px;" onclick="tutupModalNotifSuara()">Tutup</button>
   </div>
 </div>
 
@@ -1826,6 +1915,7 @@
 <script>
   const DB_KEY = 'single_leaderboard_cyber_hud_v3';
   const AUDIO_POIN_KEY = 'galatama_custom_sound_mitos';
+  const AUDIO_PODIUM_KEY = 'galatama_custom_sound_podium_v1';
   const COL_WIDTHS_KEY = 'galatama_single_col_widths_cyber_v1';
   const LOG_FOLD_KEY = 'galatama_log_is_folded';
 
@@ -2022,6 +2112,8 @@
 
 
   let customAudioPoinData = localStorage.getItem(AUDIO_POIN_KEY) || null;
+  let customAudioPodiumData = localStorage.getItem(AUDIO_PODIUM_KEY) || null;
+  let activePodiumAudio = null;
   let isLogFolded = JSON.parse(localStorage.getItem(LOG_FOLD_KEY)) || false;
   let tipeResetPending = null;
   let popupCenterTimer = null;
@@ -2326,8 +2418,17 @@
     if (elPoin) elPoin.innerText = customAudioPoinData ? "Audio Custom ✔" : "Synth Bawaan";
   }
 
+  function updateStatusAudioPodiumUI() {
+    const elPodium = document.getElementById('statusAudio_podium');
+    if (elPodium) {
+      elPodium.innerText = customAudioPodiumData ? "Audio Custom ✔" : "Fanfare Bawaan";
+      elPodium.style.color = customAudioPodiumData ? "#38bdf8" : "#fde047";
+    }
+  }
+
   function bukaModalNotifSuara() {
     updateStatusAudioTierUI();
+    updateStatusAudioPodiumUI();
     document.getElementById('modalNotifSuara').style.display = 'flex';
   }
   function tutupModalNotifSuara() {
@@ -2380,7 +2481,54 @@
     updateStatusAudioTierUI(); putarSuaraNotifPoin();
   }
 
-  function putarTerompetDanTepukTangan() {
+  function unggahAudioPodium(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+      alert("Ukuran audio terlalu besar! Gunakan file di bawah 2MB.");
+      e.target.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      customAudioPodiumData = evt.target.result;
+      try {
+        localStorage.setItem(AUDIO_PODIUM_KEY, customAudioPodiumData);
+        updateStatusAudioPodiumUI();
+        putarSuaraPodiumPreview();
+      } catch (err) {
+        alert("Gagal menyimpan audio ke localStorage (memori browser penuh)!");
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function resetAudioPodium() {
+    customAudioPodiumData = null;
+    localStorage.removeItem(AUDIO_PODIUM_KEY);
+    const inp = document.getElementById('audioInput_podium');
+    if (inp) inp.value = '';
+    updateStatusAudioPodiumUI();
+    putarTerompetBawaan();
+  }
+
+  function putarSuaraPodiumPreview() {
+    if (activePodiumAudio) {
+      try { activePodiumAudio.pause(); activePodiumAudio.currentTime = 0; } catch (e) {}
+    }
+    if (customAudioPodiumData) {
+      try {
+        activePodiumAudio = new Audio(customAudioPodiumData);
+        activePodiumAudio.play().catch(() => putarTerompetBawaan());
+      } catch (e) {
+        putarTerompetBawaan();
+      }
+    } else {
+      putarTerompetBawaan();
+    }
+  }
+
+  function putarTerompetBawaan() {
     if (audioCtx.state === 'suspended') audioCtx.resume();
     const nada = [
       { f: 523.25, d: 0.15 }, { f: 659.25, d: 0.15 }, { f: 783.99, d: 0.18 },
@@ -2391,6 +2539,10 @@
       mainkanNadaSynth(n.f, offset, n.d, 'sawtooth', 0.2);
       offset += n.d * 0.95;
     });
+  }
+
+  function putarTerompetDanTepukTangan() {
+    putarSuaraPodiumPreview();
   }
 
   function simpanDB() { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
@@ -2451,19 +2603,42 @@
   let fireworksInterval = null;
   function dapatkanFullBody3dAvatar(p) {
     if (!p) return '';
-    if (p.avatar3d && p.avatar3d.includes('Avatar') && !p.avatar3d.includes('AvatarHeadshot')) {
+    // HANYA terima gambar Full Body Avatar (mengandung /Avatar/ dan BUKAN AvatarHeadshot)
+    if (p.avatar3d && p.avatar3d.includes('/Avatar/') && !p.avatar3d.includes('AvatarHeadshot')) {
       return p.avatar3d.replaceAll('/420/420/', '/720/720/').replaceAll('/352/352/', '/720/720/');
     }
-    if (p.avatar && p.avatar.includes('rbxcdn.com')) {
-      if (p.avatar.includes('/Avatar/') && !p.avatar.includes('AvatarHeadshot')) {
-        return p.avatar.replaceAll('/420/420/', '/720/720/').replaceAll('/352/352/', '/720/720/');
-      }
-      return p.avatar;
-    }
-    if (p.avatar && !p.avatar.includes('ui-avatars') && !p.avatar.includes('dicebear')) {
-      return p.avatar;
+    if (p.avatar && p.avatar.includes('/Avatar/') && !p.avatar.includes('AvatarHeadshot')) {
+      return p.avatar.replaceAll('/420/420/', '/720/720/').replaceAll('/352/352/', '/720/720/');
     }
     return '';
+  }
+
+  const _fullBodyCache = {};
+  function pastikanFullBodyAvatarAsync(p, onFound) {
+    if (!p) return;
+    const existing = dapatkanFullBody3dAvatar(p);
+    if (existing) {
+      if (onFound) onFound(existing);
+      return;
+    }
+    const q = p.userId ? `userId=${encodeURIComponent(p.userId)}` : (p.robloxUser ? `username=${encodeURIComponent(p.robloxUser)}` : (p.user ? `username=${encodeURIComponent(p.user)}` : ''));
+    if (!q) return;
+    if (_fullBodyCache[q]) {
+      if (onFound) onFound(_fullBodyCache[q]);
+      return;
+    }
+    fetch(`/api/cari-roblox?${q}`)
+      .then(r => r.json())
+      .then(d => {
+        if (d && d.sukses && d.avatar3dUrl && d.avatar3dUrl.includes('/Avatar/')) {
+          _fullBodyCache[q] = d.avatar3dUrl;
+          p.avatar3d = d.avatar3dUrl;
+          if (d.userId && !p.userId) p.userId = d.userId;
+          simpanDB();
+          if (onFound) onFound(d.avatar3dUrl);
+        }
+      })
+      .catch(() => {});
   }
 
   function autoScalePodium() {
@@ -2493,21 +2668,54 @@
       const n1 = p1?.nick || p1?.user || 'P1';
       const n2 = p2?.nick || p2?.user || 'P2';
 
+      const av1Id = `${boxId}_img1`;
+      const av2Id = `${boxId}_img2`;
+
       const av1Html = img1 
-        ? `<img src="${img1}" class="winner-3d-full-img" alt="${n1}" onerror="this.outerHTML='<span style=\'font-size:32px;\'>👤</span>'">`
-        : `<span style="font-size:32px; color:#94a3b8;">👤</span>`;
+        ? `<img id="${av1Id}" src="${img1}" class="winner-3d-full-img" alt="${n1}" onerror="this.style.display='none'">`
+        : `<div id="${av1Id}" class="winner-3d-placeholder"><span style="font-size:36px; opacity:0.4;">👤</span></div>`;
       const av2Html = img2 
-        ? `<img src="${img2}" class="winner-3d-full-img" alt="${n2}" onerror="this.outerHTML='<span style=\'font-size:32px;\'>👤</span>'">`
-        : `<span style="font-size:32px; color:#94a3b8;">👤</span>`;
+        ? `<img id="${av2Id}" src="${img2}" class="winner-3d-full-img" alt="${n2}" onerror="this.style.display='none'">`
+        : `<div id="${av2Id}" class="winner-3d-placeholder"><span style="font-size:36px; opacity:0.4;">👤</span></div>`;
 
       box.innerHTML = av1Html + av2Html;
+
+      // Auto-fetch foto 3D full body jika belum tersimpan
+      if (!img1 && p1) {
+        pastikanFullBodyAvatarAsync(p1, (newImg) => {
+          const el = document.getElementById(av1Id);
+          if (el) {
+            el.outerHTML = `<img id="${av1Id}" src="${newImg}" class="winner-3d-full-img" alt="${n1}" onerror="this.style.display='none'">`;
+          }
+        });
+      }
+      if (!img2 && p2) {
+        pastikanFullBodyAvatarAsync(p2, (newImg) => {
+          const el = document.getElementById(av2Id);
+          if (el) {
+            el.outerHTML = `<img id="${av2Id}" src="${newImg}" class="winner-3d-full-img" alt="${n2}" onerror="this.style.display='none'">`;
+          }
+        });
+      }
+
     } else {
       box.className = 'winner-3d-body-wrap';
       const img = dapatkanFullBody3dAvatar(p1);
       const n = p1?.nick || p1?.user || 'Juara';
+      const avId = `${boxId}_img1`;
+
       box.innerHTML = img 
-        ? `<img src="${img}" class="winner-3d-full-img" alt="${n}" onerror="this.outerHTML='<span style=\'font-size:42px;\'>👤</span>'">`
-        : `<span style="font-size:42px; color:#94a3b8;">👤</span>`;
+        ? `<img id="${avId}" src="${img}" class="winner-3d-full-img" alt="${n}" onerror="this.style.display='none'">`
+        : `<div id="${avId}" class="winner-3d-placeholder"><span style="font-size:48px; opacity:0.4;">👤</span></div>`;
+
+      if (!img && p1) {
+        pastikanFullBodyAvatarAsync(p1, (newImg) => {
+          const el = document.getElementById(avId);
+          if (el) {
+            el.outerHTML = `<img id="${avId}" src="${newImg}" class="winner-3d-full-img" alt="${n}" onerror="this.style.display='none'">`;
+          }
+        });
+      }
     }
   }
 
@@ -2639,6 +2847,9 @@
   function tutupLayarPemenang() {
     document.getElementById('winnerOverlay').classList.remove('active');
     if (fireworksInterval) { clearInterval(fireworksInterval); fireworksInterval = null; }
+    if (activePodiumAudio) {
+      try { activePodiumAudio.pause(); activePodiumAudio.currentTime = 0; } catch (e) {}
+    }
   }
 
   function mulaiAnimasiPetasan() {
