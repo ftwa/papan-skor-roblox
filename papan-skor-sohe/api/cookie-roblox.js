@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       return res.status(200).json({
         hasCookie: false,
         isValid: false,
-        pesan: 'Cookie Roblox belum diatur. Klik tombol Cookie untuk menghubungkan akun bot Roblox.'
+        pesan: 'Cookie Roblox belum diatur. Klik tombol Cookie untuk menghubungkan akun Roblox.'
       });
     }
 
