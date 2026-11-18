@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/api/cari-roblox", "destination": "/api/cari-roblox.js" },
+    { "source": "/api/roblox-3d-model", "destination": "/api/roblox-3d-model.js" },
+    { "source": "/api/cookie-roblox", "destination": "/api/cookie-roblox.js" },
+    { "source": "/api/auto-add-friend", "destination": "/api/auto-add-friend.js" },
+    { "source": "/api/roblox-friend", "destination": "/api/roblox-friend.js" }
+  ]
+}
