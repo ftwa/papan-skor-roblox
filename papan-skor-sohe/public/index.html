@@ -691,20 +691,20 @@
     }
     .btn-hud-save:hover { filter: brightness(1.15); transform: translateY(-1px); }
 
-    /* OVERLAY PODIUM PEMENANG: ELEGAN, HEADER TINGGI & KOTAK COMPACT PROPORSIONAL */
+    /* OVERLAY PODIUM PEMENANG: MEWAH, TANPA AURA LINGKARAN, AVATAR MELAYANG DI ATAS KOTAK */
     .winner-overlay {
       display: none; position: fixed; inset: 0;
-      background: radial-gradient(circle at 50% 15%, rgba(15, 23, 42, 0.97), rgba(3, 7, 18, 0.99));
+      background: radial-gradient(circle at 50% 15%, rgba(15, 23, 42, 0.98), rgba(3, 7, 18, 0.99));
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       z-index: 30000; justify-content: flex-start; align-items: center; flex-direction: column;
-      padding: 38px 16px 24px 16px; overflow-y: auto; overflow-x: hidden;
+      padding: 75px 16px 24px 16px; overflow-y: auto; overflow-x: hidden;
     }
     .winner-overlay.active { display: flex; }
     .btn-close-winner {
-      position: absolute; top: 18px; right: 22px;
+      position: absolute; top: 20px; right: 24px;
       background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.18);
-      color: #cbd5e1; width: 38px; height: 38px; border-radius: 50%;
-      font-size: 17px; font-weight: 800; cursor: pointer; z-index: 30010;
+      color: #cbd5e1; width: 40px; height: 40px; border-radius: 50%;
+      font-size: 18px; font-weight: 800; cursor: pointer; z-index: 30010;
       display: flex; align-items: center; justify-content: center;
       transition: all 0.18s ease;
     }
@@ -717,13 +717,13 @@
       margin-top: 0;
     }
 
-    /* HEADER: POSISI DI ATAS PAS DENGAN TABEL SCOREBOARD */
+    /* HEADER: POSISI BERADA DI BAWAH GARIS PANDUAN DENGAN ELEGAN */
     .winner-header {
-      text-align: center; margin-top: 8px; margin-bottom: 22px; position: relative; z-index: 30008;
+      text-align: center; margin-top: 0; margin-bottom: 24px; position: relative; z-index: 30008;
     }
     .winner-subtitle {
       font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 6px;
-      color: #94a3b8; font-weight: 800; margin-bottom: 2px; text-transform: uppercase;
+      color: #94a3b8; font-weight: 800; margin-bottom: 3px; text-transform: uppercase;
       opacity: 0.95;
     }
     .winner-title {
@@ -738,7 +738,7 @@
       gap: 32px; position: relative; z-index: 30008; width: 100%;
     }
 
-    /* KARTU PODIUM: LEBAR COMPACT & PROPORSIONAL, TIDAK KEBESARAN */
+    /* KARTU PODIUM: LEBAR COMPACT & PROPORSIONAL */
     .podium-card {
       position: relative; width: 260px; border-radius: 16px;
       padding: 0; display: flex; flex-direction: column; align-items: center;
@@ -754,11 +754,105 @@
       transform: translateY(20px);
     }
 
+    /* ==============================================================================
+       3D AVATAR FLOATING STAGE & PEDESTAL AURA UNTUK PODIUM (BERSIH TANPA WARNA AURA)
+       ============================================================================== */
+    .winner-3d-floating-stage {
+      position: relative; width: 100%; height: 280px;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+      z-index: 5;
+    }
+    .rank-1 .winner-3d-floating-stage { height: 310px; }
+    .rank-2 .winner-3d-floating-stage { height: 270px; }
+    .rank-3 .winner-3d-floating-stage { height: 270px; }
+
+    /* HILANGKAN WARNA LINGKARAN AURA SESUAI TANDA X DARI USER */
+    .winner-gojo-aura, .aura-rank-1, .aura-rank-2, .aura-rank-3 {
+      display: none !important;
+    }
+
+    /* AVATAR MELAYANG DI ATAS KOTAK (TIDAK TABRAKAN DENGAN KOTAK) */
+    .winner-3d-body-wrap {
+      position: relative; z-index: 2; width: 100%; height: 100%;
+      display: flex; align-items: flex-end; justify-content: center; gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    /* ANIMASI MELAYANG: SELALU BERADA DI ATAS PEDESTAL DENGAN JARAK AMAN */
+    @keyframes winnerOriginalFloatRank1 {
+      0%, 100% { transform: translateY(-8px) scale(1.12); filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.75)); }
+      50% { transform: translateY(-16px) scale(1.15); filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.85)); }
+    }
+    @keyframes winnerOriginalFloatRank2 {
+      0%, 100% { transform: translateY(-6px) scale(1.04); filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.75)); }
+      50% { transform: translateY(-14px) scale(1.06); filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.85)); }
+    }
+    @keyframes winnerOriginalFloatRank3 {
+      0%, 100% { transform: translateY(-6px) scale(1.04); filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.75)); }
+      50% { transform: translateY(-14px) scale(1.06); filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.85)); }
+    }
+
+    .winner-3d-full-img {
+      max-width: 100%; object-fit: contain; display: block;
+      transform-origin: bottom center !important; will-change: transform, filter;
+      transition: transform 0.3s ease;
+      background: transparent !important;
+    }
+    .rank-1 .winner-3d-full-img {
+      max-height: 270px !important; animation: winnerOriginalFloatRank1 3.2s ease-in-out infinite;
+    }
+    .rank-2 .winner-3d-full-img {
+      max-height: 240px !important; animation: winnerOriginalFloatRank2 3.6s ease-in-out infinite 0.4s;
+    }
+    .rank-3 .winner-3d-full-img {
+      max-height: 240px !important; animation: winnerOriginalFloatRank3 3.4s ease-in-out infinite 0.8s;
+    }
+
+    /* MODE DUO: DUA AVATAR MELAYANG BERDAMPINGAN DENGAN RAPI & TIDAK TABRAKAN */
+    .winner-3d-body-wrap.is-duo {
+      gap: 12px; margin-bottom: 14px; width: 100%; box-sizing: border-box;
+      padding: 0 8px; justify-content: center; align-items: flex-end;
+    }
+    .winner-3d-body-wrap.is-duo .winner-3d-full-img {
+      max-width: 46% !important; flex: 0 1 auto;
+    }
+    .rank-1 .winner-3d-body-wrap.is-duo .winner-3d-full-img {
+      max-height: 245px !important; transform-origin: bottom center;
+    }
+    .rank-2 .winner-3d-body-wrap.is-duo .winner-3d-full-img {
+      max-height: 220px !important; transform-origin: bottom center;
+    }
+    .rank-3 .winner-3d-body-wrap.is-duo .winner-3d-full-img {
+      max-height: 220px !important; transform-origin: bottom center;
+    }
+
+    /* PEDESTAL SURFACE */
+    .podium-pedestal-step {
+      position: relative; width: 88%; height: 14px; margin-top: 0px;
+      z-index: 6; perspective: 400px;
+    }
+    .pedestal-surface {
+      width: 100%; height: 100%; transform: rotateX(50deg);
+      border-radius: 50%; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    }
+    .rank-1 .pedestal-surface {
+      background: radial-gradient(ellipse at center, rgba(250, 204, 21, 0.7) 0%, rgba(180, 83, 9, 0.35) 70%, transparent 100%);
+      border-top: 2px solid #fde047; box-shadow: 0 0 20px rgba(250, 204, 21, 0.7);
+    }
+    .rank-2 .pedestal-surface {
+      background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.7) 0%, rgba(3, 105, 161, 0.35) 70%, transparent 100%);
+      border-top: 2px solid #7dd3fc; box-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
+    }
+    .rank-3 .pedestal-surface {
+      background: radial-gradient(ellipse at center, rgba(251, 146, 60, 0.7) 0%, rgba(194, 65, 12, 0.35) 70%, transparent 100%);
+      border-top: 2px solid #fdba74; box-shadow: 0 0 18px rgba(251, 146, 60, 0.6);
+    }
+
     /* KOTAK DI BAWAH AVATAR: COMPACT, RAMPING & TIDAK KEBESARAN */
     .podium-glass-card {
       position: relative; z-index: 7; width: 100%; border-radius: 14px;
       padding: 10px 14px 10px 14px; display: flex; flex-direction: column; align-items: center;
-      margin-top: 4px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      margin-top: 8px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
       box-sizing: border-box;
     }
     .rank-1 .podium-glass-card {
@@ -792,6 +886,13 @@
     }
     .rank-1 .player-display-name { font-size: 17px; color: #FEF9C3; }
 
+    .member-name-row {
+      font-family: 'Outfit', sans-serif; font-size: 14.5px; font-weight: 800; color: #FFFFFF;
+      text-align: center; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      line-height: 1.25; letter-spacing: 0.5px;
+    }
+    .rank-1 .member-name-row { font-size: 16px; font-weight: 900; }
+
     .podium-score-box {
       width: 100%; padding: 4px 10px; border-radius: 8px; display: flex; align-items: baseline;
       justify-content: center; gap: 4px; font-family: 'JetBrains Mono', monospace;
@@ -801,350 +902,8 @@
     .rank-1 .podium-score-value { font-size: 19px; }
     .podium-score-label { font-size: 10px; font-weight: 700; opacity: 0.8; }
     #fireworksCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30005; }
-
-    /* ==============================================================================
-       3D AVATAR FLOATING STAGE & PEDESTAL AURA UNTUK PODIUM
-       ============================================================================== */
-    .podium-stage-scaler {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      max-width: 1100px;
-      transition: transform 0.2s ease;
-      position: relative;
-      z-index: 30008;
-    }
-    .winner-3d-floating-stage {
-      position: relative;
-      width: 100%;
-      height: 320px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      z-index: 5;
-    }
-    .rank-1 .winner-3d-floating-stage { height: 380px; }
-    .rank-2 .winner-3d-floating-stage { height: 320px; }
-    .rank-3 .winner-3d-floating-stage { height: 320px; }
-
-    /* Luxury Luminous Backlight Auras */
-    .winner-gojo-aura {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .aura-rank-1 {
-      width: 330px; height: 330px; top: 6%;
-      background: radial-gradient(circle, rgba(254, 240, 138, 0.75) 0%, rgba(250, 204, 21, 0.5) 30%, rgba(234, 179, 8, 0.25) 55%, transparent 75%);
-      animation: champAuraPulse 3.5s infinite ease-in-out;
-    }
-    .aura-rank-2 {
-      width: 280px; height: 280px; top: 8%;
-      background: radial-gradient(circle, rgba(224, 242, 254, 0.75) 0%, rgba(56, 189, 248, 0.5) 35%, rgba(14, 165, 233, 0.25) 60%, transparent 75%);
-      animation: rank2AuraPulse 3.8s infinite ease-in-out 0.4s;
-    }
-    .aura-rank-3 {
-      width: 280px; height: 280px; top: 8%;
-      background: radial-gradient(circle, rgba(255, 237, 213, 0.75) 0%, rgba(251, 146, 60, 0.5) 35%, rgba(234, 88, 12, 0.25) 60%, transparent 75%);
-      animation: rank3AuraPulse 3.6s infinite ease-in-out 0.8s;
-    }
-
-    @keyframes champAuraPulse {
-      0%, 100% { transform: scale(0.95); opacity: 0.8; filter: drop-shadow(0 0 25px rgba(250, 204, 21, 0.6)); }
-      50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 45px rgba(250, 204, 21, 0.95)); }
-    }
-    @keyframes rank2AuraPulse {
-      0%, 100% { transform: scale(0.95); opacity: 0.75; filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.55)); }
-      50% { transform: scale(1.12); opacity: 1; filter: drop-shadow(0 0 35px rgba(56, 189, 248, 0.9)); }
-    }
-    @keyframes rank3AuraPulse {
-      0%, 100% { transform: scale(0.95); opacity: 0.75; filter: drop-shadow(0 0 20px rgba(251, 146, 60, 0.55)); }
-      50% { transform: scale(1.12); opacity: 1; filter: drop-shadow(0 0 35px rgba(251, 146, 60, 0.9)); }
-    }
-
-    .winner-3d-body-wrap {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    /* Living Breathe & Floating Motion */
-    @keyframes winnerOriginalFloatRank1 {
-      0%, 100% { transform: translateY(26px) scale(1.75); filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 25px rgba(250, 204, 21, 0.85)); }
-      50% { transform: translateY(18px) scale(1.78); filter: drop-shadow(0 20px 28px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 42px rgba(250, 204, 21, 1)); }
-    }
-    @keyframes winnerOriginalFloatRank2 {
-      0%, 100% { transform: translateY(22px) scale(1.58); filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 22px rgba(56, 189, 248, 0.8)); }
-      50% { transform: translateY(15px) scale(1.61); filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 35px rgba(56, 189, 248, 0.95)); }
-    }
-    @keyframes winnerOriginalFloatRank3 {
-      0%, 100% { transform: translateY(22px) scale(1.58); filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 22px rgba(251, 146, 60, 0.8)); }
-      50% { transform: translateY(15px) scale(1.61); filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 35px rgba(251, 146, 60, 0.95)); }
-    }
-
-    
-    .winner-3d-full-img[src*="dicebear.com"] {
-      border-radius: 20px !important;
-      max-width: 46% !important;
-      max-height: 180px !important;
-    }
-    .winner-3d-full-img {
-      max-width: 100%;
-      object-fit: contain;
-      display: block;
-      transform-origin: bottom center !important;
-      will-change: transform, filter;
-      transition: transform 0.3s ease;
-    }
-    .rank-1 
-    .winner-3d-full-img[src*="dicebear.com"] {
-      border-radius: 20px !important;
-      max-width: 46% !important;
-      max-height: 180px !important;
-    }
-    .winner-3d-full-img {
-      max-height: 360px !important;
-      animation: winnerOriginalFloatRank1 3.2s ease-in-out infinite;
-    }
-    .rank-2 
-    .winner-3d-full-img[src*="dicebear.com"] {
-      border-radius: 20px !important;
-      max-width: 46% !important;
-      max-height: 180px !important;
-    }
-    .winner-3d-full-img {
-      max-height: 310px !important;
-      animation: winnerOriginalFloatRank2 3.6s ease-in-out infinite 0.4s;
-    }
-    .rank-3 
-    .winner-3d-full-img[src*="dicebear.com"] {
-      border-radius: 20px !important;
-      max-width: 46% !important;
-      max-height: 180px !important;
-    }
-    .winner-3d-full-img {
-      max-height: 310px !important;
-      animation: winnerOriginalFloatRank3 3.4s ease-in-out infinite 0.8s;
-    }
-
-    /* Dua avatar berdampingan di Mode Duo */
-    .winner-3d-body-wrap {
-      margin-bottom: -14px;
-    }
-    .winner-3d-body-wrap.is-duo {
-      gap: 4px;
-      margin-bottom: -14px;
-    }
-    .winner-3d-body-wrap.is-duo 
-    .winner-3d-full-img[src*="dicebear.com"] {
-      border-radius: 20px !important;
-      max-width: 46% !important;
-      max-height: 180px !important;
-    }
-    .winner-3d-full-img {
-      max-width: 54% !important;
-    }
-    .rank-1 .winner-3d-body-wrap.is-duo 
-    .winner-3d-full-img[src*="dicebear.com"] {
-      border-radius: 20px !important;
-      max-width: 46% !important;
-      max-height: 180px !important;
-    }
-    .winner-3d-full-img { max-height: 345px !important; }
-    .rank-2 .winner-3d-body-wrap.is-duo 
-    .winner-3d-full-img[src*="dicebear.com"] {
-      border-radius: 20px !important;
-      max-width: 46% !important;
-      max-height: 180px !important;
-    }
-    .winner-3d-full-img { max-height: 300px !important; }
-    .rank-3 .winner-3d-body-wrap.is-duo 
-    .winner-3d-full-img[src*="dicebear.com"] {
-      border-radius: 20px !important;
-      max-width: 46% !important;
-      max-height: 180px !important;
-    }
-    .winner-3d-full-img { max-height: 300px !important; }
-
-    /* Pedestal Stage Step */
-    .podium-pedestal-step {
-      position: relative;
-      width: 100%;
-      height: 14px;
-      margin-top: -6px;
-      z-index: 6;
-      perspective: 400px;
-    }
-    .pedestal-surface {
-      width: 100%;
-      height: 100%;
-      transform: rotateX(45deg);
-      border-radius: 50%;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
-    }
-    .rank-1 .pedestal-surface {
-      background: radial-gradient(ellipse at center, rgba(250, 204, 21, 0.6) 0%, rgba(180, 83, 9, 0.3) 70%, transparent 100%);
-      border-top: 1.5px solid #fde047;
-      box-shadow: 0 0 25px rgba(250, 204, 21, 0.6);
-    }
-    .rank-2 .pedestal-surface {
-      background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.6) 0%, rgba(3, 105, 161, 0.3) 70%, transparent 100%);
-      border-top: 1.5px solid #7dd3fc;
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
-    }
-    .rank-3 .pedestal-surface {
-      background: radial-gradient(ellipse at center, rgba(251, 146, 60, 0.6) 0%, rgba(194, 65, 12, 0.3) 70%, transparent 100%);
-      border-top: 1.5px solid #fdba74;
-      box-shadow: 0 0 20px rgba(251, 146, 60, 0.5);
-    }
-
-    .podium-glass-card {
-      position: relative;
-      z-index: 7;
-      width: 100%;
-      border-radius: 16px;
-      padding: 14px 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 4px;
-      backdrop-filter: blur(14px);
-    }
-    .rank-1 .podium-glass-card {
-      background: linear-gradient(180deg, rgba(68, 52, 12, 0.9) 0%, rgba(18, 15, 10, 0.98) 100%);
-      border: 1.5px solid rgba(250, 204, 21, 0.85);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(250, 204, 21, 0.3);
-    }
-    .rank-2 .podium-glass-card {
-      background: linear-gradient(180deg, rgba(14, 52, 75, 0.9) 0%, rgba(11, 20, 32, 0.98) 100%);
-      border: 1.5px solid rgba(56, 189, 248, 0.75);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(56, 189, 248, 0.25);
-    }
-    .rank-3 .podium-glass-card {
-      background: linear-gradient(180deg, rgba(68, 36, 22, 0.9) 0%, rgba(22, 13, 10, 0.98) 100%);
-      border: 1.5px solid rgba(251, 146, 60, 0.75);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(251, 146, 60, 0.25);
-    }
-
-    /* TAG RANKING ATAS PODIUM (#1, #2, #3) MENEMPEL DI BORDER ATAS */
-    .podium-rank-tag {
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 25;
-      font-family: 'JetBrains Mono', 'Outfit', sans-serif;
-      font-size: 15px;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      padding: 4px 18px;
-      border-radius: 99px;
-      text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      user-select: none;
-      white-space: nowrap;
-    }
-    .rank-1 .podium-rank-tag {
-      background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
-      color: #0b0f19;
-      border: 1.5px solid #fef08a;
-      box-shadow: 0 0 20px rgba(250, 204, 21, 0.85);
-    }
-    .rank-2 .podium-rank-tag {
-      background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-      color: #040914;
-      border: 1.5px solid #bae6fd;
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.75);
-    }
-    .rank-3 .podium-rank-tag {
-      background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%);
-      color: #040914;
-      border: 1.5px solid #fed7aa;
-      box-shadow: 0 0 20px rgba(251, 146, 60, 0.75);
-    }
-
-    /* BADGE NAMA TIM DI PODIUM */
-    .title-badge {
-      font-family: 'Outfit', sans-serif;
-      font-size: 15px;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      padding: 5px 20px;
-      border-radius: 99px;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      max-width: 95%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      transition: all 0.2s ease;
-      user-select: none;
-    }
-    .rank-1 .title-badge { background: rgba(250, 204, 21, 0.22); color: #FEF08A; border: 1.5px solid #FACC15; }
-    .rank-2 .title-badge { background: rgba(56, 189, 248, 0.2); color: #BAE6FD; border: 1.5px solid #38BDF8; }
-    .rank-3 .title-badge { background: rgba(251, 146, 60, 0.2); color: #FED7AA; border: 1.5px solid #FB923C; }
-
-    /* NAMA ANGGOTA (DISPLAY NAME DITUMPUK 2 BARIS LEBIH RAPI) */
-    .player-display-name {
-      font-family: 'Outfit', sans-serif;
-      text-align: center;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      margin-top: 4px;
-      margin-bottom: 12px;
-      padding: 0 4px;
-      user-select: none;
-    }
-    .member-name-row {
-      font-family: 'Outfit', sans-serif;
-      font-size: 17px;
-      font-weight: 800;
-      color: #FFFFFF;
-      text-align: center;
-      max-width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      line-height: 1.25;
-      letter-spacing: 0.5px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
-    }
-    .rank-1 .member-name-row {
-      font-size: 19px;
-      font-weight: 900;
-      color: #FFFFFF;
-      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95);
-    }
-    .rank-2 .member-name-row {
-      font-size: 17.5px;
-      font-weight: 800;
-      color: #F8FAFC;
-    }
-    .rank-3 .member-name-row {
-      font-size: 17.5px;
-      font-weight: 800;
-      color: #F8FAFC;
-    }
-
-    .player-username {
-      display: none !important;
-    }
-</style>
+    .player-username { display: none !important; }
+    </style>
 </head>
 <body class="view-match">
 
@@ -1561,7 +1320,6 @@
       <!-- Rank 2: 2nd Place -->
       <div class="podium-card rank-2">
         <div class="winner-3d-floating-stage">
-          <div class="winner-gojo-aura aura-rank-2"></div>
           <div class="winner-3d-body-wrap" id="winAvatarBox2">
             <span>2</span>
           </div>
@@ -1582,7 +1340,6 @@
       <!-- Rank 1: Champion -->
       <div class="podium-card rank-1">
         <div class="winner-3d-floating-stage">
-          <div class="winner-gojo-aura aura-rank-1"></div>
           <div class="winner-3d-body-wrap" id="winAvatarBox1">
             <span>1</span>
           </div>
@@ -1603,7 +1360,6 @@
       <!-- Rank 3: 3rd Place -->
       <div class="podium-card rank-3">
         <div class="winner-3d-floating-stage">
-          <div class="winner-gojo-aura aura-rank-3"></div>
           <div class="winner-3d-body-wrap" id="winAvatarBox3">
             <span>3</span>
           </div>
@@ -3501,11 +3257,11 @@
     const scaler = document.getElementById('podiumStageScaler');
     if (!scaler) return;
     const targetW = 1260;
-    const targetH = 610;
+    const targetH = 650;
     const winW = window.innerWidth || document.documentElement.clientWidth || 1260;
     const winH = window.innerHeight || document.documentElement.clientHeight || 800;
     const scaleX = (winW - 32) / targetW;
-    const scaleY = (winH - 64) / targetH;
+    const scaleY = (winH - 100) / targetH;
     let scale = Math.min(scaleX, scaleY);
     if (scale < 0.3) scale = 0.3;
     if (scale > 1.05) scale = 1.05;
