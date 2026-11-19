@@ -180,11 +180,11 @@
     /* POPUP NOTIFIKASI CYBER HUD */
     .center-notif-popup {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
-      width: 270px; min-height: 180px; background: rgba(13, 20, 36, 0.96); backdrop-filter: blur(16px);
-      border-radius: 16px; border: 1.5px solid rgba(56, 189, 248, 0.65);
+      width: 280px; min-height: 220px; background: rgba(13, 20, 36, 0.96); backdrop-filter: blur(16px);
+      border-radius: 18px; border: 1.5px solid rgba(56, 189, 248, 0.65);
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(56, 189, 248, 0.25); z-index: 25000;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
-      padding: 16px; text-align: center; opacity: 0; pointer-events: none;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
+      padding: 16px 20px; text-align: center; opacity: 0; pointer-events: none;
       transition: opacity 0.2s ease, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, box-shadow 0.2s;
     }
     .center-notif-popup.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
@@ -194,13 +194,38 @@
       border: 1px solid rgba(56, 189, 248, 0.35); letter-spacing: 1px; text-transform: uppercase;
       transition: all 0.2s ease;
     }
+    .c-notif-avatar-wrap {
+      display: flex; align-items: center; justify-content: center;
+      margin: 2px 0; position: relative;
+    }
+    .c-notif-avatar-img {
+      border-radius: 50%; object-fit: cover;
+      border: 2px solid #38bdf8;
+      background: #0f172a; display: block;
+      transition: all 0.2s ease;
+    }
+    .c-notif-avatar-placeholder {
+      border-radius: 50%;
+      background: #1e293b; border: 2px solid #38bdf8;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Outfit', sans-serif; font-weight: 900; color: #f8fafc;
+      transition: all 0.2s ease;
+    }
+    .c-notif-avatar-wrap.is-duo {
+      display: flex; align-items: center; justify-content: center;
+    }
+    .c-notif-avatar-wrap.is-duo > *:last-child {
+      margin-left: -14px;
+      position: relative;
+      z-index: 2;
+    }
     .c-notif-name {
-      font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: #ffffff;
+      font-family: 'Outfit', sans-serif; font-size: 21px; font-weight: 800; color: #ffffff;
       line-height: 1.15; max-width: 100%; overflow: hidden; text-overflow: ellipsis;
     }
     .c-notif-pts-box {
       width: 100%; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.4);
-      border-radius: 10px; padding: 6px 10px; margin-top: 4px;
+      border-radius: 10px; padding: 6px 10px; margin-top: 2px;
       transition: all 0.2s ease;
     }
     .c-notif-pts-main { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 900; color: #38bdf8; transition: color 0.2s ease; }
@@ -317,10 +342,11 @@
       display: none; position: fixed; z-index: 35000; background: #0d1527; color: #f8fafc;
       width: 235px; padding: 12px; border-radius: 12px; border: 1.5px solid #38bdf8;
       box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75); flex-direction: column; gap: 8px;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
     .quick-point-popover.show { display: flex; }
     .qp-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 6px; }
-    .qp-title { font-size: 12px; font-weight: 800; color: #38bdf8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .qp-title { font-size: 12px; font-weight: 800; color: #38bdf8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.18s ease; }
     .qp-close { background: none; border: none; color: #94a3b8; font-size: 16px; font-weight: 800; cursor: pointer; }
     .qp-close:hover { color: #ef4444; }
     .qp-grid-plus { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
@@ -328,14 +354,15 @@
       border: 1px solid #1e293b; background: #141f36; color: #38bdf8; font-family: 'JetBrains Mono', monospace;
       font-size: 12.5px; font-weight: 900; padding: 6px 0; border-radius: 5px; cursor: pointer; transition: all 0.12s ease;
     }
-    .btn-qp:hover { background: #0284c7; color: #ffffff; border-color: #38bdf8; }
+    .btn-qp:hover { filter: brightness(1.28); transform: translateY(-1px); }
     .qp-footer { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
     .qp-custom-input {
       flex: 1; width: 100%; background: #141f36; border: 1px solid #334155; color: #ffffff;
       font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 900; padding: 4px 6px; border-radius: 5px; outline: none; text-align: center;
+      transition: border-color 0.18s ease;
     }
-    .btn-qp-set { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; font-size: 10.5px; font-weight: 800; padding: 5px 8px; border-radius: 5px; cursor: pointer; }
-    .btn-qp-set:hover { background: #0284c7; color: #fff; }
+    .btn-qp-set { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; font-size: 10.5px; font-weight: 800; padding: 5px 8px; border-radius: 5px; cursor: pointer; transition: all 0.14s ease; }
+    .btn-qp-set:hover { filter: brightness(1.25); transform: translateY(-1px); }
 
     /* TABEL GRID */
     .grid-tables { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; position: relative; z-index: 10; }
@@ -1058,6 +1085,7 @@
 <!-- POPUP NOTIFIKASI CYBER HUD -->
 <div class="center-notif-popup" id="centerNotifPopup">
   <span class="c-notif-tag" id="cNotifTag">UPDATE POIN</span>
+  <div class="c-notif-avatar-wrap" id="cNotifAvatarWrap"></div>
   <div class="c-notif-name" id="cNotifPlayer">NAMA PEMAIN</div>
   <div class="c-notif-pts-box">
     <div class="c-notif-pts-main" id="cNotifPts">+1 POIN</div>
@@ -1745,11 +1773,18 @@
     renderIsiTabel();
   }
 
-  function renderTombolQuickPoint() {
+  function renderTombolQuickPoint(colorTheme) {
     const grid = document.getElementById('qpGridButtons');
     if (!grid) return;
     const listAngka = (db.warnaPoin && Array.isArray(db.warnaPoin.quickPoints)) ? db.warnaPoin.quickPoints : DEFAULT_QUICK_POINTS;
-    grid.innerHTML = listAngka.map(n => `<button type="button" class="btn-qp" onclick="eksekusiQuickPoint(${n})">+${n}</button>`).join('');
+    const theme = colorTheme || { hex: '#38bdf8', light: '#38bdf8', glow: 'rgba(56, 189, 248, 0.4)' };
+    grid.innerHTML = listAngka.map(n => `
+      <button type="button" class="btn-qp" 
+        style="color: ${theme.light}; border-color: ${theme.hex}55; background: ${theme.hex}18;"
+        onmouseover="this.style.background='${theme.hex}38'; this.style.borderColor='${theme.hex}';"
+        onmouseout="this.style.background='${theme.hex}18'; this.style.borderColor='${theme.hex}55';"
+        onclick="eksekusiQuickPoint(${n})">+${n}</button>
+    `).join('');
   }
 
   function bukaQuickPointPopover(index, ev) {
@@ -1758,26 +1793,74 @@
     const p = (index === 19) ? currData.host : currData.players[index];
     if (!p) return;
     activeQuickPointIndex = index;
-    renderTombolQuickPoint();
+
+    let teamInfo = null;
+    if (db.gameMode === 'duo' && index < 18) {
+      const tIdx = Math.floor(index / 2);
+      const team = db.duoTeams[tIdx] || { name: `TIM ${tIdx+1}`, color: '#38bdf8' };
+      teamInfo = { name: team.name, color: team.color };
+    }
+    const warnaDipakai = p.colorTag || (teamInfo ? teamInfo.color : "");
+
+    let colorTheme = null;
+    if (warnaDipakai && WARNA_TAG_CONFIG[warnaDipakai]) {
+      colorTheme = WARNA_TAG_CONFIG[warnaDipakai];
+    } else if (warnaDipakai && (warnaDipakai.startsWith('#') || warnaDipakai.startsWith('rgb'))) {
+      colorTheme = {
+        hex: warnaDipakai,
+        light: warnaDipakai,
+        glow: warnaDipakai + '55',
+        tagBg: warnaDipakai + '22',
+        ptsBg: warnaDipakai + '1a'
+      };
+    } else {
+      colorTheme = {
+        hex: '#38bdf8',
+        light: '#38bdf8',
+        glow: 'rgba(56, 189, 248, 0.4)',
+        tagBg: 'rgba(56, 189, 248, 0.15)',
+        ptsBg: 'rgba(56, 189, 248, 0.1)'
+      };
+    }
+
+    renderTombolQuickPoint(colorTheme);
 
     const namaTampil = p.nick || p.user || p.robloxUser || (index === 19 ? 'Host' : `Kursi ${index + 1}`);
-    document.getElementById('qpPlayerTitle').innerText = `${namaTampil} (${p.poin || 0} Pts)`;
-    document.getElementById('qpDirectInput').value = p.poin || 0;
+    const titleEl = document.getElementById('qpPlayerTitle');
+    if (titleEl) {
+      titleEl.innerText = `${namaTampil} (${p.poin || 0} Pts)`;
+      titleEl.style.color = colorTheme.light;
+    }
+
+    const inpDirect = document.getElementById('qpDirectInput');
+    if (inpDirect) {
+      inpDirect.value = p.poin || 0;
+      inpDirect.style.borderColor = colorTheme.hex + '66';
+    }
 
     const pop = document.getElementById('quickPointPopover');
-    pop.classList.add('show');
+    if (pop) {
+      pop.style.borderColor = colorTheme.hex;
+      pop.style.boxShadow = `0 18px 40px rgba(0, 0, 0, 0.85), 0 0 22px ${colorTheme.glow}`;
+      const btnSet = pop.querySelector('.btn-qp-set');
+      if (btnSet) {
+        btnSet.style.color = colorTheme.light;
+        btnSet.style.borderColor = colorTheme.hex + '55';
+      }
+      pop.classList.add('show');
 
-    const rect = ev.currentTarget.getBoundingClientRect();
-    const popWidth = 235;
-    const popHeight = pop.offsetHeight || 150;
+      const rect = ev.currentTarget.getBoundingClientRect();
+      const popWidth = 235;
+      const popHeight = pop.offsetHeight || 150;
 
-    let leftPos = rect.left - popWidth - 8;
-    if (leftPos < 10) leftPos = Math.min(window.innerWidth - popWidth - 10, rect.right + 8);
-    let topPos = rect.top - (popHeight / 2) + (rect.height / 2);
-    topPos = Math.max(10, Math.min(window.innerHeight - popHeight - 10, topPos));
+      let leftPos = rect.left - popWidth - 8;
+      if (leftPos < 10) leftPos = Math.min(window.innerWidth - popWidth - 10, rect.right + 8);
+      let topPos = rect.top - (popHeight / 2) + (rect.height / 2);
+      topPos = Math.max(10, Math.min(window.innerHeight - popHeight - 10, topPos));
 
-    pop.style.left = `${leftPos}px`;
-    pop.style.top = `${topPos}px`;
+      pop.style.left = `${leftPos}px`;
+      pop.style.top = `${topPos}px`;
+    }
   }
 
   function tutupQuickPointPopover() {
@@ -1805,16 +1888,18 @@
     const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
 
     let teamInfo = null;
+    let partner = null;
     if (db.gameMode === 'duo' && idx < 18) {
       const tIdx = Math.floor(idx / 2);
       const team = db.duoTeams[tIdx] || { name: `TIM ${tIdx+1}`, color: '#38bdf8' };
       const partnerIdx = (idx % 2 === 0) ? idx + 1 : idx - 1;
+      partner = currData.players[partnerIdx] || null;
       const teamScore = p.poin + (currData.players[partnerIdx]?.poin || 0);
       teamInfo = { name: team.name, score: teamScore, color: team.color };
     }
 
     const warnaDipakai = p.colorTag || (teamInfo ? teamInfo.color : "");
-    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN", warnaDipakai, teamInfo);
+    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "TAMBAH POIN", warnaDipakai, teamInfo, p, partner);
 
     simpanDB();
     urutkanOtomatis();
@@ -1838,16 +1923,18 @@
     const namaTampil = p.nick || p.user || p.robloxUser || (idx === 19 ? 'Host' : `Kursi ${idx + 1}`);
 
     let teamInfo = null;
+    let partner = null;
     if (db.gameMode === 'duo' && idx < 18) {
       const tIdx = Math.floor(idx / 2);
       const team = db.duoTeams[tIdx] || { name: `TIM ${tIdx+1}`, color: '#38bdf8' };
       const partnerIdx = (idx % 2 === 0) ? idx + 1 : idx - 1;
+      partner = currData.players[partnerIdx] || null;
       const teamScore = p.poin + (currData.players[partnerIdx]?.poin || 0);
       teamInfo = { name: team.name, score: teamScore, color: team.color };
     }
 
     const warnaDipakai = p.colorTag || (teamInfo ? teamInfo.color : "");
-    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "SET TOTAL", warnaDipakai, teamInfo);
+    if (selisih !== 0) tampilkanPopupPoinTengah(namaTampil, selisih, p.poin, "SET TOTAL", warnaDipakai, teamInfo, p, partner);
 
     if (idx === 19) { simpanDB(); renderIsiTabel(); } else { urutkanOtomatis(); }
     tambahLogAktivitas(namaTampil, `Total disetel ke ${p.poin}${teamInfo ? ` (${teamInfo.name})` : ''}`, 'system', awal, p.poin, Math.abs(selisih));
@@ -1869,7 +1956,7 @@
     slate:  { hex: '#64748b', light: '#cbd5e1', glow: 'rgba(100, 116, 139, 0.45)', tagBg: 'rgba(100, 116, 139, 0.25)', ptsBg: 'rgba(100, 116, 139, 0.2)' }
   };
 
-  function tampilkanPopupPoinTengah(namaPemain, deltaPoin, totalPoin, labelAtas = "UPDATE POIN", warnaTagOrHex = "", teamInfo = null) {
+  function tampilkanPopupPoinTengah(namaPemain, deltaPoin, totalPoin, labelAtas = "UPDATE POIN", warnaTagOrHex = "", teamInfo = null, playerData = null, partnerData = null) {
     const popup = document.getElementById('centerNotifPopup');
     if (!popup) return;
     if (popupCenterTimer) clearTimeout(popupCenterTimer);
@@ -1883,6 +1970,7 @@
     const ptsBox = popup.querySelector('.c-notif-pts-box');
     const ptsMain = document.getElementById('cNotifPts');
     const ptsTotal = document.getElementById('cNotifTotal');
+    const avWrap = document.getElementById('cNotifAvatarWrap');
 
     if (tagEl) { tagEl.style.color = ''; tagEl.style.background = ''; tagEl.style.borderColor = ''; }
     if (ptsBox) { ptsBox.style.background = ''; ptsBox.style.borderColor = ''; }
@@ -1895,8 +1983,15 @@
       activeColor = teamInfo.color;
     }
 
+    let activeHex = '#38bdf8';
+    let activeGlow = 'rgba(56, 189, 248, 0.45)';
+    let activeLight = '#bae6fd';
+
     if (activeColor && WARNA_TAG_CONFIG[activeColor]) {
       const cfg = WARNA_TAG_CONFIG[activeColor];
+      activeHex = cfg.hex;
+      activeGlow = cfg.glow;
+      activeLight = cfg.light;
       popup.classList.add(`theme-${activeColor}`);
       popup.style.borderColor = cfg.hex;
       popup.style.boxShadow = `0 24px 60px rgba(0, 0, 0, 0.88), 0 0 35px ${cfg.glow}`;
@@ -1912,6 +2007,9 @@
       if (ptsMain) ptsMain.style.color = cfg.light;
       if (ptsTotal) ptsTotal.style.color = '#ffffff';
     } else if (activeColor && (activeColor.startsWith('#') || activeColor.startsWith('rgb'))) {
+      activeHex = activeColor;
+      activeGlow = activeColor + '70';
+      activeLight = activeColor;
       popup.style.borderColor = activeColor;
       popup.style.boxShadow = `0 24px 60px rgba(0, 0, 0, 0.88), 0 0 35px ${activeColor}80`;
       if (tagEl) {
@@ -1925,6 +2023,31 @@
       }
       if (ptsMain) ptsMain.style.color = activeColor;
       if (ptsTotal) ptsTotal.style.color = '#ffffff';
+    }
+
+    // Render Foto Avatar di Toast Notifikasi
+    if (avWrap) {
+      const renderAvatarEl = (playerObj, size = 60) => {
+        if (!playerObj) return '';
+        const avUrl = playerObj.avatar;
+        const initial = (playerObj.nick || playerObj.user || playerObj.robloxUser || '?').charAt(0).toUpperCase();
+        if (avUrl) {
+          return `<img class="c-notif-avatar-img" src="${avUrl}" alt="Avatar" style="width:${size}px; height:${size}px; border-color:${activeHex}; box-shadow:0 4px 14px rgba(0,0,0,0.6), 0 0 16px ${activeGlow};" onerror="this.outerHTML='<div class=\\'c-notif-avatar-placeholder\\' style=\\'width:${size}px; height:${size}px; border-color:${activeHex}; box-shadow:0 0 14px ${activeGlow}; font-size:${Math.round(size*0.42)}px;\\'>${initial}</div>'">`;
+        } else {
+          return `<div class="c-notif-avatar-placeholder" style="width:${size}px; height:${size}px; border-color:${activeHex}; box-shadow:0 0 14px ${activeGlow}; font-size:${Math.round(size*0.42)}px;">${initial}</div>`;
+        }
+      };
+
+      if (teamInfo && partnerData && (partnerData.avatar || partnerData.nick || partnerData.user)) {
+        avWrap.className = 'c-notif-avatar-wrap is-duo';
+        avWrap.innerHTML = renderAvatarEl(playerData, 50) + renderAvatarEl(partnerData, 50);
+      } else if (playerData && (playerData.avatar || playerData.nick || playerData.user)) {
+        avWrap.className = 'c-notif-avatar-wrap';
+        avWrap.innerHTML = renderAvatarEl(playerData, 60);
+      } else {
+        avWrap.className = 'c-notif-avatar-wrap';
+        avWrap.innerHTML = renderAvatarEl({ nick: namaPemain }, 60);
+      }
     }
 
     const tanda = deltaPoin >= 0 ? `+${deltaPoin}` : `${deltaPoin}`;
@@ -1946,7 +2069,10 @@
   }
 
   function tesPopupTengahManual() {
-    tampilkanPopupPoinTengah("BOBOHU", 5, 20, "TES NOTIFIKASI", "yellow");
+    tampilkanPopupPoinTengah("BOBOHU", 5, 20, "TES NOTIFIKASI", "yellow", null, {
+      avatar: "https://tr.rbxcdn.com/30DAY-AvatarHeadshot-FBCE3486A51CD3FD573C6A2EAA25E6DE-Png/150/150/AvatarHeadshot/Png/noFilter",
+      nick: "BOBOHU"
+    });
     tambahLogAktivitas('TEST', 'Tes popup notifikasi tengah', 'system');
   }
 
