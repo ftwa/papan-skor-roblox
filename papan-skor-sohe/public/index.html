@@ -762,42 +762,69 @@
 
     .podium-container {
       display: flex; align-items: flex-end; justify-content: center;
-      gap: 32px; position: relative; z-index: 30008; width: 100%;
-      margin-top: 85px;
+      gap: 36px; position: relative; z-index: 30008; width: 100%;
+      margin-top: 115px;
     }
 
-    /* KARTU PODIUM: LEBAR COMPACT & PROPORSIONAL */
+    /* KARTU PODIUM: LEBAR LEBIH BESAR, TEGAS & JELAS */
     .podium-card {
-      position: relative; width: 260px; border-radius: 16px;
+      position: relative; width: 280px; border-radius: 16px;
       padding: 0; display: flex; flex-direction: column; align-items: center;
       background: transparent !important; border: none !important; box-shadow: none !important;
     }
     .podium-card.rank-1 {
-      width: 290px; transform: translateY(-16px);
+      width: 320px; transform: translateY(-20px);
     }
     .podium-card.rank-2 {
-      transform: translateY(8px);
+      transform: translateY(10px);
     }
     .podium-card.rank-3 {
-      transform: translateY(20px);
+      transform: translateY(22px);
     }
 
     /* ==============================================================================
-       3D AVATAR FLOATING STAGE & PEDESTAL AURA UNTUK PODIUM (BERSIH TANPA WARNA AURA)
+       3D AVATAR FLOATING STAGE & AMBIENT AURORA MULTI-WARNA (MEWAH & TIDAK POLOS)
        ============================================================================== */
     .winner-3d-floating-stage {
-      position: relative; width: 100%; height: 280px;
+      position: relative; width: 100%; height: 320px;
       display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
       z-index: 5;
     }
-    .rank-1 .winner-3d-floating-stage { height: 310px; }
-    .rank-2 .winner-3d-floating-stage { height: 270px; }
-    .rank-3 .winner-3d-floating-stage { height: 270px; }
+    .rank-1 .winner-3d-floating-stage { height: 355px; }
+    .rank-2 .winner-3d-floating-stage { height: 315px; }
+    .rank-3 .winner-3d-floating-stage { height: 315px; }
 
-    /* HILANGKAN WARNA LINGKARAN AURA SESUAI TANDA X DARI USER */
-    .winner-gojo-aura, .aura-rank-1, .aura-rank-2, .aura-rank-3 {
-      display: none !important;
+    /* AMBIENT AURORA MULTI-WARNA DI BELAKANG AVATAR */
+    .winner-ambient-aura {
+      position: absolute; top: 48%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none; z-index: 1; border-radius: 50%;
+      mix-blend-mode: screen;
+      animation: ambientAuraPulse 4.2s ease-in-out infinite alternate;
     }
+    @keyframes ambientAuraPulse {
+      0% { opacity: 0.8; transform: translate(-50%, -50%) scale(0.96); }
+      100% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+    }
+    /* Rank 1: Multi-color Golden Champion Aurora (Emas, Amber, Ungu, Aksen Biru Muda) */
+    .aura-rank-1 {
+      width: 390px; height: 390px;
+      background: radial-gradient(circle, rgba(250, 204, 21, 0.45) 0%, rgba(245, 158, 11, 0.3) 30%, rgba(168, 85, 247, 0.22) 55%, rgba(56, 189, 248, 0.15) 75%, transparent 95%);
+      filter: blur(28px);
+    }
+    /* Rank 2: Multi-color Cyber Sky Aurora (Sky Blue, Indigo, Violet) */
+    .aura-rank-2 {
+      width: 330px; height: 330px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, rgba(99, 102, 241, 0.32) 35%, rgba(168, 85, 247, 0.2) 60%, transparent 95%);
+      filter: blur(24px);
+    }
+    /* Rank 3: Multi-color Radiant Bronze Aurora (Orange, Rose Coral, Amber) */
+    .aura-rank-3 {
+      width: 330px; height: 330px;
+      background: radial-gradient(circle, rgba(251, 146, 60, 0.45) 0%, rgba(244, 63, 94, 0.3) 35%, rgba(234, 179, 8, 0.18) 60%, transparent 95%);
+      filter: blur(24px);
+    }
+    .winner-gojo-aura { display: none !important; }
 
     /* AVATAR MELAYANG DI ATAS KOTAK (TIDAK TABRAKAN DENGAN KOTAK) */
     .winner-3d-body-wrap {
@@ -827,13 +854,13 @@
       background: transparent !important;
     }
     .rank-1 .winner-3d-full-img {
-      max-height: 270px !important; animation: winnerOriginalFloatRank1 3.2s ease-in-out infinite;
+      max-height: 315px !important; animation: winnerOriginalFloatRank1 3.2s ease-in-out infinite;
     }
     .rank-2 .winner-3d-full-img {
-      max-height: 240px !important; animation: winnerOriginalFloatRank2 3.6s ease-in-out infinite 0.4s;
+      max-height: 280px !important; animation: winnerOriginalFloatRank2 3.6s ease-in-out infinite 0.4s;
     }
     .rank-3 .winner-3d-full-img {
-      max-height: 240px !important; animation: winnerOriginalFloatRank3 3.4s ease-in-out infinite 0.8s;
+      max-height: 280px !important; animation: winnerOriginalFloatRank3 3.4s ease-in-out infinite 0.8s;
     }
 
     /* MODE DUO: DUA AVATAR MELAYANG BERDAMPINGAN DENGAN RAPI & TIDAK TABRAKAN */
@@ -845,13 +872,13 @@
       max-width: 46% !important; flex: 0 1 auto;
     }
     .rank-1 .winner-3d-body-wrap.is-duo .winner-3d-full-img {
-      max-height: 245px !important; transform-origin: bottom center;
+      max-height: 285px !important; transform-origin: bottom center;
     }
     .rank-2 .winner-3d-body-wrap.is-duo .winner-3d-full-img {
-      max-height: 220px !important; transform-origin: bottom center;
+      max-height: 255px !important; transform-origin: bottom center;
     }
     .rank-3 .winner-3d-body-wrap.is-duo .winner-3d-full-img {
-      max-height: 220px !important; transform-origin: bottom center;
+      max-height: 255px !important; transform-origin: bottom center;
     }
 
     /* PEDESTAL SURFACE */
@@ -876,59 +903,59 @@
       border-top: 2px solid #fdba74; box-shadow: 0 0 18px rgba(251, 146, 60, 0.6);
     }
 
-    /* KOTAK DI BAWAH AVATAR: COMPACT, RAMPING & TIDAK KEBESARAN */
+    /* KOTAK DI BAWAH AVATAR: LEBIH LEGA & PROPORSIONAL */
     .podium-glass-card {
-      position: relative; z-index: 7; width: 100%; border-radius: 14px;
-      padding: 10px 14px 10px 14px; display: flex; flex-direction: column; align-items: center;
+      position: relative; z-index: 7; width: 100%; border-radius: 16px;
+      padding: 12px 16px; display: flex; flex-direction: column; align-items: center;
       margin-top: 8px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
       box-sizing: border-box;
     }
     .rank-1 .podium-glass-card {
       background: linear-gradient(180deg, rgba(68, 52, 12, 0.92) 0%, rgba(18, 15, 10, 0.98) 100%);
       border: 1.5px solid rgba(250, 204, 21, 0.9);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.85), 0 0 20px rgba(250, 204, 21, 0.28);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.85), 0 0 24px rgba(250, 204, 21, 0.32);
     }
     .rank-2 .podium-glass-card {
       background: linear-gradient(180deg, rgba(14, 52, 75, 0.92) 0%, rgba(11, 20, 32, 0.98) 100%);
       border: 1.5px solid rgba(56, 189, 248, 0.85);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.85), 0 0 16px rgba(56, 189, 248, 0.22);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.85), 0 0 20px rgba(56, 189, 248, 0.25);
     }
     .rank-3 .podium-glass-card {
       background: linear-gradient(180deg, rgba(68, 36, 22, 0.92) 0%, rgba(22, 13, 10, 0.98) 100%);
       border: 1.5px solid rgba(251, 146, 60, 0.85);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.85), 0 0 16px rgba(251, 146, 60, 0.22);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.85), 0 0 20px rgba(251, 146, 60, 0.25);
     }
 
     .title-badge {
-      font-family: 'Outfit', sans-serif; font-size: 11.5px; font-weight: 800; letter-spacing: 1.2px;
-      padding: 3px 12px; border-radius: 99px; margin-bottom: 5px; text-transform: uppercase;
+      font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 900; letter-spacing: 1.5px;
+      padding: 4px 14px; border-radius: 99px; margin-bottom: 6px; text-transform: uppercase;
     }
     .rank-1 .title-badge { background: rgba(250, 204, 21, 0.25); color: #FEF08A; border: 1px solid #FACC15; }
     .rank-2 .title-badge { background: rgba(56, 189, 248, 0.2); color: #BAE6FD; border: 1px solid #38BDF8; }
     .rank-3 .title-badge { background: rgba(251, 146, 60, 0.2); color: #FED7AA; border: 1px solid #FB923C; }
 
     .player-display-name {
-      font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 800; color: #FFFFFF;
+      font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 900; color: #FFFFFF;
       text-align: center; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       line-height: 1.25; margin-bottom: 2px;
     }
-    .rank-1 .player-display-name { font-size: 17px; color: #FEF9C3; }
+    .rank-1 .player-display-name { font-size: 21px; color: #FEF9C3; }
 
     .member-name-row {
-      font-family: 'Outfit', sans-serif; font-size: 14.5px; font-weight: 800; color: #FFFFFF;
+      font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 900; color: #FFFFFF;
       text-align: center; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       line-height: 1.25; letter-spacing: 0.5px;
     }
-    .rank-1 .member-name-row { font-size: 16px; font-weight: 900; }
+    .rank-1 .member-name-row { font-size: 18.5px; font-weight: 900; }
 
     .podium-score-box {
-      width: 100%; padding: 4px 10px; border-radius: 8px; display: flex; align-items: baseline;
+      width: 100%; padding: 5px 12px; border-radius: 9px; display: flex; align-items: baseline;
       justify-content: center; gap: 4px; font-family: 'JetBrains Mono', monospace;
-      background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); margin-top: 5px;
+      background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.12); margin-top: 6px;
     }
-    .podium-score-value { font-size: 17px; font-weight: 900; color: #f8fafc; }
-    .rank-1 .podium-score-value { font-size: 19px; }
-    .podium-score-label { font-size: 10px; font-weight: 700; opacity: 0.8; }
+    .podium-score-value { font-size: 20px; font-weight: 900; color: #f8fafc; }
+    .rank-1 .podium-score-value { font-size: 23px; }
+    .podium-score-label { font-size: 12px; font-weight: 800; opacity: 0.85; }
     #fireworksCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30005; }
     .player-username { display: none !important; }
     </style>
@@ -1349,6 +1376,7 @@
       <!-- Rank 2: 2nd Place -->
       <div class="podium-card rank-2">
         <div class="winner-3d-floating-stage">
+          <div class="winner-ambient-aura aura-rank-2"></div>
           <div class="winner-3d-body-wrap" id="winAvatarBox2">
             <span>2</span>
           </div>
@@ -1369,6 +1397,7 @@
       <!-- Rank 1: Champion -->
       <div class="podium-card rank-1">
         <div class="winner-3d-floating-stage">
+          <div class="winner-ambient-aura aura-rank-1"></div>
           <div class="winner-3d-body-wrap" id="winAvatarBox1">
             <span>1</span>
           </div>
@@ -1389,6 +1418,7 @@
       <!-- Rank 3: 3rd Place -->
       <div class="podium-card rank-3">
         <div class="winner-3d-floating-stage">
+          <div class="winner-ambient-aura aura-rank-3"></div>
           <div class="winner-3d-body-wrap" id="winAvatarBox3">
             <span>3</span>
           </div>
@@ -3380,18 +3410,18 @@
     });
   }
 
-    function autoScalePodium() {
+  function autoScalePodium() {
     const scaler = document.getElementById('podiumStageScaler');
     if (!scaler) return;
-    const targetW = 1260;
-    const targetH = 720;
-    const winW = window.innerWidth || document.documentElement.clientWidth || 1260;
+    const targetW = 1040;
+    const targetH = 760;
+    const winW = window.innerWidth || document.documentElement.clientWidth || 1040;
     const winH = window.innerHeight || document.documentElement.clientHeight || 800;
-    const scaleX = (winW - 32) / targetW;
-    const scaleY = (winH - 100) / targetH;
+    const scaleX = (winW - 24) / targetW;
+    const scaleY = (winH - 60) / targetH;
     let scale = Math.min(scaleX, scaleY);
-    if (scale < 0.3) scale = 0.3;
-    if (scale > 1.05) scale = 1.05;
+    if (scale < 0.4) scale = 0.4;
+    if (scale > 1.25) scale = 1.25;
     scaler.style.transform = `scale(${scale.toFixed(4)})`;
     scaler.style.transformOrigin = 'top center';
   }
