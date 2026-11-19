@@ -697,7 +697,7 @@
       background: radial-gradient(circle at 50% 15%, rgba(15, 23, 42, 0.97), rgba(3, 7, 18, 0.99));
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       z-index: 30000; justify-content: flex-start; align-items: center; flex-direction: column;
-      padding: 12px 16px 20px 16px; overflow-y: auto; overflow-x: hidden;
+      padding: 38px 16px 24px 16px; overflow-y: auto; overflow-x: hidden;
     }
     .winner-overlay.active { display: flex; }
     .btn-close-winner {
@@ -719,7 +719,7 @@
 
     /* HEADER: POSISI DI ATAS PAS DENGAN TABEL SCOREBOARD */
     .winner-header {
-      text-align: center; margin-top: 6px; margin-bottom: 18px; position: relative; z-index: 30008;
+      text-align: center; margin-top: 8px; margin-bottom: 22px; position: relative; z-index: 30008;
     }
     .winner-subtitle {
       font-family: 'Outfit', sans-serif; font-size: 13px; letter-spacing: 6px;
@@ -3500,12 +3500,12 @@
     function autoScalePodium() {
     const scaler = document.getElementById('podiumStageScaler');
     if (!scaler) return;
-    const targetW = 1260; // Paskan dengan ukuran tabel scoreboard .container (1260px)
-    const targetH = 580; // Proporsional di bagian atas layar
+    const targetW = 1260;
+    const targetH = 610;
     const winW = window.innerWidth || document.documentElement.clientWidth || 1260;
     const winH = window.innerHeight || document.documentElement.clientHeight || 800;
     const scaleX = (winW - 32) / targetW;
-    const scaleY = (winH - 40) / targetH;
+    const scaleY = (winH - 64) / targetH;
     let scale = Math.min(scaleX, scaleY);
     if (scale < 0.3) scale = 0.3;
     if (scale > 1.05) scale = 1.05;
