@@ -3497,6 +3497,22 @@
     });
   }
 
+    function autoScalePodium() {
+    const scaler = document.getElementById('podiumStageScaler');
+    if (!scaler) return;
+    const targetW = 1140;
+    const targetH = 680;
+    const winW = window.innerWidth || document.documentElement.clientWidth || 1200;
+    const winH = window.innerHeight || document.documentElement.clientHeight || 800;
+    const scaleX = (winW - 48) / targetW;
+    const scaleY = (winH - 48) / targetH;
+    let scale = Math.min(scaleX, scaleY);
+    if (scale < 0.25) scale = 0.25;
+    if (scale > 1.1) scale = 1.1;
+    scaler.style.transform = `scale(${scale.toFixed(4)})`;
+    scaler.style.transformOrigin = 'center center';
+  }
+
   window.addEventListener('resize', autoScalePodium);
 
   
