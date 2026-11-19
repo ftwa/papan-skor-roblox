@@ -762,37 +762,37 @@
 
     .podium-container {
       display: flex; align-items: flex-end; justify-content: center;
-      gap: 36px; position: relative; z-index: 30008; width: 100%;
-      margin-top: 115px;
+      gap: 32px; position: relative; z-index: 30008; width: 100%;
+      margin-top: 165px;
     }
 
-    /* KARTU PODIUM: LEBAR LEBIH BESAR, TEGAS & JELAS */
+    /* KARTU PODIUM: LEBAR 300px (RANK 1), TEGAS, TAJAM & JELAS */
     .podium-card {
-      position: relative; width: 280px; border-radius: 16px;
+      position: relative; width: 270px; border-radius: 16px;
       padding: 0; display: flex; flex-direction: column; align-items: center;
       background: transparent !important; border: none !important; box-shadow: none !important;
     }
     .podium-card.rank-1 {
-      width: 320px; transform: translateY(-20px);
+      width: 300px; transform: translateY(-18px);
     }
     .podium-card.rank-2 {
-      transform: translateY(10px);
+      width: 270px; transform: translateY(10px);
     }
     .podium-card.rank-3 {
-      transform: translateY(22px);
+      width: 270px; transform: translateY(22px);
     }
 
     /* ==============================================================================
        3D AVATAR FLOATING STAGE & AMBIENT AURORA MULTI-WARNA (MEWAH & TIDAK POLOS)
        ============================================================================== */
     .winner-3d-floating-stage {
-      position: relative; width: 100%; height: 320px;
+      position: relative; width: 100%; height: 280px;
       display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
       z-index: 5;
     }
-    .rank-1 .winner-3d-floating-stage { height: 355px; }
-    .rank-2 .winner-3d-floating-stage { height: 315px; }
-    .rank-3 .winner-3d-floating-stage { height: 315px; }
+    .rank-1 .winner-3d-floating-stage { height: 300px; }
+    .rank-2 .winner-3d-floating-stage { height: 265px; }
+    .rank-3 .winner-3d-floating-stage { height: 265px; }
 
     /* AMBIENT AURORA MULTI-WARNA DI BELAKANG AVATAR */
     .winner-ambient-aura {
@@ -808,21 +808,21 @@
     }
     /* Rank 1: Multi-color Golden Champion Aurora (Emas, Amber, Ungu, Aksen Biru Muda) */
     .aura-rank-1 {
-      width: 390px; height: 390px;
+      width: 340px; height: 340px;
       background: radial-gradient(circle, rgba(250, 204, 21, 0.45) 0%, rgba(245, 158, 11, 0.3) 30%, rgba(168, 85, 247, 0.22) 55%, rgba(56, 189, 248, 0.15) 75%, transparent 95%);
-      filter: blur(28px);
+      filter: blur(24px);
     }
     /* Rank 2: Multi-color Cyber Sky Aurora (Sky Blue, Indigo, Violet) */
     .aura-rank-2 {
-      width: 330px; height: 330px;
+      width: 290px; height: 290px;
       background: radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, rgba(99, 102, 241, 0.32) 35%, rgba(168, 85, 247, 0.2) 60%, transparent 95%);
-      filter: blur(24px);
+      filter: blur(22px);
     }
     /* Rank 3: Multi-color Radiant Bronze Aurora (Orange, Rose Coral, Amber) */
     .aura-rank-3 {
-      width: 330px; height: 330px;
+      width: 290px; height: 290px;
       background: radial-gradient(circle, rgba(251, 146, 60, 0.45) 0%, rgba(244, 63, 94, 0.3) 35%, rgba(234, 179, 8, 0.18) 60%, transparent 95%);
-      filter: blur(24px);
+      filter: blur(22px);
     }
     .winner-gojo-aura { display: none !important; }
 
@@ -833,18 +833,18 @@
       margin-bottom: 14px;
     }
 
-    /* ANIMASI MELAYANG: SELALU BERADA DI ATAS PEDESTAL DENGAN JARAK AMAN */
+    /* ANIMASI MELAYANG: TETAP DI SKALA 1.0 (JUARA 1 TETAP 270px) */
     @keyframes winnerOriginalFloatRank1 {
-      0%, 100% { transform: translateY(-8px) scale(1.12); filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.75)); }
-      50% { transform: translateY(-16px) scale(1.15); filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.85)); }
+      0%, 100% { transform: translateY(-5px); filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.75)); }
+      50% { transform: translateY(-13px); filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.85)); }
     }
     @keyframes winnerOriginalFloatRank2 {
-      0%, 100% { transform: translateY(-6px) scale(1.04); filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.75)); }
-      50% { transform: translateY(-14px) scale(1.06); filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.85)); }
+      0%, 100% { transform: translateY(-4px); filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.75)); }
+      50% { transform: translateY(-11px); filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.85)); }
     }
     @keyframes winnerOriginalFloatRank3 {
-      0%, 100% { transform: translateY(-6px) scale(1.04); filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.75)); }
-      50% { transform: translateY(-14px) scale(1.06); filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.85)); }
+      0%, 100% { transform: translateY(-4px); filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.75)); }
+      50% { transform: translateY(-11px); filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.85)); }
     }
 
     .winner-3d-full-img {
@@ -854,13 +854,13 @@
       background: transparent !important;
     }
     .rank-1 .winner-3d-full-img {
-      max-height: 315px !important; animation: winnerOriginalFloatRank1 3.2s ease-in-out infinite;
+      max-height: 270px !important; animation: winnerOriginalFloatRank1 3.2s ease-in-out infinite;
     }
     .rank-2 .winner-3d-full-img {
-      max-height: 280px !important; animation: winnerOriginalFloatRank2 3.6s ease-in-out infinite 0.4s;
+      max-height: 240px !important; animation: winnerOriginalFloatRank2 3.6s ease-in-out infinite 0.4s;
     }
     .rank-3 .winner-3d-full-img {
-      max-height: 280px !important; animation: winnerOriginalFloatRank3 3.4s ease-in-out infinite 0.8s;
+      max-height: 240px !important; animation: winnerOriginalFloatRank3 3.4s ease-in-out infinite 0.8s;
     }
 
     /* MODE DUO: DUA AVATAR MELAYANG BERDAMPINGAN DENGAN RAPI & TIDAK TABRAKAN */
@@ -872,13 +872,13 @@
       max-width: 46% !important; flex: 0 1 auto;
     }
     .rank-1 .winner-3d-body-wrap.is-duo .winner-3d-full-img {
-      max-height: 285px !important; transform-origin: bottom center;
+      max-height: 240px !important; transform-origin: bottom center;
     }
     .rank-2 .winner-3d-body-wrap.is-duo .winner-3d-full-img {
-      max-height: 255px !important; transform-origin: bottom center;
+      max-height: 215px !important; transform-origin: bottom center;
     }
     .rank-3 .winner-3d-body-wrap.is-duo .winner-3d-full-img {
-      max-height: 255px !important; transform-origin: bottom center;
+      max-height: 215px !important; transform-origin: bottom center;
     }
 
     /* PEDESTAL SURFACE */
