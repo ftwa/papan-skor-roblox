@@ -736,6 +736,7 @@
     .podium-container {
       display: flex; align-items: flex-end; justify-content: center;
       gap: 32px; position: relative; z-index: 30008; width: 100%;
+      margin-top: 85px;
     }
 
     /* KARTU PODIUM: LEBAR COMPACT & PROPORSIONAL */
@@ -3257,7 +3258,7 @@
     const scaler = document.getElementById('podiumStageScaler');
     if (!scaler) return;
     const targetW = 1260;
-    const targetH = 650;
+    const targetH = 720;
     const winW = window.innerWidth || document.documentElement.clientWidth || 1260;
     const winH = window.innerHeight || document.documentElement.clientHeight || 800;
     const scaleX = (winW - 32) / targetW;
