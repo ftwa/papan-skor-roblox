@@ -183,7 +183,7 @@
        ============================================================================== */
     .center-notif-popup {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
-      width: 500px; max-width: calc(100vw - 32px); min-height: 156px;
+      width: 410px; max-width: calc(100vw - 28px); min-height: 146px;
       background: linear-gradient(135deg, rgba(8, 20, 36, 0.96) 0%, rgba(28, 12, 44, 0.96) 100%);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-radius: 20px;
@@ -290,16 +290,22 @@
     /* KOTAK PARALLELOGRAM / SLANTED POIN CYBER */
     .c-notif-pts-hud {
       position: relative;
+      width: 100%; box-sizing: border-box;
       background: linear-gradient(90deg, rgba(24, 48, 76, 0.85) 0%, rgba(15, 23, 42, 0.88) 100%);
       border: 1.2px solid rgba(56, 189, 248, 0.45);
       border-radius: 8px;
       transform: skewX(-12deg);
-      padding: 6px 20px 6px 14px;
+      padding: 6px 16px 6px 14px;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
       transition: all 0.2s ease;
+      margin-top: 2px;
     }
     .c-notif-pts-hud-inner {
       transform: skewX(12deg);
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%;
+    }
+    .c-notif-pts-left {
       display: flex; align-items: center; gap: 12px;
     }
     .c-notif-pts-delta {
@@ -318,8 +324,15 @@
       transition: all 0.2s ease;
     }
     .c-notif-pts-total {
-      font-family: 'Outfit', sans-serif; font-size: 12.5px; font-weight: 700;
+      font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 700;
       color: #cbd5e1; margin-top: 2px; white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .c-notif-pts-stripes {
+      display: flex; gap: 3px; opacity: 0.5; margin-right: 4px;
+    }
+    .c-notif-pts-stripes span {
+      width: 3.5px; height: 18px; background: #38bdf8; transform: skewX(-14deg); border-radius: 1px;
       transition: all 0.2s ease;
     }
 
@@ -1226,10 +1239,15 @@
 
     <div class="c-notif-pts-hud" id="cNotifPtsHud">
       <div class="c-notif-pts-hud-inner">
-        <span class="c-notif-pts-delta" id="cNotifPts">+3</span>
-        <div class="c-notif-pts-info">
-          <span class="c-notif-pts-unit" id="cNotifUnit">POIN</span>
-          <span class="c-notif-pts-total" id="cNotifTotal">Total: 63 Poin</span>
+        <div class="c-notif-pts-left">
+          <span class="c-notif-pts-delta" id="cNotifPts">+3</span>
+          <div class="c-notif-pts-info">
+            <span class="c-notif-pts-unit" id="cNotifUnit">POIN</span>
+            <span class="c-notif-pts-total" id="cNotifTotal">Total: 63 Poin</span>
+          </div>
+        </div>
+        <div class="c-notif-pts-stripes" id="cNotifStripes">
+          <span></span><span></span><span></span>
         </div>
       </div>
     </div>
@@ -2134,6 +2152,10 @@
     if (ptsTotal) ptsTotal.style.color = '';
     if (ringArc1) ringArc1.setAttribute('stroke', '#38bdf8');
     if (ringArc2) ringArc2.setAttribute('stroke', '#d946ef');
+    const stripesEl = document.getElementById('cNotifStripes');
+    if (stripesEl) {
+      stripesEl.querySelectorAll('span').forEach(s => s.style.background = '#38bdf8');
+    }
 
     // Cari warna yang aktif (dari warna kustom bangku atau warna tim)
     let activeColor = warnaTagOrHex;
@@ -2171,6 +2193,9 @@
       if (ptsTotal) ptsTotal.style.color = '#ffffff';
       if (ringArc1) ringArc1.setAttribute('stroke', cfg.hex);
       if (ringArc2) ringArc2.setAttribute('stroke', activeColor === 'pink' || activeColor === 'purple' ? '#38bdf8' : '#d946ef');
+      if (stripesEl) {
+        stripesEl.querySelectorAll('span').forEach(s => s.style.background = cfg.hex);
+      }
     } else if (activeColor && (activeColor.startsWith('#') || activeColor.startsWith('rgb'))) {
       activeHex = activeColor;
       activeGlow = activeColor + '70';
@@ -2195,6 +2220,9 @@
       if (ptsTotal) ptsTotal.style.color = '#ffffff';
       if (ringArc1) ringArc1.setAttribute('stroke', activeColor);
       if (ringArc2) ringArc2.setAttribute('stroke', '#d946ef');
+      if (stripesEl) {
+        stripesEl.querySelectorAll('span').forEach(s => s.style.background = activeColor);
+      }
     }
 
     // Render Foto Avatar di Toast Notifikasi
