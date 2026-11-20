@@ -183,7 +183,7 @@
        ============================================================================== */
     .center-notif-popup {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
-      width: 410px; max-width: calc(100vw - 28px); min-height: 146px;
+      width: 420px; max-width: calc(100vw - 28px); min-height: 148px;
       background: linear-gradient(135deg, rgba(8, 20, 36, 0.96) 0%, rgba(28, 12, 44, 0.96) 100%);
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-radius: 20px;
@@ -203,11 +203,11 @@
 
     /* KOLOM KIRI: AVATAR DENGAN TECH GAUGE / RADAR HUD RING */
     .c-notif-avatar-col {
-      position: relative; width: 94px; height: 94px; flex-shrink: 0;
+      position: relative; width: 104px; height: 104px; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
     }
     .c-notif-avatar-tech-ring {
-      position: absolute; inset: -9px; pointer-events: none; z-index: 1;
+      position: absolute; inset: -3px; pointer-events: none; z-index: 1;
     }
     .c-notif-avatar-tech-ring svg {
       width: 100%; height: 100%; display: block;
@@ -218,33 +218,33 @@
       100% { transform: rotate(360deg); }
     }
     .c-notif-avatar-wrap {
-      position: relative; z-index: 2; width: 76px; height: 76px;
+      position: relative; z-index: 2; width: 96px; height: 96px;
       display: flex; align-items: center; justify-content: center;
     }
     .c-notif-avatar-img {
-      width: 76px; height: 76px; border-radius: 50%; object-fit: cover;
-      border: 2px solid rgba(255, 255, 255, 0.85);
+      width: 96px; height: 96px; border-radius: 50%; object-fit: cover;
+      border: 2.5px solid rgba(255, 255, 255, 0.9);
       background: #0f172a; display: block;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.7), 0 0 16px rgba(56, 189, 248, 0.5);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.7), 0 0 16px rgba(56, 189, 248, 0.5);
       transition: all 0.2s ease;
     }
     .c-notif-avatar-placeholder {
-      width: 76px; height: 76px; border-radius: 50%;
-      background: #1e293b; border: 2px solid rgba(255, 255, 255, 0.85);
+      width: 96px; height: 96px; border-radius: 50%;
+      background: #1e293b; border: 2.5px solid rgba(255, 255, 255, 0.9);
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 32px; color: #f8fafc;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.7), 0 0 16px rgba(56, 189, 248, 0.5);
+      font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 42px; color: #f8fafc;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.7), 0 0 16px rgba(56, 189, 248, 0.5);
       transition: all 0.2s ease;
     }
     .c-notif-avatar-wrap.is-duo {
-      width: 90px;
+      width: 104px;
     }
     .c-notif-avatar-wrap.is-duo .c-notif-avatar-img,
     .c-notif-avatar-wrap.is-duo .c-notif-avatar-placeholder {
-      width: 52px; height: 52px; font-size: 22px;
+      width: 64px; height: 64px; font-size: 26px;
     }
     .c-notif-avatar-wrap.is-duo > *:last-child {
-      margin-left: -18px; position: relative; z-index: 3;
+      margin-left: -20px; position: relative; z-index: 3;
     }
 
     /* KOLOM KANAN: DETAIL PEMAIN & POIN */
@@ -2227,12 +2227,12 @@
 
     // Render Foto Avatar di Toast Notifikasi
     if (avWrap) {
-      const renderAvatarEl = (playerObj, size = 60) => {
+      const renderAvatarEl = (playerObj, size = 96) => {
         if (!playerObj) return '';
         const avUrl = playerObj.avatar;
         const initial = (playerObj.nick || playerObj.user || playerObj.robloxUser || '?').charAt(0).toUpperCase();
         if (avUrl) {
-          return `<img class="c-notif-avatar-img" src="${avUrl}" alt="Avatar" style="width:${size}px; height:${size}px; border-color:${activeHex}; box-shadow:0 4px 14px rgba(0,0,0,0.6), 0 0 16px ${activeGlow};" onerror="this.outerHTML='<div class=\\'c-notif-avatar-placeholder\\' style=\\'width:${size}px; height:${size}px; border-color:${activeHex}; box-shadow:0 0 14px ${activeGlow}; font-size:${Math.round(size*0.42)}px;\\'>${initial}</div>'">`;
+          return `<img class="c-notif-avatar-img" src="${avUrl}" alt="Avatar" style="width:${size}px; height:${size}px; border-color:${activeHex}; box-shadow:0 4px 14px rgba(0,0,0,0.6), 0 0 16px ${activeGlow};" onerror="this.outerHTML='<div class=\'c-notif-avatar-placeholder\' style=\'width:${size}px; height:${size}px; border-color:${activeHex}; box-shadow:0 0 14px ${activeGlow}; font-size:${Math.round(size*0.42)}px;\'>${initial}</div>'">`;
         } else {
           return `<div class="c-notif-avatar-placeholder" style="width:${size}px; height:${size}px; border-color:${activeHex}; box-shadow:0 0 14px ${activeGlow}; font-size:${Math.round(size*0.42)}px;">${initial}</div>`;
         }
@@ -2240,13 +2240,13 @@
 
       if (teamInfo && partnerData && (partnerData.avatar || partnerData.nick || partnerData.user)) {
         avWrap.className = 'c-notif-avatar-wrap is-duo';
-        avWrap.innerHTML = renderAvatarEl(playerData, 50) + renderAvatarEl(partnerData, 50);
+        avWrap.innerHTML = renderAvatarEl(playerData, 64) + renderAvatarEl(partnerData, 64);
       } else if (playerData && (playerData.avatar || playerData.nick || playerData.user)) {
         avWrap.className = 'c-notif-avatar-wrap';
-        avWrap.innerHTML = renderAvatarEl(playerData, 60);
+        avWrap.innerHTML = renderAvatarEl(playerData, 96);
       } else {
         avWrap.className = 'c-notif-avatar-wrap';
-        avWrap.innerHTML = renderAvatarEl({ nick: namaPemain }, 60);
+        avWrap.innerHTML = renderAvatarEl({ nick: namaPemain }, 96);
       }
     }
 
